@@ -1,0 +1,1162 @@
+/* =====================================================
+   KINGDOM GATHERING CHURCH WEBSITE - CUSTOM STYLES
+   ===================================================== */
+
+:root {
+    --primary-dark: #1a1a1a;
+    --dark-bg: #222222;
+    --darker-bg: #0f0f0f;
+    --gold-color: #d4af37;
+    --gold-dark: #b8941f;
+    --white-color: #ffffff;
+    --silver-color: #e8e8e8;
+    --light-gray: #f8f9fa;
+}
+
+/* =====================================================
+   BASE STYLES
+   ===================================================== */
+
+* {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+body {
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+.about-bg {
+    background-image: url('../images/people.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* =====================================================
+   TYPOGRAPHY
+   ===================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.display-3 {
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, var(--gold-color), transparent, var(--gold-color));
+    border-radius: 2px;
+}
+
+.section-title-dark {
+    color: var(--gold-color);
+    font-size: 2.5rem;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.section-title-dark::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, var(--gold-color), transparent, var(--gold-color));
+    border-radius: 2px;
+}
+
+/* =====================================================
+   COLOR UTILITIES
+   ===================================================== */
+
+.text-gold {
+    color: var(--gold-color);
+}
+
+.text-silver {
+    color: var(--silver-color);
+}
+
+.bg-gold {
+    background-color: var(--gold-color);
+}
+
+.border-gold {
+    border-color: var(--gold-color) !important;
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+}
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+.navbar {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 3px solid var(--gold-color);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-brand:hover {
+    color: var(--gold-color) !important;
+    transform: scale(1.05);
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.nav-link {
+    color: var(--silver-color) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 10px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.nav-link:hover {
+    color: var(--gold-color) !important;
+    background-color: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+}
+
+.navbar-toggler {
+    border-color: var(--gold-color);
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+}
+
+/* =====================================================
+   HERO SECTION
+   ===================================================== */
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark-bg) 100%) !important;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(212,175,55,0.03)"/></svg>') repeat;
+    opacity: 0.5;
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.8s ease;
+}
+
+.animate-fade-in-delay {
+    animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+.animate-fade-in-delay-2 {
+    animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    animation: fadeInDown 0.8s ease;
+}
+
+.hero-section .lead {
+    font-weight: 300;
+    font-size: 1.5rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-section p.text-silver {
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.hero-section .btn-gold {
+    animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.btn-gold {
+    background-color: var(--gold-color);
+    color: var(--primary-dark) !important;
+    border: 2px solid var(--gold-color);
+    font-weight: 600;
+    padding: 12px 32px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-gold:hover {
+    background-color: var(--gold-dark);
+    border-color: var(--gold-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold:focus {
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+}
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+
+.card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-custom {
+    border-radius: 10px;
+    border: 2px solid var(--gold-color) !important;
+    transition: all 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2) !important;
+}
+
+/* =====================================================
+   EVENTS SECTION
+   ===================================================== */
+
+.events-hero {
+    position: relative;
+    background: url('../images/lady_praying.jpg') center/cover no-repeat;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.events-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.45));
+}
+
+.event-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+.event-card .badge {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.event-card p {
+    line-height: 1.6;
+}
+
+/* =====================================================
+   ENHANCED EVENT CARDS
+   ===================================================== */
+
+.event-card-enhanced {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 20px;
+    padding: 30px 25px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-color), var(--gold-dark), var(--gold-color));
+    border-radius: 20px 20px 0 0;
+}
+
+.event-card-enhanced:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+    border-color: var(--gold-color);
+}
+
+.event-card-enhanced:hover .event-icon i {
+    transform: scale(1.2) rotate(10deg);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.event-icon {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.event-icon i {
+    transition: all 0.3s ease;
+}
+
+.event-date-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--gold-color);
+    color: var(--primary-dark);
+    border-radius: 12px;
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-width: 60px;
+}
+
+.event-date-badge .month {
+    display: block;
+    font-size: 0.7rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.event-date-badge .day {
+    display: block;
+    font-size: 1.2rem;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.event-actions {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.event-actions .btn {
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.event-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* =====================================================
+   LEADERSHIP PAGE STYLES
+   ===================================================== */
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.value-icon:hover {
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.value-icon:hover i {
+    color: white !important;
+}
+
+.quote-box {
+    border-left: 4px solid var(--gold-color);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(212, 175, 55, 0.02));
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* =====================================================
+   MINISTRIES SECTION
+   ===================================================== */
+
+.ministries-hero {
+    position: relative;
+    background: url('../images/unity.webp') center/cover no-repeat;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.ministries-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.45));
+}
+
+.ministry-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: pointer;
+}
+
+.ministry-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+.ministry-icon {
+    font-size: 3rem;
+    color: var(--gold-color);
+    margin-bottom: 15px;
+}
+
+/* =====================================================
+   SERVICE TIME CARDS
+   ===================================================== */
+
+.service-time-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    border: 2px solid rgba(212, 175, 55, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.service-time-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 4px solid var(--gold-color);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(10px);
+}
+
+.service-card i {
+    font-size: 1.5rem;
+}
+
+/* =====================================================
+   PROGRAM BADGES
+   ===================================================== */
+
+.program-badge {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid var(--gold-color);
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.program-badge:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0.15) 100%);
+    transform: scale(1.05);
+}
+
+/* =====================================================
+   MINISTRY CARDS
+   ===================================================== */
+
+.ministry-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--gold-color);
+}
+
+.ministry-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.ministry-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.ministry-card:hover .ministry-icon {
+    transform: scale(1.1) rotateY(360deg);
+}
+
+/* =====================================================
+   PASTOR AVATAR
+   ===================================================== */
+
+.pastor-avatar {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+/* =====================================================
+   CONTACT FORM
+   ===================================================== */
+
+.contact-form .form-control {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.contact-form .form-control:focus {
+    background-color: white;
+    border-color: var(--gold-color);
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+    color: #333;
+}
+
+.contact-form .form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* =====================================================
+   BACKGROUND CLASSES
+   ===================================================== */
+
+.bg-dark {
+    background-color: var(--primary-dark) !important;
+}
+
+.bg-darker {
+    background-color: var(--darker-bg) !important;
+}
+
+.bg-light {
+    background-color: var(--light-gray) !important;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+footer {
+    background-color: var(--darker-bg) !important;
+}
+
+footer a {
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    transform: scale(1.2);
+    color: var(--gold-dark) !important;
+}
+
+footer i {
+    font-size: 1.2rem;
+}
+
+/* =====================================================
+   SPACING UTILITIES
+   ===================================================== */
+
+section {
+    position: relative;
+    overflow: hidden;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    width: 1000px;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="rgba(212,175,55,0.02)" stroke-width="1"/><circle cx="100" cy="100" r="60" fill="none" stroke="rgba(212,175,55,0.02)" stroke-width="1"/></svg>') repeat;
+    pointer-events: none;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-title-dark {
+        font-size: 2rem;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        padding-top: 1rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem !important;
+    }
+
+    .display-3 {
+        font-size: 2rem !important;
+    }
+
+    .ministry-card {
+        margin-bottom: 20px;
+    }
+
+    .pastor-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .service-card {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding-top: 80px !important;
+        padding-bottom: 80px !important;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .btn-gold {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .row {
+        margin: 0 -10px;
+    }
+
+    .col-lg-6,
+    .col-md-6 {
+        padding: 10px;
+    }
+
+    .contact-form {
+        margin-top: 30px;
+    }
+}
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+/* =====================================================
+   SCROLLBAR STYLING
+   ===================================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-dark);
+}
+
+/* =====================================================
+   UTILITY CLASSES
+   ===================================================== */
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.transition {
+    transition: all 0.3s ease;
+}
+
+.text-decoration-none:hover {
+    text-decoration: none;
+}
+
+hr {
+    border-color: var(--gold-color);
+    opacity: 0.5;
+}
+
+/* =====================================================
+   FORM FEEDBACK
+   ===================================================== */
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.is-valid {
+    border-color: #28a745 !important;
+}
+
+.valid-feedback {
+    display: block;
+    color: #28a745;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* =====================================================
+   CINEMATIC HOME HERO (INDEX)
+   ===================================================== */
+
+.cinematic-hero-section {
+    min-height: 100vh;
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(1200px 700px at 10% 10%, rgba(212, 175, 55, 0.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 35%, rgba(212, 175, 55, 0.10), transparent 55%),
+        linear-gradient(135deg, #070707 0%, #141414 45%, #0b0b0b 100%);
+    overflow: hidden;
+}
+
+.cinematic-hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.78) 100%);
+    z-index: 2;
+}
+
+.cinematic-hero-section::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.12), transparent 40%),
+        radial-gradient(circle at 80% 60%, rgba(212,175,55,0.08), transparent 45%);
+    filter: blur(18px);
+    z-index: 1;
+}
+
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.05) contrast(1.05) brightness(0.55);
+    transform: scale(1.02);
+    z-index: 0;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 3;
+    width: min(1100px, 92vw);
+    padding: clamp(70px, 10vh, 120px) 0;
+}
+
+.hero-content {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.hero-text {
+    opacity: 0;
+    transform: translateY(14px);
+    will-change: transform, opacity, filter;
+    filter: blur(8px);
+}
+
+.hero-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: opacity 800ms ease, transform 800ms cubic-bezier(.2,.8,.2,1), filter 800ms ease;
+}
+
+.hero-text.primary {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5.2vw, 4.1rem);
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+
+.hero-text.secondary {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.35rem, 3.4vw, 2.25rem);
+    font-weight: 700;
+    color: var(--gold-color);
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.hero-text.tertiary {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-text.tagline {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.2px;
+}
+
+.skip-btn {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    background: rgba(10, 10, 10, 0.65);
+    color: var(--gold-color);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.skip-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(10, 10, 10, 0.78);
+}
+
+.particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.95), rgba(212,175,55,0.2));
+    opacity: 0.0;
+    animation: floatParticle var(--dur, 8s) linear infinite;
+    filter: blur(0.2px);
+}
+
+@keyframes floatParticle {
+    0% { transform: translate3d(var(--x, 0), 110vh, 0) scale(var(--s, 1)); opacity: 0; }
+    10% { opacity: 0.7; }
+    100% { transform: translate3d(var(--x, 0), -20vh, 0) scale(var(--s, 1)); opacity: 0; }
+}
+
+.glow-orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glow-orb {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.18), transparent 60%);
+    filter: blur(10px);
+    opacity: 0.8;
+    mix-blend-mode: screen;
+    animation: orbDrift 14s ease-in-out infinite;
+}
+
+.glow-orb1 { top: -160px; left: -120px; animation-duration: 16s; }
+.glow-orb2 { top: 12vh; right: -160px; animation-duration: 18s; opacity: 0.65; }
+.glow-orb3 { bottom: -220px; left: 40vw; animation-duration: 20s; opacity: 0.55; }
+
+@keyframes orbDrift {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    50% { transform: translate3d(18px, -22px, 0) scale(1.06); }
+}
+
+/* =====================================================
+   IMAGE BACKGROUND SECTIONS (ABOUT)
+   ===================================================== */
+
+.image-bg-section {
+    position: relative;
+    color: #fff;
+    background: var(--bg, none) center/cover no-repeat;
+}
+
+.image-bg-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.55) 45%, rgba(5,5,5,0.78) 100%);
+}
+
+.image-bg-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.image-bg-section .section-title {
+    color: #fff;
+}
+
+.image-bg-section .lead,
+.image-bg-section p,
+.image-bg-section li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.image-bg-section .text-muted {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* =====================================================
+   NAV: MINISTRIES CLICK-TO-EXPAND (NO CARET)
+   ===================================================== */
+
+.nav-item.dropdown .nav-link .fa-caret-down {
+    display: none;
+}
+
+.navbar .dropdown-menu {
+    border-radius: 12px;
+    border: 1px solid rgba(212,175,55,0.25);
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    padding: 10px;
+}
+
+.navbar .dropdown-item {
+    color: rgba(255,255,255,0.88);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 500;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    background: rgba(212,175,55,0.12);
+    color: #fff;
+}
