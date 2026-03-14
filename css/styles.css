@@ -9,7 +9,7 @@
     --gold-color: #d4af37;
     --gold-dark: #b8941f;
     --white-color: #ffffff;
-    --silver-color: #e8e8e8;
+    --silver-color: #6c757d;
     --light-gray: #f8f9fa;
 }
 
@@ -332,7 +332,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .event-card {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: 16px;
     transition: transform 0.35s ease, box-shadow 0.35s ease;
