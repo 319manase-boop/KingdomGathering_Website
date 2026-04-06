@@ -1,5 +1,5 @@
 /* =====================================================
-   KINGDOM GATHERING CHURCH WEBSITE - MAIN JAVASCRIPT
+   KINGDOM GATHERING CHURCH WEBSITE - ENHANCED JAVASCRIPT
    ===================================================== */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -9,7 +9,265 @@ document.addEventListener('DOMContentLoaded', function() {
     initCounselingForm();
     initScrollAnimations();
     initSmoothScroll();
+    initParticleEffects();
+    initHeroAnimations();
+    initInteractiveElements();
+    initScrollProgress();
 });
+
+/* =====================================================
+   ENHANCED NAVIGATION FUNCTIONS
+   ===================================================== */
+
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    const navbar = document.querySelector('.navbar');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Close mobile menu when a link is clicked
+            if (navbarCollapse.classList.contains('show')) {
+                const closeButton = document.querySelector('.navbar-toggler');
+                closeButton.click();
+            }
+
+            // Add ripple effect
+            createRippleEffect(this);
+        });
+
+        // Add hover sound effect (visual feedback)
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Enhanced scroll effect to navbar
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+
+        if (window.scrollY > 50) {
+            navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.6)';
+            navbar.style.backdropFilter = 'blur(20px) saturate(180%)';
+            navbar.style.background = 'rgba(26, 26, 26, 0.95)';
+        } else {
+            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.4)';
+            navbar.style.background = 'linear-gradient(135deg, var(--primary-dark) 0%, var(--dark-bg) 50%, var(--primary-dark) 100%)';
+        }
+    });
+}
+
+/* =====================================================
+   PARTICLE EFFECTS
+   ===================================================== */
+
+function initParticleEffects() {
+    // Create floating particles in hero section
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        createFloatingParticles(heroSection, 15);
+    }
+
+    // Create particles for other sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        if (!section.classList.contains('hero-section')) {
+            createSectionParticles(section, 5);
+        }
+    });
+}
+
+function createFloatingParticles(container, count) {
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'floating-particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 6 + 2}px;
+            height: ${Math.random() * 6 + 2}px;
+            background: rgba(212, 175, 55, ${Math.random() * 0.6 + 0.2});
+            border-radius: 50%;
+            top: ${Math.random() * 100}%;
+            left: ${Math.random() * 100}%;
+            animation: float-particle ${Math.random() * 10 + 10}s ease-in-out infinite;
+            animation-delay: ${Math.random() * 5}s;
+            pointer-events: none;
+            z-index: 1;
+        `;
+        container.appendChild(particle);
+    }
+}
+
+function createSectionParticles(container, count) {
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'section-particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 4 + 1}px;
+            height: ${Math.random() * 4 + 1}px;
+            background: rgba(212, 175, 55, ${Math.random() * 0.3 + 0.1});
+            border-radius: 50%;
+            top: ${Math.random() * 100}%;
+            left: ${Math.random() * 100}%;
+            animation: drift ${Math.random() * 20 + 15}s linear infinite;
+            animation-delay: ${Math.random() * 10}s;
+            pointer-events: none;
+            z-index: 0;
+        `;
+        container.appendChild(particle);
+    }
+}
+
+/* =====================================================
+   HERO ANIMATIONS
+   ===================================================== */
+
+function initHeroAnimations() {
+    const heroTitle = document.querySelector('.hero-section h1');
+    const heroSubtitle = document.querySelector('.hero-section .lead');
+    const heroButton = document.querySelector('.hero-section .btn-gold');
+
+    if (heroTitle) {
+        // Add typing effect to hero title
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        setTimeout(typeWriter, 500);
+    }
+
+    // Add staggered animations
+    if (heroSubtitle) {
+        heroSubtitle.style.opacity = '0';
+        heroSubtitle.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+            heroSubtitle.style.transition = 'all 0.8s ease';
+            heroSubtitle.style.opacity = '1';
+            heroSubtitle.style.transform = 'translateY(0)';
+        }, 1500);
+    }
+
+    if (heroButton) {
+        heroButton.style.opacity = '0';
+        heroButton.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+            heroButton.style.transition = 'all 0.8s ease';
+            heroButton.style.opacity = '1';
+            heroButton.style.transform = 'translateY(0)';
+        }, 2000);
+    }
+}
+
+/* =====================================================
+   INTERACTIVE ELEMENTS
+   ===================================================== */
+
+function initInteractiveElements() {
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('.btn, .card, .ministry-card');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            createRippleEffect(this, e);
+        });
+    });
+
+    // Add magnetic effect to certain elements
+    const magneticElements = document.querySelectorAll('.ministry-icon, .value-icon');
+    magneticElements.forEach(element => {
+        element.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            this.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        });
+
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'translate(0, 0)';
+        });
+    });
+
+    // Add parallax effect to hero background
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            const rate = scrolled * -0.5;
+            heroSection.style.backgroundPosition = `center ${rate}px`;
+        }
+    });
+}
+
+/* =====================================================
+   SCROLL PROGRESS INDICATOR
+   ===================================================== */
+
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.id = 'scroll-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--gold-color), var(--gold-dark));
+        z-index: 9999;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    `;
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.offsetHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    });
+}
+
+/* =====================================================
+   UTILITY FUNCTIONS
+   ===================================================== */
+
+function createRippleEffect(element, event) {
+    const ripple = document.createElement('div');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event ? event.clientX - rect.left - size / 2 : rect.width / 2 - size / 2;
+    const y = event ? event.clientY - rect.top - size / 2 : rect.height / 2 - size / 2;
+
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s ease-out;
+        pointer-events: none;
+        top: ${y}px;
+        left: ${x}px;
+    `;
+
+    element.style.position = element.style.position || 'relative';
+    element.appendChild(ripple);
+
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
 
 /* =====================================================
    NAVIGATION FUNCTIONS
