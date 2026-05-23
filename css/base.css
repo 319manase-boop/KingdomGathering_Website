@@ -1,0 +1,440 @@
+:root {
+    --primary-dark: #111111;
+    --dark-bg: #181818;
+    --darker-bg: #0a0a0a;
+    --gold-color: #d4af37;
+    --gold-dark: #b8941f;
+    --white-color: #ffffff;
+    --silver-color: #adb5bd;
+    --light-gray: #f8f9fa;
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    background: #080808;
+    color: var(--white-color);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    overflow-x: hidden;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+section {
+    position: relative;
+    padding: 4.5rem 0;
+}
+
+.section-title,
+.section-title-dark {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    color: #111;
+    font-size: 2.35rem;
+}
+
+.section-title::after,
+.section-title-dark::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-color), transparent, var(--gold-color));
+    border-radius: 2px;
+}
+
+.section-title-dark {
+    color: var(--gold-color);
+    font-size: 2.35rem;
+    width: 100%;
+    text-align: center;
+}
+
+.text-gold {
+    color: var(--gold-color) !important;
+}
+
+.text-silver {
+    color: var(--silver-color) !important;
+}
+
+.bg-light {
+    background-color: var(--light-gray) !important;
+}
+
+/* Ensure readable text on light backgrounds */
+.bg-light,
+.service-time-card,
+.event-card,
+.calendar-table tbody tr,
+.event-card-enhanced,
+.hero-info,
+.contact-form .form-control,
+.quote-box,
+.timeline-item {
+    color: #111 !important;
+}
+
+/* Make 'silver' text darker when placed on light backgrounds */
+.bg-light .text-silver,
+.event-card .text-silver,
+.service-time-card .text-silver,
+.calendar-table td .text-silver {
+    color: #6c757d !important;
+}
+
+.bg-dark {
+    background-color: #101010 !important;
+}
+
+.bg-darker {
+    background-color: #080808 !important;
+}
+
+.border-gold {
+    border-color: var(--gold-color) !important;
+}
+
+.btn-outline-gold {
+    color: var(--gold-color);
+    border: 1px solid var(--gold-color);
+    background: transparent;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-gold:hover,
+.btn-outline-gold:focus {
+    color: #ffffff;
+    background: rgba(212, 175, 55, 0.12);
+    border-color: var(--gold-color);
+}
+
+.btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    background: var(--gold-color);
+    border: 1px solid var(--gold-color);
+    border-radius: 50px;
+    padding: 0.95rem 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    transition: all 0.24s ease;
+}
+
+.btn-gold:hover,
+.btn-gold:focus {
+    background: var(--gold-dark);
+    color: #111;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+}
+
+.hero-overlay,
+.events-overlay,
+.ministries-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(12, 12, 12, 0.78), rgba(12, 12, 12, 0.65));
+}
+
+.about-bg {
+    background-image: url('../images/people.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.service-time-card,
+.event-card,
+.event-card-enhanced,
+.ministry-card,
+.program-badge,
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 18px;
+}
+
+.service-time-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    padding: 2rem;
+    text-align: center;
+}
+
+.service-time-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+}
+
+.service-time-card i {
+    color: var(--gold-color);
+    margin-bottom: 1rem;
+}
+
+.service-time-card h4 {
+    color: var(--gold-color);
+}
+
+.event-card {
+    background: #ffffff;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-enhanced {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    min-height: 100%;
+}
+
+.event-card-enhanced:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.ministry-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    padding: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ministry-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.08);
+}
+
+.ministry-icon {
+    font-size: 2.5rem;
+    color: var(--gold-color);
+    margin-bottom: 1rem;
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.value-icon:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+}
+
+.value-icon:hover i {
+    color: #ffffff !important;
+}
+
+.quote-box {
+    border-left: 4px solid var(--gold-color);
+    background: rgba(255, 255, 255, 0.07);
+    padding: 1.5rem;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 1.8rem 2.2rem 1.8rem 5.5rem;
+    margin-bottom: 1.8rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+}
+
+.timeline-item:hover {
+    transform: translateX(6px);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 1.8rem;
+    width: 26px;
+    height: 26px;
+    background: var(--gold-color);
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.15);
+}
+
+.timeline-date {
+    position: absolute;
+    left: -78px;
+    top: 1.6rem;
+    width: 88px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--gold-color);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.85rem;
+}
+
+.timeline-content h5 {
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.timeline-content p {
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.75;
+}
+
+.event-date-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--gold-color);
+    color: #111;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+.event-date-badge .month {
+    display: block;
+    font-size: 0.7rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.event-date-badge .day {
+    display: block;
+    font-size: 1.2rem;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.event-actions {
+    margin-top: auto;
+    padding-top: 1.25rem;
+}
+
+.event-actions .btn:hover {
+    transform: translateY(-2px);
+}
+
+.pastor-avatar {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
+}
+
+.contact-form .form-control {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 10px;
+    padding: 0.95rem 1rem;
+    font-size: 0.95rem;
+    color: #111;
+}
+
+.contact-form .form-control:focus {
+    background-color: #ffffff;
+    border-color: var(--gold-color);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.18);
+}
+
+.contact-form .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    background-color: #070707 !important;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+footer .social-links a {
+    color: var(--gold-color);
+}
+
+/* Readable contrast utility
+   - Default: dark text for light backgrounds
+   - When inside known dark contexts, switch to light text for readability */
+.text-contrast {
+    color: #495057 !important; /* readable dark gray */
+}
+.bg-dark .text-contrast,
+.bg-darker .text-contrast,
+footer .text-contrast,
+.hero-section .text-contrast,
+.navbar .text-contrast {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+footer .social-links a:hover {
+    transform: scale(1.05);
+}

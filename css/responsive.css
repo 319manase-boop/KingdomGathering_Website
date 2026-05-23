@@ -1,0 +1,138 @@
+@media (max-width: 1199px) {
+    .hero-section h1 {
+        font-size: 3.3rem;
+    }
+
+    .hero-section .hero-subtitle {
+        font-size: 1.35rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 991px) {
+    section {
+        padding: 3.5rem 0;
+    }
+
+    .hero-section {
+        min-height: 85vh;
+    }
+
+    .hero-section h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .navbar-nav {
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    section {
+        padding: 3rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-section .hero-subtitle {
+        font-size: 1.15rem;
+    }
+
+    .hero-section .hero-info {
+        padding: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-section .hero-cta {
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .btn-gold,
+    .btn-outline-gold {
+        width: 100%;
+    }
+
+    .section-title,
+    .section-title-dark {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-section {
+        min-height: 80vh;
+        padding: 1.25rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .hero-section .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-section .lead {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .nav-link {
+        font-size: 0.92rem;
+        padding: 0.7rem 0.9rem;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .navbar-toggler {
+        margin-left: auto;
+    }
+
+    .section-title,
+    .section-title-dark {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 479px) {
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-section .lead {
+        font-size: 0.88rem;
+    }
+
+    .btn-gold,
+    .btn-outline-gold {
+        padding: 0.85rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .calendar-table th,
+    .calendar-table td {
+        padding: 0.85rem 1rem;
+    }
+}
