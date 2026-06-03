@@ -17,8 +17,10 @@
         padding: 3.5rem 0;
     }
 
-    .hero-section {
-        min-height: 85vh;
+    .hero-section,
+    .ministries-hero,
+    .events-hero {
+        padding: 160px 0;
     }
 
     .hero-section h1 {
@@ -37,6 +39,12 @@
 @media (max-width: 767px) {
     section {
         padding: 3rem 0;
+    }
+
+    .hero-section,
+    .ministries-hero,
+    .events-hero {
+        padding: 130px 0;
     }
 
     .hero-section h1 {

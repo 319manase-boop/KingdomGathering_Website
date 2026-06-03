@@ -13,8 +13,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="about-bg">
-    <!-- Navigation -->
+<body>
+        <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
         <div class="container">
             <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
@@ -26,131 +26,296 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
-                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <li><a class="dropdown-item" href="../about/"><i class="fas fa-church text-gold me-2"></i>Our Church</a></li>
-                            <li><a class="dropdown-item" href="../leadership/"><i class="fas fa-user-tie text-gold me-2"></i>Leadership</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
                     <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
-                        <ul class="dropdown-menu" aria-labelledby="moreDropdown">
-                            <li><a class="dropdown-item" href="../blog/"><i class="fas fa-newspaper text-gold me-2"></i>Blog</a></li>
-                            <li><a class="dropdown-item" href="../resources/"><i class="fas fa-book-open text-gold me-2"></i>Resources</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="../contact/">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="../about/">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
                 </ul>
+                <div class="d-flex d-lg-none justify-content-center mt-3">
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                </div>
                 <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give</a>
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
                 </div>
             </div>
         </div>
     </nav>
-    <section class="py-5" style="background-color: rgba(255,255,255,0.95);">
+
+    <section class="about-hero text-white d-flex align-items-center">
         <div class="container">
-            <h2 class="section-title mb-4 text-center">About Kingdom Gathering Church</h2>
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <p class="fs-5 mb-4">Founded in Maun, New Disaneng Farms, Botswana, on 21 January 2018, Kingdom Gathering Church has grown to include branches in Serowe and Gaborone. In 2018, the church acquired 11.4 hectares of land for future expansion.</p>
-                    <hr class="border-gold my-4">
-                    <h4 class="text-gold mb-3">Vision</h4>
-                    <p class="mb-4">"A Citadel of Grace and Truth"</p>
-                    <h4 class="text-gold mb-3">Mission</h4>
-                    <p class="mb-4">"To make disciples of Christ Jesus and develop leaders towards the expansion of the Kingdom of God"</p>
-                    <h4 class="text-gold mb-3">Core Values</h4>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-check text-gold me-2"></i>Discipleship</li>
-                        <li><i class="fas fa-check text-gold me-2"></i>Love</li>
-                        <li><i class="fas fa-check text-gold me-2"></i>Generosity</li>
-                        <li><i class="fas fa-check text-gold me-2"></i>Prayer</li>
-                        <li><i class="fas fa-check text-gold me-2"></i>Excellence</li>
-                        <li><i class="fas fa-check text-gold me-2"></i>Honour</li>
-                    </ul>
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <p class="section-eyebrow mb-3">A Citadel of Grace and Truth</p>
+                    <h1 class="display-4 fw-bold mb-4">From Vision to Impact</h1>
+                    <p class="lead text-white-75 mb-4">What began as a calling from God has grown into a thriving ministry committed to discipleship, leadership, community transformation, and advancing God's Kingdom across Botswana.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="../contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
+                        <a href="#leadership" class="btn btn-outline-gold btn-lg">Meet Our Leadership</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Footer -->
-    <footer class="bg-darker text-white py-5 border-top border-gold">
+
+    <section class="py-5">
         <div class="container">
-            <div class="row g-4">
-                <!-- Church Info -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="mb-4">
-                        <h5 class="text-gold fw-bold mb-3">Kingdom Gathering Church</h5>
-                        <p class="text-light mb-3">"A Citadel of Grace and Truth"</p>
-                        <p class="text-contrast small mb-3">Located in Maun, New Disaneng Farms, Botswana</p>
-                        <p class="text-contrast small">Empowering lives, strengthening communities, expanding God's Kingdom.</p>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold me-3 fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6">
+                    <div class="about-story">
+                        <p class="section-eyebrow mb-3">Our Story</p>
+                        <h2 class="section-title text-white">A purpose built on prayer, people, and promise.</h2>
+                        <p class="text-white-75 mt-4">Kingdom Gathering Church began with a simple obedience to God's call. From humble beginnings at New Disaneng Farms, the ministry has grown into a place where people are welcomed, shaped, and sent into mission with courage and compassion.</p>
+                        <div class="mt-4">
+                            <h5 class="text-gold mb-2">Foundation</h5>
+                            <p class="text-white-75">In 2018, local leaders answered the Lord's invitation to plant a church centered on grace, truth, and relentless prayer.</p>
+                            <h5 class="text-gold mb-2 mt-4">Growth</h5>
+                            <p class="text-white-75">Through worship, discipleship, and community care, the church expanded from Maun to reach Serowe, Gaborone, and many neighborhoods beyond.</p>
+                            <h5 class="text-gold mb-2 mt-4">Impact</h5>
+                            <p class="text-white-75">Families have been restored, leaders empowered, and communities strengthened by the practical love and kingdom truth of the church.</p>
+                            <h5 class="text-gold mb-2 mt-4">Future Vision</h5>
+                            <p class="text-white-75">The journey continues toward a future where every heart touches the gospel and every community experiences transformation through Christ.</p>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../index.html" class="text-contrast text-decoration-none">Home</a></li>
-                        <li class="mb-2"><a href="index.html" class="text-contrast text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="../leadership/" class="text-contrast text-decoration-none">Leadership</a></li>
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
-                    </ul>
-                </div>
-
-                <!-- Ministries -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Ministries</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/#children" class="text-contrast text-decoration-none">Children's</a></li>
-                        <li class="mb-2"><a href="../ministries/#women" class="text-contrast text-decoration-none">Women's</a></li>
-                        <li class="mb-2"><a href="../ministries/#men" class="text-contrast text-decoration-none">Men's</a></li>
-                        <li class="mb-2"><a href="../ministries/#clinic" class="text-contrast text-decoration-none">Clinic Outreach</a></li>
-                        <li class="mb-2"><a href="../ministries/#cell" class="text-contrast text-decoration-none">Cell Groups</a></li>
-                        <li class="mb-2"><a href="../ministries/#youth" class="text-contrast text-decoration-none">Youth</a></li>
-                        <li class="mb-2"><a href="../ministries/#arts" class="text-contrast text-decoration-none">Kingdom Arts</a></li>
-                        <li class="mb-2"><a href="../ministries/#training-details" class="text-contrast text-decoration-none">Mamlakah Training Centre</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="col-lg-4 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Get In Touch</h6>
-                    <div class="mb-3">
-                        <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                        <span class="text-contrast">Maun, New Disaneng Farms, Botswana</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-envelope text-gold me-2"></i>
-                        <span class="text-contrast">kingdom18gathering@gmail.com</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-phone text-gold me-2"></i>
-                        <span class="text-contrast">+267 76928744</span>
-                    </div>
-                    <div class="mt-4">
-                        <a href="../contact/" class="btn btn-outline-gold btn-sm">Contact Us</a>
+                <div class="col-lg-6">
+                    <div class="story-image overflow-hidden rounded-4">
+                        <img src="../images/unity.webp" alt="Kingdom Gathering community" class="img-fluid w-100">
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="section-eyebrow mb-3">Vision, Mission, Values</p>
+                <h2 class="section-title-dark">Kingdom clarity for every season.</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article class="section-card h-100">
+                        <div class="icon-circle mb-3"><i class="fas fa-eye fa-lg"></i></div>
+                        <h4>Vision</h4>
+                        <p>To be a citadel of grace and truth, releasing a new generation of believers who lead with love and live with kingdom purpose.</p>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="section-card h-100">
+                        <div class="icon-circle mb-3"><i class="fas fa-bullseye fa-lg"></i></div>
+                        <h4>Mission</h4>
+                        <p>To raise disciples of Christ, develop Kingdom leaders, and bring God's love and truth to communities across Botswana and beyond.</p>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="section-card h-100">
+                        <div class="icon-circle mb-3"><i class="fas fa-heart fa-lg"></i></div>
+                        <h4>Core Values</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li>Discipleship</li>
+                            <li>Love</li>
+                            <li>Prayer</li>
+                            <li>Excellence</li>
+                            <li>Community</li>
+                            <li>Integrity</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="leadership" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="section-eyebrow mb-3">Meet the Leaders Behind the Vision</p>
+                <h2 class="section-title text-white">Faithful leaders committed to prayer, discipleship, integrity, and the advancement of God's Kingdom.</h2>
+            </div>
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5">
+                    <div class="profile-image overflow-hidden rounded-4">
+                        <img src="../images/pastor.jpg" alt="Apostle Mataboge" class="img-fluid w-100">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-story">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="timeline-block">
+                                    <h5>Calling</h5>
+                                    <p>Apostle Mataboge heard God's invitation to establish a church that would stand as a beacon of grace and authority in Botswana. His calling was shaped by prayer, obedience, and a desire to see communities transformed.</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="timeline-block">
+                                    <h5>Ministry Journey</h5>
+                                    <p>Since 2018, he has led with pastoral care, prophetic insight, and practical mentorship. The church has grown through worship gatherings, outreach campaigns, leadership development, and dynamic community care.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="timeline-block">
+                                    <h5>Education & Training</h5>
+                                    <p>He is rooted in biblical theology and ministry training, combining kingdom teaching with practical leadership skills to equip the next generation.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="timeline-block">
+                                    <h5>Vision for the Church</h5>
+                                    <p>He envisions a church that multiplies disciples, sends leaders into service, and impacts every community with the life-changing message of Jesus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-darker text-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="section-eyebrow mb-3">Transforming Lives Across Botswana</p>
+                <h2 class="section-title-dark">Impact through ministry, leadership, and outreach.</h2>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-4">
+                <div class="col">
+                    <div class="impact-card h-100">
+                        <h3>8+</h3>
+                        <p>Years of Ministry</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="impact-card h-100">
+                        <h3>3</h3>
+                        <p>Branches across Botswana</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="impact-card h-100">
+                        <h3>12+</h3>
+                        <p>Communities Reached</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="impact-card h-100">
+                        <h3>150+</h3>
+                        <p>Leaders Developed</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="impact-card h-100">
+                        <h3>24</h3>
+                        <p>Outreach Programs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6 order-lg-2">
+                    <div class="expect-image overflow-hidden rounded-4">
+                        <img src="../images/pastorbackground.jpg" alt="Worship and community at Kingdom Gathering" class="img-fluid w-100">
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div class="expect-card">
+                        <p class="section-eyebrow mb-3">What to Expect When You Visit</p>
+                        <h2 class="section-title text-white">A place to belong, grow, and serve.</h2>
+                        <p class="text-white-75 mt-4">Warm worship. Biblical teaching. Prayer. Authentic community. Kingdom Gathering is a spiritual home where you are welcomed, strengthened, and equipped for the next step in your journey.</p>
+                        <ul class="list-unstyled mt-4 mb-4">
+                            <li class="d-flex align-items-start mb-3"><span class="me-3 text-gold fs-5"><i class="fas fa-check-circle"></i></span><span class="text-white-75">Warm worship with heartfelt praise and strong biblical truth.</span></li>
+                            <li class="d-flex align-items-start mb-3"><span class="me-3 text-gold fs-5"><i class="fas fa-check-circle"></i></span><span class="text-white-75">Prayerful leadership and practical care for every guest.</span></li>
+                            <li class="d-flex align-items-start mb-3"><span class="me-3 text-gold fs-5"><i class="fas fa-check-circle"></i></span><span class="text-white-75">A genuine community where families and first-time visitors are welcomed.</span></li>
+                            <li class="d-flex align-items-start"><span class="me-3 text-gold fs-5"><i class="fas fa-check-circle"></i></span><span class="text-white-75">A safe place to grow in faith, leadership, and purpose.</span></li>
+                        </ul>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <div class="section-card h-100">
+                                    <h5 class="text-white mb-2">Service Times</h5>
+                                    <p class="mb-0 text-white-75">Sunday 09:00 AM - 12:00 PM<br>Midweek 6:00 PM - 8:30 PM</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="section-card h-100">
+                                    <h5 class="text-white mb-2">Location</h5>
+                                    <p class="mb-0 text-white-75">New Disaneng Farms, Maun, Botswana</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex flex-wrap gap-3">
+                            <a href="../contact/" class="btn btn-outline-gold btn-lg">Contact Us</a>
+                            <a href="../contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="final-cta text-center">
+                <p class="section-eyebrow mb-3">Next Step</p>
+                <h2 class="fw-bold text-white mb-3">Ready to Take Your Next Step?</h2>
+                <p class="text-white-75 mb-4">Join us as we worship, grow, serve, and advance God's Kingdom together.</p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="../contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
+                    <a href="../contact/" class="btn btn-outline-gold btn-lg">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="bg-darker text-white py-5 border-top border-gold">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
+                        Kingdom Gathering
+                    </a>
+                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God�s Kingdom through faith, leadership, and community.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
+                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
+                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
+                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
+                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
+                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
+                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
+                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
             <hr class="border-gold my-4">
-
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">"A Blessing to other Families on Earth"</p>
+                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
                 </div>
             </div>
         </div>
@@ -159,3 +324,5 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+

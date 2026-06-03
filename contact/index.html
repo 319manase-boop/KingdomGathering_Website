@@ -8,191 +8,230 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <!-- Navigation -->
+        <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
         <div class="container">
-            <a class="navbar-brand fw-bold text-gold" href="../index.html">Kingdom Gathering</a>
+            <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
+                <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
+                Kingdom Gathering
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            About Us <i class="fas fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <li><a class="dropdown-item" href="../about/"><i class="fas fa-church text-gold me-2"></i>Our Church</a></li>
-                            <li><a class="dropdown-item" href="../leadership/"><i class="fas fa-user-tie text-gold me-2"></i>Leadership</a></li>
-                        </ul>
-                    </li>
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../services/">Services & Programs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../blog/">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../resources/">Resources</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../giving/">Online Giving</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../about/">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
                 </ul>
+                <div class="d-flex d-lg-none justify-content-center mt-3">
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                </div>
+                <div class="d-none d-lg-flex align-items-center ms-3">
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                </div>
             </div>
         </div>
     </nav>
-    <section class="py-5 bg-dark text-white">
+    <!-- Connect Hero -->
+    <section class="connect-hero text-white py-6">
+        <div class="container text-center">
+            <p class="hero-eyebrow">How can we help you take your next step?</p>
+            <h1 class="display-5 fw-bold mb-3">Let's Connect</h1>
+            <p class="hero-subtitle mb-4">Whether you're visiting for the first time, looking for a ministry, requesting prayer, or wanting to become part of the family, we're here for you.</p>
+            <div class="hero-buttons d-flex justify-content-center gap-3">
+                <a href="../index.html#home" class="btn btn-gold btn-lg">Plan Your Visit</a>
+                <a href="#prayer" class="btn btn-outline-gold btn-lg">Request Prayer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Your Next Step -->
+    <section class="py-5">
         <div class="container">
-            <h2 class="section-title-dark mb-5 text-center">Contact / Plan Your Visit</h2>
+            <div class="text-center mb-5">
+                <p class="section-eyebrow">Choose Your Next Step</p>
+                <h2 class="section-title mb-3">How can we help you today?</h2>
+                <p class="section-subtitle mx-auto" style="max-width:700px;">Select one of the options below and we'll guide you through the next steps — whether you're visiting, seeking prayer, joining a ministry, or needing counsel.</p>
+            </div>
+
             <div class="row g-4">
-                <div class="col-lg-6">
-                    <h4 class="text-gold mb-4">Contact Information</h4>
-                    <div class="mb-4">
-                        <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-3"></i><strong>Address</strong></p>
-                        <p class="text-contrast">Maun, New Disaneng Farms, Botswana</p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="mb-2"><i class="fas fa-phone text-gold me-3"></i><strong>Phone</strong></p>
-                        <p class="text-contrast"><a href="tel:76928744" class="text-contrast text-decoration-none">76928744</a></p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="mb-2"><i class="fas fa-envelope text-gold me-3"></i><strong>Email</strong></p>
-                        <p class="text-contrast"><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
-                    </div>
-                    <div class="mb-4">
-                        <p class="mb-2"><i class="fas fa-clock text-gold me-3"></i><strong>Office Hours</strong></p>
-                        <p class="text-contrast">Monday to Friday: 08:30 – 17:00</p>
-                    </div>
-                    <div class="mb-4">
-                        <iframe src="https://www.google.com/maps?q=Maun,+Botswana&output=embed" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card step-card p-4 text-center h-100">
+                        <div class="mb-3 display-6 text-gold"><i class="fas fa-landmark"></i></div>
+                        <h5 class="mb-2">Plan Your Visit</h5>
+                        <p class="mb-3 text-muted">New to Kingdom Gathering? We'd love to welcome you.</p>
+                        <a href="../index.html#home" class="btn btn-outline-gold">Plan My Visit</a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <form id="contactForm" class="contact-form mb-5">
-                        <div class="mb-3">
-                            <label for="name" class="form-label text-gold">Your Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label text-gold">Your Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="subject" class="form-label text-gold">Subject</label>
-                            <input type="text" class="form-control" id="subject" placeholder="How can we help?" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label text-gold">Message</label>
-                            <textarea class="form-control" id="message" rows="4" placeholder="Your message..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-gold fw-bold w-100">Send Message</button>
-                    </form>
-
-                    <div class="card bg-light text-dark mb-4">
-                        <div class="card-body p-4">
-                            <h4 class="text-gold mb-3">Book a Counseling Session</h4>
-                            <form id="counselingForm" class="counseling-form">
-                                <div class="mb-3">
-                                    <label for="counselingName" class="form-label text-gold">Your Name</label>
-                                    <input type="text" class="form-control" id="counselingName" placeholder="Your Name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="counselingEmail" class="form-label text-gold">Your Email</label>
-                                    <input type="email" class="form-control" id="counselingEmail" placeholder="your@email.com" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="counselingPhone" class="form-label text-gold">Phone Number</label>
-                                    <input type="tel" class="form-control" id="counselingPhone" placeholder="Your Phone Number" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="counselingDate" class="form-label text-gold">Preferred Date</label>
-                                    <input type="date" class="form-control" id="counselingDate" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="counselingTime" class="form-label text-gold">Preferred Time</label>
-                                    <input type="time" class="form-control" id="counselingTime" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="counselingMessage" class="form-label text-gold">Message</label>
-                                    <textarea class="form-control" id="counselingMessage" rows="3" placeholder="Briefly describe your need..." required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-gold fw-bold w-100">Book Session</button>
-                            </form>
-                        </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card step-card p-4 text-center h-100">
+                        <div class="mb-3 display-6 text-gold"><i class="fas fa-praying-hands"></i></div>
+                        <h5 class="mb-2">Prayer Request</h5>
+                        <p class="mb-3 text-muted">Share your prayer request with us — we care and pray with you.</p>
+                        <a href="#prayer" class="btn btn-outline-gold">Request Prayer</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card step-card p-4 text-center h-100">
+                        <div class="mb-3 display-6 text-gold"><i class="fas fa-users"></i></div>
+                        <h5 class="mb-2">Join a Ministry</h5>
+                        <p class="mb-3 text-muted">Find a place to grow, serve, and belong.</p>
+                        <a href="../ministries/" class="btn btn-outline-gold">Explore Ministries</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card step-card p-4 text-center h-100">
+                        <div class="mb-3 display-6 text-gold"><i class="fas fa-heart"></i></div>
+                        <h5 class="mb-2">Salvation & Counseling</h5>
+                        <p class="mb-3 text-muted">Need spiritual guidance or counseling? We're here to listen.</p>
+                        <a href="#counsel" class="btn btn-outline-gold">Speak With Someone</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Footer -->
+
+    <!-- Visit Us -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <iframe src="https://www.google.com/maps?q=Maun,+New+Disaneng+Farms&output=embed" width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-lg-5">
+                    <h3 class="text-gold">Visit Us</h3>
+                    <p class="text-muted mb-3">We’re located in Maun at New Disaneng Farms — come as you are and expect a warm welcome.</p>
+                    <p class="mb-2"><strong>📍</strong> Maun, New Disaneng Farms</p>
+                    <p class="mb-2"><strong>📞</strong> <a href="tel:+26776928744" class="text-decoration-none">+267 769 28744</a></p>
+                    <p class="mb-2"><strong>✉</strong> <a href="mailto:kingdom18gathering@gmail.com" class="text-decoration-none">kingdom18gathering@gmail.com</a></p>
+                    <p class="mb-2"><strong>🕒 Sunday Service</strong><br>9:00 AM – 12:00 PM</p>
+                    <p class="mb-2"><strong>🕒 Midweek Cell Groups</strong><br>6:00 PM – 8:30 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prayer Request Form -->
+    <section id="prayer" class="py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <p class="section-eyebrow">Need Prayer?</p>
+                <h2 class="section-title">Share a Prayer Request</h2>
+                <p class="section-subtitle mx-auto" style="max-width:700px;">Our team prays for requests weekly — submit yours below and we will stand with you in prayer.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <form id="prayerForm" class="p-4 visit-card">
+                        <div class="mb-3">
+                            <label for="prayerName" class="form-label text-gold">Name</label>
+                            <input type="text" id="prayerName" class="form-control" placeholder="Your name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prayerPhone" class="form-label text-gold">Phone Number</label>
+                            <input type="tel" id="prayerPhone" class="form-control" placeholder="Phone number (optional)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="prayerMessage" class="form-label text-gold">Prayer Request</label>
+                            <textarea id="prayerMessage" class="form-control" rows="5" placeholder="Share your prayer request" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold w-100">Submit Prayer Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Us Online -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="text-center mb-4">
+                <p class="section-eyebrow">Meet Us Online</p>
+                <h2 class="section-title-dark">Stay connected</h2>
+                <p class="section-subtitle mx-auto" style="max-width:700px;">Follow our community on social media for news, highlights, teachings, and encouragement.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <a href="https://facebook.com/share/1AbP9GkEg/" class="card social-card p-4 text-center text-decoration-none text-white h-100">
+                        <div class="display-6 text-gold mb-2"><i class="fab fa-facebook-f"></i></div>
+                        <h5 class="mb-2">Facebook</h5>
+                        <p class="mb-0">Stay updated with church news.</p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="https://instagram.com/kingdomgatheringchurch" class="card social-card p-4 text-center text-decoration-none text-white h-100">
+                        <div class="display-6 text-gold mb-2"><i class="fab fa-instagram"></i></div>
+                        <h5 class="mb-2">Instagram</h5>
+                        <p class="mb-0">See moments from our services and events.</p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="https://tiktok.com/@kingdom.gatheringbw" class="card social-card p-4 text-center text-decoration-none text-white h-100">
+                        <div class="display-6 text-gold mb-2"><i class="fab fa-tiktok"></i></div>
+                        <h5 class="mb-2">TikTok</h5>
+                        <p class="mb-0">Watch teachings, testimonies, and highlights.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta-section text-center">
+        <div class="container">
+            <h2 class="section-title-dark mb-3">Ready To Call Kingdom Gathering Home?</h2>
+            <p class="section-subtitle mx-auto" style="max-width:760px;">Join us this week and experience faith, family, and purpose.</p>
+            <a href="../index.html#home" class="btn btn-gold btn-lg mt-3">Plan Your Visit</a>
+        </div>
+    </section>
+        <!-- Footer -->
     <footer class="bg-darker text-white py-5 border-top border-gold">
         <div class="container">
-            <div class="row g-4">
-                <!-- Church Info -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="mb-4">
-                        <h5 class="text-gold fw-bold mb-3">Kingdom Gathering Church</h5>
-                        <p class="text-light mb-3">"A Citadel of Grace and Truth"</p>
-                        <p class="text-contrast small mb-3">Located in Maun, New Disaneng Farms, Botswana</p>
-                        <p class="text-contrast small">Empowering lives, strengthening communities, expanding God's Kingdom.</p>
-                    </div>
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
+                        Kingdom Gathering
+                    </a>
+                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God�s Kingdom through faith, leadership, and community.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
+                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
+                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
+                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
+                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
+                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
+                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
+                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
                     <div class="social-links">
                         <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold me-3 fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../index.html" class="text-contrast text-decoration-none">Home</a></li>
-                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="../leadership/" class="text-contrast text-decoration-none">Leadership</a></li>
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
-                    </ul>
-                </div>
-
-                <!-- Ministries -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Ministries</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/#children" class="text-contrast text-decoration-none">Children's</a></li>
-                        <li class="mb-2"><a href="../ministries/#women" class="text-contrast text-decoration-none">Women's</a></li>
-                        <li class="mb-2"><a href="../ministries/#men" class="text-contrast text-decoration-none">Men's</a></li>
-                        <li class="mb-2"><a href="../ministries/#clinic" class="text-contrast text-decoration-none">Clinic Outreach</a></li>
-                        <li class="mb-2"><a href="../ministries/#cell" class="text-contrast text-decoration-none">Cell Groups</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="col-lg-4 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Get In Touch</h6>
-                    <div class="mb-3">
-                        <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                        <span class="text-contrast">Maun, New Disaneng Farms, Botswana</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-envelope text-gold me-2"></i>
-                        <span class="text-contrast">kingdom18gathering@gmail.com</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-phone text-gold me-2"></i>
-                        <span class="text-contrast">+267 76928744</span>
-                    </div>
-                    <div class="mt-4">
-                        <a href="index.html" class="btn btn-outline-gold btn-sm">Contact Us</a>
+                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-
             <hr class="border-gold my-4">
-
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">"A Blessing to other Families on Earth"</p>
+                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
                 </div>
             </div>
         </div>
@@ -201,3 +240,5 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+

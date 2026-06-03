@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <!-- Navigation -->
+        <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
         <div class="container">
             <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
@@ -26,28 +26,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
-                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <li><a class="dropdown-item" href="../about/"><i class="fas fa-church text-gold me-2"></i>Our Church</a></li>
-                            <li><a class="dropdown-item" href="../leadership/"><i class="fas fa-user-tie text-gold me-2"></i>Leadership</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
-                        <ul class="dropdown-menu" aria-labelledby="moreDropdown">
-                            <li><a class="dropdown-item" href="../blog/"><i class="fas fa-newspaper text-gold me-2"></i>Blog</a></li>
-                            <li><a class="dropdown-item" href="../resources/"><i class="fas fa-book-open text-gold me-2"></i>Resources</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="../contact/">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../about/">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
                 </ul>
+                <div class="d-flex d-lg-none justify-content-center mt-3">
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                </div>
                 <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give</a>
+                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
                 </div>
             </div>
         </div>
@@ -141,193 +130,60 @@
             </div>
             <!-- Upcoming events portion -->
             <hr class="border-gold my-5">
-            <h3 class="text-center text-gold mb-4">Upcoming Events</h3>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="event-card-enhanced">
-                        <div class="event-icon mb-3">
-                            <i class="fas fa-music text-gold fs-2"></i>
-                        </div>
-                        <div class="event-date-badge">
-                            <span class="month">APRIL</span>
-                            <span class="day">2026</span>
-                        </div>
-                        <h4 class="text-gold mb-2 fw-bold">Annual Conference</h4>
-                        <p class="text-light mb-3">Join us for a powerful time of worship and teaching that will inspire and uplift your spirit.</p>
-                        <div class="event-details mb-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-calendar-alt text-gold me-2"></i>
-                                <span class="text-contrast">April 2026</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-clock text-gold me-2"></i>
-                                <span class="text-contrast">4 Days</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                                <span class="text-contrast">Kingdom Gathering Church</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn btn-gold btn-sm me-2 mb-2" onclick="rsvpEvent(this,'interested')">
-                                <i class="fas fa-star me-1"></i>Interested (<span>0</span>)
-                            </button>
-                            <button class="btn btn-outline-gold btn-sm mb-2" onclick="rsvpEvent(this,'going')">
-                                <i class="fas fa-check me-1"></i>Going (<span>0</span>)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="event-card-enhanced">
-                        <div class="event-icon mb-3">
-                            <i class="fas fa-heart text-gold fs-2"></i>
-                        </div>
-                        <div class="event-date-badge">
-                            <span class="month">APR</span>
-                            <span class="day">2026</span>
-                        </div>
-                        <h4 class="text-gold mb-2 fw-bold">Marriage Enrichment</h4>
-                        <p class="text-light mb-3">Strengthen your marriage with biblical principles and practical wisdom for lasting relationships.</p>
-                        <div class="event-details mb-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-calendar-alt text-gold me-2"></i>
-                                <span class="text-contrast">April 2026</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-clock text-gold me-2"></i>
-                                <span class="text-contrast">TBA</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                                <span class="text-contrast">Kingdom Gathering Church</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn btn-gold btn-sm me-2 mb-2" onclick="rsvpEvent(this,'interested')">
-                                <i class="fas fa-star me-1"></i>Interested (<span>0</span>)
-                            </button>
-                            <button class="btn btn-outline-gold btn-sm mb-2" onclick="rsvpEvent(this,'going')">
-                                <i class="fas fa-check me-1"></i>Going (<span>0</span>)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="event-card-enhanced">
-                        <div class="event-icon mb-3">
-                            <i class="fas fa-users text-gold fs-2"></i>
-                        </div>
-                        <div class="event-date-badge">
-                            <span class="month">MAY</span>
-                            <span class="day">2026</span>
-                        </div>
-                        <h4 class="text-gold mb-2 fw-bold">Family Week</h4>
-                        <p class="text-light mb-3">A special week dedicated to strengthening family bonds and spiritual growth together.</p>
-                        <div class="event-details mb-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-calendar-alt text-gold me-2"></i>
-                                <span class="text-contrast">May 2026</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-clock text-gold me-2"></i>
-                                <span class="text-contrast">All Week</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                                <span class="text-contrast">Kingdom Gathering Church</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn btn-gold btn-sm me-2 mb-2" onclick="rsvpEvent(this,'interested')">
-                                <i class="fas fa-star me-1"></i>Interested (<span>0</span>)
-                            </button>
-                            <button class="btn btn-outline-gold btn-sm mb-2" onclick="rsvpEvent(this,'going')">
-                                <i class="fas fa-check me-1"></i>Going (<span>0</span>)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
+            <div class="text-center">
+                <p class="text-contrast mb-4">Discover the full Kingdom Gathering events calendar, and connect to the next season of worship, training, and community.</p>
                 <a href="../events/" class="btn btn-outline-gold btn-lg">
-                    <i class="fas fa-calendar me-2"></i>View All Events
+                    <i class="fas fa-calendar me-2"></i>See All Events
                 </a>
             </div>
         </div>
     </section>
-    <!-- Footer -->
+        <!-- Footer -->
     <footer class="bg-darker text-white py-5 border-top border-gold">
         <div class="container">
-            <div class="row g-4">
-                <!-- Church Info -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="mb-4">
-                        <h5 class="text-gold fw-bold mb-3">Kingdom Gathering Church</h5>
-                        <p class="text-light mb-3">"A Citadel of Grace and Truth"</p>
-                        <p class="text-contrast small mb-3">Located in Maun, New Disaneng Farms, Botswana</p>
-                        <p class="text-contrast small">Empowering lives, strengthening communities, expanding God's Kingdom.</p>
-                    </div>
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
+                        Kingdom Gathering
+                    </a>
+                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God�s Kingdom through faith, leadership, and community.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
+                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
+                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
+                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
+                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
+                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
+                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
+                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
                     <div class="social-links">
                         <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold me-3 fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../index.html" class="text-contrast text-decoration-none">Home</a></li>
-                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="../leadership/" class="text-contrast text-decoration-none">Leadership</a></li>
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="index.html" class="text-contrast text-decoration-none">Services</a></li>
-                    </ul>
-                </div>
-
-                <!-- Ministries -->
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Ministries</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/#children" class="text-contrast text-decoration-none">Children's</a></li>
-                        <li class="mb-2"><a href="../ministries/#women" class="text-contrast text-decoration-none">Women's</a></li>
-                        <li class="mb-2"><a href="../ministries/#men" class="text-contrast text-decoration-none">Men's</a></li>
-                        <li class="mb-2"><a href="../ministries/#clinic" class="text-contrast text-decoration-none">Clinic Outreach</a></li>
-                        <li class="mb-2"><a href="../ministries/#cell" class="text-contrast text-decoration-none">Cell Groups</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="col-lg-4 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Get In Touch</h6>
-                    <div class="mb-3">
-                        <i class="fas fa-map-marker-alt text-gold me-2"></i>
-                        <span class="text-contrast">Maun, New Disaneng Farms, Botswana</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-envelope text-gold me-2"></i>
-                        <span class="text-contrast">kingdom18gathering@gmail.com</span>
-                    </div>
-                    <div class="mb-3">
-                        <i class="fas fa-phone text-gold me-2"></i>
-                        <span class="text-contrast">+267 76928744</span>
-                    </div>
-                    <div class="mt-4">
-                        <a href="../contact/" class="btn btn-outline-gold btn-sm">Contact Us</a>
+                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-
             <hr class="border-gold my-4">
-
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">"A Blessing to other Families on Earth"</p>
+                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
                 </div>
             </div>
         </div>
@@ -336,3 +192,5 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+
