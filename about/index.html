@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,36 +11,52 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">`r`n    <link rel="icon" href="../images/logo.png" type="image/png">
 </head>
 <body>
-        <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
-                <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                Kingdom Gathering
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="../about/">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
-                </ul>
-                <div class="d-flex d-lg-none justify-content-center mt-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+            <!-- Premium Header -->
+    <header class="premium-header sticky-top">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="../index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                        <div class="brand-text ms-3">
+                            <h1 class="brand-name">Kingdom Gathering</h1>
+                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                <nav class="col d-none d-lg-block">
+                    <ul class="nav justify-content-center mb-0">
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    </ul>
+                </nav>
+                <div class="col-auto d-none d-lg-block">
+                    <a href="../giving/" class="btn-cta-secondary">Give Online</a>
+                </div>
+                <div class="col-auto d-lg-none ms-auto">
+                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
                 </div>
             </div>
+            <div class="collapse" id="mobileNav">
+                <ul class="nav flex-column mt-3 text-center">
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    <li class="nav-item mt-3"><a href="../giving/" class="btn-cta-secondary">Give Online</a></li>
+                </ul>
+            </div>
         </div>
-    </nav>
+    </header>
 
     <section class="about-hero text-white d-flex align-items-center">
         <div class="container">
@@ -60,27 +76,40 @@
 
     <section class="py-5">
         <div class="container">
-            <div class="row align-items-center gy-5">
-                <div class="col-lg-6">
-                    <div class="about-story">
-                        <p class="section-eyebrow mb-3">Our Story</p>
-                        <h2 class="section-title text-white">A purpose built on prayer, people, and promise.</h2>
-                        <p class="text-white-75 mt-4">Kingdom Gathering Church began with a simple obedience to God's call. From humble beginnings at New Disaneng Farms, the ministry has grown into a place where people are welcomed, shaped, and sent into mission with courage and compassion.</p>
-                        <div class="mt-4">
-                            <h5 class="text-gold mb-2">Foundation</h5>
-                            <p class="text-white-75">In 2018, local leaders answered the Lord's invitation to plant a church centered on grace, truth, and relentless prayer.</p>
-                            <h5 class="text-gold mb-2 mt-4">Growth</h5>
-                            <p class="text-white-75">Through worship, discipleship, and community care, the church expanded from Maun to reach Serowe, Gaborone, and many neighborhoods beyond.</p>
-                            <h5 class="text-gold mb-2 mt-4">Impact</h5>
-                            <p class="text-white-75">Families have been restored, leaders empowered, and communities strengthened by the practical love and kingdom truth of the church.</p>
-                            <h5 class="text-gold mb-2 mt-4">Future Vision</h5>
-                            <p class="text-white-75">The journey continues toward a future where every heart touches the gospel and every community experiences transformation through Christ.</p>
+            <div class="story-section-wrapper">
+                <div class="text-center mb-5">
+                    <p class="section-eyebrow mb-3">Our Story</p>
+                    <h2 class="section-title text-white">A purpose built on prayer, people, and promise.</h2>
+                    <p class="story-intro mt-4">Kingdom Gathering Church began with a simple obedience to God's call. From humble beginnings at New Disaneng Farms, the ministry has grown into a place where people are welcomed, shaped, and sent into mission with courage and compassion.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="story-card h-100">
+                            <div class="story-card-icon"><i class="fas fa-layer-group"></i></div>
+                            <h5>Foundation</h5>
+                            <p>In 2018, local leaders answered the Lord's invitation to plant a church centered on grace, truth, and relentless prayer.</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="story-image overflow-hidden rounded-4">
-                        <img src="../images/unity.webp" alt="Kingdom Gathering community" class="img-fluid w-100">
+                    <div class="col-md-6">
+                        <div class="story-card h-100">
+                            <div class="story-card-icon"><i class="fas fa-chart-line"></i></div>
+                            <h5>Growth</h5>
+                            <p>Through worship, discipleship, and community care, the church expanded from Maun to reach Serowe, Gaborone, and many neighborhoods beyond.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="story-card h-100">
+                            <div class="story-card-icon"><i class="fas fa-heart"></i></div>
+                            <h5>Impact</h5>
+                            <p>Families have been restored, leaders empowered, and communities strengthened by the practical love and kingdom truth of the church.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="story-card h-100">
+                            <div class="story-card-icon"><i class="fas fa-compass"></i></div>
+                            <h5>Future Vision</h5>
+                            <p>The journey continues toward a future where every heart touches the gospel and every community experiences transformation through Christ.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,26 +172,26 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="timeline-block">
-                                    <h5>Calling</h5>
-                                    <p>Apostle Mataboge heard God's invitation to establish a church that would stand as a beacon of grace and authority in Botswana. His calling was shaped by prayer, obedience, and a desire to see communities transformed.</p>
+                                    <h5>Calling & Foundation</h5>
+                                    <p>Apostle Nonofo Wilfred Mataboge was ordained as a minister of the Gospel in 2003 under the Assemblies of God Church in Botswana. A dedicated leader, he prioritizes human and leadership development as core aspects of church growth and Kingdom expansion. Married to Mrs. Moitshephi Mataboge, they are blessed with two children. In 2017, he answered a new call and founded Kingdom Gathering Church in 2018.</p>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="timeline-block">
                                     <h5>Ministry Journey</h5>
-                                    <p>Since 2018, he has led with pastoral care, prophetic insight, and practical mentorship. The church has grown through worship gatherings, outreach campaigns, leadership development, and dynamic community care.</p>
+                                    <p>Apostle Mataboge brings 23 years of ministry experience to his leadership. Since founding Kingdom Gathering Church, he has led with pastoral care, strategic vision, and practical mentorship. The church has grown significantly: six members have been licensed to preach the Gospel, and he now leads a team of two additional fully ordained pastors serving in Maun and Gaborone. Through worship gatherings, outreach campaigns, discipleship training, and intentional community care, the church continues to expand across Botswana.</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="timeline-block">
                                     <h5>Education & Training</h5>
-                                    <p>He is rooted in biblical theology and ministry training, combining kingdom teaching with practical leadership skills to equip the next generation.</p>
+                                    <p>A graduate of the Assembly Bible College, he holds a Bachelor of Ministry from Vision International University and an Advanced Certificate in IT and Business Skills from Botho University—combining biblical foundation with practical leadership and technology skills.</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="timeline-block">
                                     <h5>Vision for the Church</h5>
-                                    <p>He envisions a church that multiplies disciples, sends leaders into service, and impacts every community with the life-changing message of Jesus.</p>
+                                    <p>He envisions a thriving community of disciples sent into mission with courage and compassion. His dream is to see leaders multiplied, communities transformed, and God's Kingdom advanced through Kingdom Gathering across Botswana and beyond.</p>
                                 </div>
                             </div>
                         </div>
@@ -270,53 +299,51 @@
         </div>
     </section>
 
-        <!-- Footer -->
-    <footer class="bg-darker text-white py-5 border-top border-gold">
+                <!-- Premium Footer -->
+    <footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
         <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-3 col-md-6">
-                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
-                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                        Kingdom Gathering
+            <div class="row gy-5">
+                <div class="col-lg-4 footer-brand">
+                    <a href="../index.html" class="d-flex align-items-center text-decoration-none text-white">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="footer-logo">
+                        <div class="ms-3">
+                            <p class="footer-tagline mb-2">Kingdom Gathering Church</p>
+                            <h2 class="footer-brand-name">Kingdom Gathering</h2>
+                        </div>
                     </a>
-                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God�s Kingdom through faith, leadership, and community.</p>
+                    <p class="footer-mission mt-4">1 Timothy 3:15</p>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
-                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
-                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
-                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                <div class="col-lg-2">
+                    <h3 class="footer-column-title">Explore</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../ministries/" class="footer-link">Ministries</a></li>
+                        <li><a href="../services/" class="footer-link">Services</a></li>
+                        <li><a href="../events/" class="footer-link">Events</a></li>
+                        <li><a href="../about/" class="footer-link">About Us</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
-                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
-                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
-                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                <div class="col-lg-3">
+                    <h3 class="footer-column-title">Connect</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../contact/" class="footer-link">Contact</a></li>
+                        <li><a href="../giving/" class="footer-link">Give</a></li>
+                        <li><a href="../gaborone/" class="footer-link">Gaborone Branch</a></li>
+                    </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
-                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
-                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
-                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-3 footer-service-time">
+                    <h3 class="footer-column-title">Service Times</h3>
+                    <div class="mb-3">
+                        <h6>Sunday Worship</h6>
+                        <p class="mb-0">9:00 AM – 11:00 AM</p>
+                    </div>
+                    <div>
+                        <h6>Prayer & Community</h6>
+                        <p class="mb-0">Wednesdays, 6:00 PM</p>
                     </div>
                 </div>
             </div>
-            <hr class="border-gold my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
-                </div>
+            <div class="row mt-5 pt-4 border-top border-light border-opacity-10">
+                <div class="col text-center text-muted small footer-divider">&copy; 2026 Kingdom Gathering Church. All rights reserved.</div>
             </div>
         </div>
     </footer>
@@ -324,5 +351,9 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+
+
+
 
 

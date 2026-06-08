@@ -1,0 +1,513 @@
+/* ====================================
+   PREMIUM HEADER & NAVIGATION STYLING
+   ==================================== */
+
+.premium-header {
+    background: rgba(8, 8, 8, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.12);
+    transition: all 0.3s ease;
+    z-index: 1030;
+}
+
+.premium-header.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(8, 8, 8, 0.98);
+}
+
+/* Brand Logo & Text */
+.brand-logo {
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.brand-logo:hover {
+    opacity: 0.85;
+}
+
+.logo-large {
+    height: 56px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.brand-logo:hover .logo-large {
+    transform: scale(1.05);
+}
+
+.brand-text {
+    text-align: left;
+}
+
+.brand-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.brand-tagline {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffd95d;
+    margin: 2px 0 0 0;
+    opacity: 0.9;
+}
+
+/* Premium Navigation Links */
+.premium-nav-link {
+    position: relative;
+    color: #e0e0e0;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 1.2rem !important;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.premium-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.25rem;
+    left: 1.2rem;
+    width: 0;
+    height: 2px;
+    background: #ffd95d;
+    transition: width 0.3s ease;
+}
+
+.premium-nav-link:hover {
+    color: #ffd95d;
+}
+
+.premium-nav-link:hover::after {
+    width: calc(100% - 2.4rem);
+}
+
+.premium-nav-link.active {
+    color: #ffd95d;
+}
+
+.premium-nav-link.active::after {
+    width: calc(100% - 2.4rem);
+}
+
+/* Secondary CTA Button */
+.btn-cta-secondary {
+    display: inline-block;
+    padding: 0.6rem 1.8rem;
+    background: transparent;
+    color: #ffd95d;
+    border: 1px solid #ffd95d;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-cta-secondary:hover {
+    background: #ffd95d;
+    color: #080808;
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Mobile Toggle Button */
+.btn-mobile-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.btn-mobile-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* ====================================
+   HERO SECTION WITH LOGO
+   ==================================== */
+
+.hero-logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.8s ease 0.2s both;
+}
+
+.hero-logo {
+    height: 96px;
+    width: auto;
+    filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.35));
+    transition: transform 0.25s ease;
+}
+
+.hero-logo:hover {
+    transform: scale(1.04);
+}
+
+.hero-title {
+    font-size: 3.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #fff;
+    margin: 1.2rem 0 1rem;
+    animation: fadeInUp 0.8s ease 0.3s both;
+    font-family: 'Playfair Display', serif;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+}
+
+.hero-section {
+    min-height: 60vh;
+    padding: 60px 0 40px;
+}
+
+/* ====================================
+   PREMIUM BUTTONS
+   ==================================== */
+
+.btn-primary-large {
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: linear-gradient(135deg, #ffd95d, #ffb84d);
+    color: #080808;
+    border: none;
+    border-radius: 0.6rem;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 32px rgba(255, 215, 0, 0.2);
+}
+
+.btn-primary-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 48px rgba(255, 215, 0, 0.35);
+}
+
+.btn-primary-large:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary-large {
+    display: inline-block;
+    margin-left: 1.5rem;
+    padding: 1rem 2.8rem;
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 0.6rem;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary-large:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+    .btn-primary-large,
+    .btn-secondary-large {
+        display: block;
+        margin: 0.75rem auto;
+    }
+}
+
+/* ====================================
+   PREMIUM FOOTER
+   ==================================== */
+
+.premium-footer {
+    background: linear-gradient(180deg, #0a0a0a 0%, #080808 100%);
+    border-top: 1px solid rgba(255, 215, 0, 0.12);
+    padding-top: 4rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.footer-brand {
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    height: 52px;
+    max-width: 160px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.18s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.03);
+}
+
+.footer-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 1rem 0 0.5rem;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-tagline {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffd95d;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+}
+
+.footer-mission {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-column-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-links {
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link {
+    display: block;
+    padding: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.footer-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #ffd95d;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #ffd95d;
+    transform: translateX(4px);
+}
+
+.footer-link:hover::before {
+    opacity: 1;
+}
+
+.footer-service-time {
+    padding-bottom: 1.5rem;
+}
+
+.footer-service-time:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+    padding-bottom: 1.5rem;
+}
+
+.footer-service-time h6 {
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.footer-divider {
+    opacity: 0.15;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.08);
+    color: #ffd95d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.social-link:hover {
+    background: #ffd95d;
+    color: #080808;
+    transform: scale(1.1) translateY(-3px);
+}
+
+/* ====================================
+   ANIMATIONS
+   ==================================== */
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================
+   RESPONSIVE ADJUSTMENTS
+   ==================================== */
+
+@media (max-width: 991px) {
+    .premium-header .container {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .brand-name {
+        font-size: 1.1rem;
+    }
+
+    .brand-tagline {
+        font-size: 0.7rem;
+    }
+
+    .logo-large {
+        height: 48px;
+    }
+
+    .premium-nav-link {
+        font-size: 0.9rem;
+        padding: 0.75rem 0.6rem !important;
+    }
+
+    .btn-secondary-large {
+        margin-left: 0;
+        margin-top: 0.75rem;
+    }
+
+    .hero-logo {
+        height: 100px;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+        margin: 1.5rem 0 1rem;
+    }
+
+    .footer-column-title {
+        margin-top: 2rem;
+    }
+
+    .footer-brand .footer-column-title {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 575px) {
+    .premium-header {
+        padding: 1rem 0;
+    }
+
+    .brand-logo {
+        margin-bottom: 1rem;
+    }
+
+    .brand-name {
+        font-size: 1rem;
+    }
+
+    .logo-large {
+        height: 40px;
+    }
+
+    .hero-logo {
+        height: 80px;
+    }
+
+    .hero-logo-container {
+        margin-bottom: 2rem;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .btn-primary-large,
+    .btn-secondary-large {
+        padding: 0.85rem 2rem;
+        font-size: 0.9rem;
+    }
+
+    .footer-brand-name {
+        font-size: 1.5rem;
+    }
+
+    .footer-column-title {
+        font-size: 1rem;
+    }
+}

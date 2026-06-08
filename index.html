@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,35 +12,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo.png" type="image/png">
 </head>
 <body>
         <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="index.html">
-                <img src="images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                Kingdom Gathering
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link" href="services/">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="events/">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about/">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact/">Connect</a></li>
-                </ul>
-                <div class="d-flex d-lg-none justify-content-center mt-3">
-                    <a href="giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+        <!-- Premium Header -->
+    <header class="premium-header sticky-top">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                        <div class="brand-text ms-3">
+                            <h1 class="brand-name">Kingdom Gathering</h1>
+                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                <nav class="col d-none d-lg-block">
+                    <ul class="nav justify-content-center mb-0">
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="contact/">Connect</a></li>
+                    </ul>
+                </nav>
+                <div class="col-auto d-none d-lg-block">
+                    <a href="giving/" class="btn-cta-secondary">Give Online</a>
+                </div>
+                <div class="col-auto d-lg-none ms-auto">
+                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
                 </div>
             </div>
+            <div class="collapse" id="mobileNav">
+                <ul class="nav flex-column mt-3 text-center">
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="ministries/">Ministries</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="services/">Services</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="events/">Events</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="about/">About</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="contact/">Connect</a></li>
+                    <li class="nav-item mt-3"><a href="giving/" class="btn-cta-secondary">Give Online</a></li>
+                </ul>
+            </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
 <section id="home" class="hero-section text-white">
@@ -48,10 +67,15 @@
 
     <div class="container position-relative z-2">
         <div class="row align-items-center">
-            <div class="col-lg-8 mx-auto text-center">
+            <div class="col-lg-8 text-center">
+                <!-- Logo in Hero -->
+                <div class="hero-logo-container mb-5">
+                    <img src="images/logo.png" alt="Kingdom Gathering" class="hero-logo">
+                </div>
+
                 <p class="hero-eyebrow">A Citadel of Grace and Truth</p>
 
-                <h1>
+                <h1 class="hero-title">
                     Building Disciples.<br>
                     Transforming Lives.<br>
                     Expanding God’s Kingdom.
@@ -62,9 +86,9 @@
                     and community converge to raise leaders and shape generations.
                 </h2>
 
-                <div class="hero-buttons">
-                    <a href="contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
-                    <a href="services/" class="btn btn-outline-gold btn-lg">Watch a Service</a>
+                <div class="hero-buttons mt-5">
+                    <a href="contact/" class="btn-primary-large">Plan Your Visit</a>
+                    <a href="services/" class="btn-secondary-large">Watch a Service</a>
                 </div>
             </div>
         </div>
@@ -171,11 +195,44 @@
     <div class="container">
         <div class="featured-event-box">
             <p class="section-eyebrow">Next Big Event</p>
-            <h2>2026 Annual Conference</h2>
+            <h2>Leadership Workshop • 14 July 2026</h2>
             <p class="section-subtitle">
-                A four-day conference of worship, revival, leadership teaching, and breakthrough prayer.
+                A focused event for leaders, ministry teams, and emerging servants to grow in vision, strategy, and spiritual leadership.
             </p>
             <a href="events/" class="btn btn-gold">Reserve Your Seat</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <p class="section-eyebrow mb-3">Gaborone Branch</p>
+                <h2 class="section-title mb-3">Connect with Kingdom Gathering Gaborone</h2>
+                <a href="https://www.facebook.com/share/1J9jquGVpE/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg mt-3">Visit the Gaborone Branch Page</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="section-card p-4 rounded-4 border border-gold h-100">
+                    <h3 class="text-gold mb-3">Leadership Workshop</h3>
+                    <p class="text-muted mb-3">14 July 2026 — a focused event for leaders, ministry teams, and emerging servants to grow in vision, strategy, and spiritual leadership.</p>
+                    <a href="events/" class="btn btn-outline-gold">Reserve Your Seat</a>
+                </div>
+            </div>
+                <div class="col-lg-6">
+                <div class="section-card p-4 rounded-4 border border-gold h-100">
+                    <h3 class="text-gold mb-3">Maun Crusade</h3>
+                    <p class="text-muted mb-3">Step into an atmosphere of worship, revival, and Kingdom transformation. Our crusade is a time of encountering God's presence, receiving His Word, and being equipped to impact lives and communities with the Gospel of Jesus Christ.</p>
+                    <a href="events/" class="btn btn-outline-gold">Learn More</a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -188,3 +245,72 @@
         <a href="contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
     </div>
 </section>
+
+<!-- Premium Footer -->
+<footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
+    <div class="container">
+        <div class="row g-5 mb-5">
+            <!-- Column 1: Brand -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-brand mb-3">
+                    <img src="images/logo.png" alt="Kingdom Gathering" class="footer-logo mb-3">
+                    <h3 class="footer-brand-name">Kingdom Gathering</h3>
+                    <p class="footer-tagline">A Citadel of Grace & Truth</p>
+                    <p class="footer-mission text-secondary">Raising disciples, transforming lives, and advancing God's Kingdom through faith, leadership, and community.</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Explore -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-column-title">Explore</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="ministries/" class="footer-link">Ministries</a></li>
+                    <li><a href="services/" class="footer-link">Services</a></li>
+                    <li><a href="events/" class="footer-link">Events</a></li>
+                    <li><a href="about/" class="footer-link">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Gather With Us -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-column-title">Gather With Us</h5>
+                <div class="footer-service-time mb-4">
+                    <h6 class="text-gold mb-2">Sunday Worship</h6>
+                    <p class="text-secondary mb-0">09:00 AM - 12:00 PM<br><small>Main Sanctuary, Maun</small></p>
+                </div>
+                <div class="footer-service-time">
+                    <h6 class="text-gold mb-2">Midweek Cell Groups</h6>
+                    <p class="text-secondary mb-0">6:00 PM - 8:30 PM<br><small>Fellowship Center</small></p>
+                </div>
+            </div>
+
+            <!-- Column 4: Connect -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-column-title">Connect</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="contact/" class="footer-link">Contact Us</a></li>
+                    <li><a href="giving/" class="footer-link">Give Online</a></li>
+                    <li><a href="https://www.facebook.com/share/1J9jquGVpE/?mibextid=wwXIfr" class="footer-link" target="_blank" rel="noopener">Gaborone Branch</a></li>
+                </ul>
+                <div class="social-links mt-4">
+                    <a href="https://facebook.com/share/1AbP9GkEg/" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="social-link" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-divider border-top border-gold my-5"></div>
+
+        <!-- Footer Bottom -->
+        <div class="row align-items-center py-4">
+            <div class="col-md-6">
+                <p class="text-secondary small mb-0">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="text-secondary small mb-0">A spiritual home for leaders and community.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+

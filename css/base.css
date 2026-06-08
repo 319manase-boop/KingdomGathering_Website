@@ -234,7 +234,7 @@ section {
 .about-hero {
     position: relative;
     min-height: 680px;
-    background-image: linear-gradient(180deg, rgba(8, 8, 8, 0.88), rgba(8, 8, 8, 0.92)), url('../images/people.jpg');
+    background-image: linear-gradient(180deg, rgba(8, 8, 8, 0.88), rgba(8, 8, 8, 0.92)), url('../images/Apostle&Wife.jpeg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -263,6 +263,72 @@ section {
 .profile-image,
 .expect-image {
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
+}
+
+.story-section-wrapper {
+    background: rgba(18, 18, 18, 0.98);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+}
+
+.story-intro {
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.05rem;
+    line-height: 1.85;
+}
+
+.story-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(212, 175, 55, 0.14);
+    border-radius: 28px;
+    padding: 2.25rem;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    transition: all 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.28);
+    box-shadow: 0 24px 68px rgba(0, 0, 0, 0.24);
+}
+
+.story-card-icon {
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 175, 55, 0.12);
+    border-radius: 50%;
+    color: var(--gold-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.story-card h5 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+}
+
+.story-card p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .story-section-wrapper {
+        padding: 2rem 1.5rem;
+    }
+    .story-card {
+        padding: 1.75rem;
+    }
 }
 
 .section-card {

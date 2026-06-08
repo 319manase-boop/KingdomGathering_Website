@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroAnimations();
     initInteractiveElements();
     initScrollProgress();
+    initPremiumHeader();
 });
 
 /* =====================================================
@@ -618,6 +619,36 @@ function rsvpEvent(button, type) {
 
     const status = type === 'going' ? 'Going' : 'Interested';
     showAlert('success', 'RSVP Recorded', `Thanks for letting us know you are ${status} for ${eventTitle}.`);
+}
+
+/* =====================================================
+   PREMIUM HEADER SCROLL EFFECT
+   ===================================================== */
+
+function initPremiumHeader() {
+    const header = document.querySelector('.premium-header');
+    if (!header) return;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Close mobile menu on link click
+    const mobileNav = document.querySelector('#mobileNav');
+    const premiumNavLinks = document.querySelectorAll('.premium-nav-link');
+    
+    premiumNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (mobileNav && mobileNav.classList.contains('show')) {
+                const toggle = document.querySelector('.btn-mobile-toggle');
+                toggle.click();
+            }
+        });
+    });
 }
 
 console.log('Kingdom Gathering Church Website - Initialized Successfully');

@@ -1,59 +1,148 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Giving | Kingdom Gathering Church</title>
+    <title>Give | Kingdom Gathering Church</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
 </head>
 <body>
-        <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
-                <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                Kingdom Gathering
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../about/">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
-                </ul>
-                <div class="d-flex d-lg-none justify-content-center mt-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+        <!-- Premium Header -->
+    <header class="premium-header sticky-top">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="../index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                        <div class="brand-text ms-3">
+                            <h1 class="brand-name">Kingdom Gathering</h1>
+                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                <nav class="col d-none d-lg-block">
+                    <ul class="nav justify-content-center mb-0">
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    </ul>
+                </nav>
+                <div class="col-auto d-none d-lg-block">
+                    <a href="../giving/" class="btn-cta-secondary">Give Online</a>
+                </div>
+                <div class="col-auto d-lg-none ms-auto">
+                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse" id="mobileNav">
+                <ul class="nav flex-column mt-3 text-center">
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    <li class="nav-item mt-3"><a href="../giving/" class="btn-cta-secondary">Give Online</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section text-white">
+        <div class="hero-overlay"></div>
+        <div class="container position-relative z-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <div class="hero-logo-container mb-4">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="hero-logo">
+                    </div>
+                    <p class="hero-eyebrow">Kingdom Partnership</p>
+                    <h1 class="hero-title">Partner in advancing God’s Kingdom through faithful generosity.</h1>
+                    <p class="hero-subtitle">Your gift empowers worship, prayer, outreach, leadership development, and community care across Botswana.</p>
                 </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Hero Section -->
-    <section class="giving-hero py-6">
-        <div class="hero-overlay"></div>
-        <div class="container position-relative z-2 text-center text-white">
+    <section class="py-5">
+        <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <p class="eyebrow">Partner With The Vision</p>
-                    <h1 class="display-4 fw-bold mb-4">Your Generosity Changes Lives</h1>
-                    <p class="lead mb-5">Every gift helps us reach communities, raise disciples, support families, and expand the work of God's Kingdom throughout Botswana and beyond.</p>
-                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                        <a href="#givingForm" class="btn btn-gold btn-lg px-5">Give Today</a>
-                        <a href="../about/" class="btn btn-outline-gold btn-lg px-5">Learn About Our Mission</a>
+                <div class="col-lg-7">
+                    <div class="scripture-card p-5 rounded-4 border border-gold bg-white shadow-sm text-center">
+                        <p class="eyebrow text-gold mb-3">Scripture for Giving</p>
+                        <p class="lead mb-4">"Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver."</p>
+                        <p class="mb-0 text-muted">— 2 Corinthians 9:7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="section-title mb-3">How Your Generosity Makes A Difference</h2>
+                    <p class="text-muted">When you give to Kingdom Gathering Church, you are joining a mission that is biblical, community-centered, and deeply rooted in kingdom impact.</p>
+                    <ul class="list-unstyled text-muted mb-4">
+                        <li class="mb-3">Host worship services and prayer gatherings that renew hearts.</li>
+                        <li class="mb-3">Support community outreach initiatives that bring practical hope.</li>
+                        <li class="mb-3">Equip leaders and disciples for faithful service.</li>
+                        <li class="mb-3">Reach families across Botswana with the Gospel.</li>
+                        <li class="mb-3">Develop future ministry leaders who carry the vision forward.</li>
+                        <li class="mb-3">Expand Kingdom impact through church growth and mercy ministry.</li>
+                    </ul>
+                    <p class="text-muted"><strong>Stewardship Statement:</strong> We are committed to handling every gift with integrity, accountability, and transparency. Your generosity is carefully stewarded to support the mission and ministry of Kingdom Gathering Church.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="giving-highlight-card p-4 rounded-4 border border-gold bg-white shadow-sm">
+                        <h3 class="text-gold mb-3">Your gift at work</h3>
+                        <p class="text-muted mb-3">Your generosity sustains worship, equips leaders, supports outreach, cares for families, and helps us proclaim the Gospel in every community we serve.</p>
+                        <p class="text-muted mb-4">Every gift is a faithful investment in discipleship, mercy ministry, and the expansion of God’s Kingdom.</p>
+                        <a href="#givingForm" class="btn btn-outline-gold btn-lg">Give with Confidence</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="vision-card p-5 rounded-4 border border-gold bg-white shadow-sm text-center">
+                        <p class="eyebrow text-gold mb-3">Advancing God's Kingdom Together</p>
+                        <p class="lead mb-0">Every gift is more than a financial contribution—it is an investment in lives, discipleship, outreach, leadership development, and the expansion of God's Kingdom. Through your generosity, we are able to serve communities, raise disciples, support ministry initiatives, and share the hope of Jesus Christ across Botswana.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title mb-3">Because of Your Generosity</h2>
+                    <p class="text-muted">Through faithful giving, Kingdom Gathering Church continues to strengthen worship ministries, support outreach efforts, equip leaders, and impact communities with the Gospel. Every contribution helps advance the mission God has entrusted to us.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="testimonial-card p-5 rounded-4 bg-dark text-white shadow-sm">
+                        <p class="mb-4">“Because your generosity is faithful, worship ministries stay strong, outreach reaches families, leaders are trained, and communities are renewed by the Gospel. Every gift advances the mission God has entrusted to us.”</p>
+                        <p class="mb-0 text-gold fw-bold">Kingdom Gathering Church ministry update</p>
                     </div>
                 </div>
             </div>
@@ -65,8 +154,8 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title mb-3">Giving Categories</h2>
-                    <p class="text-muted">Choose how your support is invested into ministry, outreach, and lasting community transformation.</p>
+                    <h2 class="section-title mb-3">Ways To Give</h2>
+                    <p class="text-muted">Choose the way your generosity will support worship, outreach, leadership, and community transformation.</p>
                 </div>
             </div>
             <div class="row g-4">
@@ -77,7 +166,7 @@
                                 <i class="fas fa-hand-holding-heart"></i>
                             </div>
                             <h4>Tithes & Offerings</h4>
-                            <p class="mb-4">Support the ongoing ministry and mission of the church.</p>
+                            <p class="mb-4">Sustain weekly worship, pastoral care, and the heartbeat of our church family.</p>
                             <div class="mt-auto">
                                 <a href="#givingForm" class="btn btn-outline-gold">Give to Tithes</a>
                             </div>
@@ -91,7 +180,7 @@
                                 <i class="fas fa-seedling"></i>
                             </div>
                             <h4>Kingdom Expansion</h4>
-                            <p class="mb-4">Help fund outreach, church planting, discipleship, and transformational initiatives.</p>
+                            <p class="mb-4">Help fund outreach, discipleship, and church planting across Botswana.</p>
                             <div class="mt-auto">
                                 <a href="#givingForm" class="btn btn-outline-gold">Support Expansion</a>
                             </div>
@@ -105,7 +194,7 @@
                                 <i class="fas fa-hands-holding-child"></i>
                             </div>
                             <h4>Community Impact</h4>
-                            <p class="mb-4">Support programs that strengthen families and serve local communities.</p>
+                            <p class="mb-4">Support family care, mercy ministry, and programs that serve our local neighborhoods.</p>
                             <div class="mt-auto">
                                 <a href="#givingForm" class="btn btn-outline-gold">Give to Impact</a>
                             </div>
@@ -123,9 +212,9 @@
                 <div class="col-xl-8">
                     <div class="giving-form-card">
                         <div class="text-center mb-5">
-                            <p class="eyebrow">Faithful Giving</p>
-                            <h2 class="section-title-dark mb-3">Make Your Gift Today</h2>
-                            <p class="section-subtitle">Thank you for partnering with Kingdom Gathering Church. Your generosity helps us impact lives and advance God's Kingdom.</p>
+                            <p class="eyebrow">Kingdom Partnership</p>
+                            <h2 class="section-title-dark mb-3">Join Our Mission Through Generosity</h2>
+                            <p class="section-subtitle">Thank you for partnering with Kingdom Gathering Church. Your gift supports worship, prayer, outreach, and leadership development.</p>
                         </div>
                         <form id="givingForm">
                             <div class="row g-4">
@@ -180,8 +269,8 @@
         <div class="container">
             <div class="row justify-content-center mb-4">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title mb-3">Trusted Giving, Kingdom Impact</h2>
-                    <p class="text-muted">Giving through Kingdom Gathering Church is secure, confidential, and focused on lasting ministry outcomes.</p>
+                    <h2 class="section-title mb-3">Stewardship & Transparency</h2>
+                    <p class="text-muted">We are committed to handling every gift with integrity, accountability, and transparency. Your generosity is carefully stewarded to support the mission and ministry of Kingdom Gathering Church.</p>
                 </div>
             </div>
             <div class="row g-4">
@@ -189,21 +278,37 @@
                     <div class="giving-trust-card text-center h-100">
                         <div class="trust-icon"><i class="fas fa-shield-alt"></i></div>
                         <h5>Secure Giving</h5>
-                        <p>All donations are processed securely.</p>
+                        <p>All donations are processed with the highest level of care and protection.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="giving-trust-card text-center h-100">
                         <div class="trust-icon"><i class="fas fa-lock"></i></div>
-                        <h5>Privacy Protected</h5>
-                        <p>Your information remains confidential and protected.</p>
+                        <h5>Accountable Stewardship</h5>
+                        <p>We steward every gift faithfully and report on ministry impact with honesty.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="giving-trust-card text-center h-100">
                         <div class="trust-icon"><i class="fas fa-heart"></i></div>
                         <h5>Kingdom Impact</h5>
-                        <p>Every contribution supports ministry, discipleship, outreach, and community transformation.</p>
+                        <p>Every contribution supports worship, outreach, discipleship, and lasting community care.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <p class="eyebrow text-gold mb-3">Partner With The Vision</p>
+                    <h2 class="section-title-dark mb-3">Partner With The Vision</h2>
+                    <p class="section-subtitle mb-4">Thank you for partnering with Kingdom Gathering Church. Together we are raising disciples, transforming lives, and advancing God's Kingdom through worship, prayer, outreach, and leadership development.</p>
+                    <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row">
+                        <a href="#givingForm" class="btn btn-gold btn-lg">Give Today</a>
+                        <a href="../contact/" class="btn btn-outline-light btn-lg">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -291,53 +396,51 @@
         </div>
     </div>
 
-        <!-- Footer -->
-    <footer class="bg-darker text-white py-5 border-top border-gold">
+        <!-- Premium Footer -->
+    <footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
         <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-3 col-md-6">
-                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
-                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                        Kingdom Gathering
+            <div class="row gy-5">
+                <div class="col-lg-4 footer-brand">
+                    <a href="../index.html" class="d-flex align-items-center text-decoration-none text-white">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="footer-logo">
+                        <div class="ms-3">
+                            <p class="footer-tagline mb-2">Kingdom Gathering Church</p>
+                            <h2 class="footer-brand-name">Kingdom Gathering</h2>
+                        </div>
                     </a>
-                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God’s Kingdom through faith, leadership, and community.</p>
+                    <p class="footer-mission mt-4">1 Timothy 3:15</p>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
-                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
-                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
-                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                <div class="col-lg-2">
+                    <h3 class="footer-column-title">Explore</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../ministries/" class="footer-link">Ministries</a></li>
+                        <li><a href="../services/" class="footer-link">Services</a></li>
+                        <li><a href="../events/" class="footer-link">Events</a></li>
+                        <li><a href="../about/" class="footer-link">About Us</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
-                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
-                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
-                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                <div class="col-lg-3">
+                    <h3 class="footer-column-title">Connect</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../contact/" class="footer-link">Contact</a></li>
+                        <li><a href="../giving/" class="footer-link">Give</a></li>
+                        <li><a href="../gaborone/" class="footer-link">Gaborone Branch</a></li>
+                    </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
-                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
-                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
-                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-3 footer-service-time">
+                    <h3 class="footer-column-title">Service Times</h3>
+                    <div class="mb-3">
+                        <h6>Sunday Worship</h6>
+                        <p class="mb-0">9:00 AM – 11:00 AM</p>
+                    </div>
+                    <div>
+                        <h6>Prayer & Community</h6>
+                        <p class="mb-0">Wednesdays, 6:00 PM</p>
                     </div>
                 </div>
             </div>
-            <hr class="border-gold my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
-                </div>
+            <div class="row mt-5 pt-4 border-top border-light border-opacity-10">
+                <div class="col text-center text-muted small footer-divider">&copy; 2026 Kingdom Gathering Church. All rights reserved.</div>
             </div>
         </div>
     </footer>
@@ -346,5 +449,8 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+
+
 
 

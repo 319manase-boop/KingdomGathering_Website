@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,323 +12,581 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+    <style>
+        .events-hero {
+            min-height: 60vh;
+            padding: 80px 0 60px;
+            background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.12), transparent 28%), linear-gradient(180deg, #050505 0%, #111111 100%);
+        }
+        .events-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 215, 0, 0.08), transparent 34%);
+            pointer-events: none;
+        }
+        .events-hero .hero-copy {
+            position: relative;
+            z-index: 2;
+        }
+        .events-hero .hero-copy h1 {
+            font-size: 3.75rem;
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+        }
+        .events-hero .hero-copy p {
+            max-width: 720px;
+            margin: 0 auto 1.75rem;
+            color: #f4f4f4;
+            font-size: 1.15rem;
+        }
+        .featured-event-banner {
+            background: linear-gradient(180deg, rgba(5,5,5,.8) 0%, rgba(5,5,5,.8) 100%), url("../images/people.jpg") center/cover no-repeat;
+            background-color: #101010;
+            position: relative;
+            min-height: 480px;
+            padding: 0;
+            display: grid;
+            align-items: center;
+            overflow: hidden;
+        }
+        .featured-event-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,215,0,0.12), transparent 38%);
+        }
+        .featured-event-banner .container {
+            position: relative;
+            z-index: 2;
+            padding: 3rem 0;
+        }
+        .featured-event-banner .badge-date {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: rgba(255,215,0,.16);
+            color: #fff;
+            border: 1px solid rgba(255,215,0,.32);
+            padding: .9rem 1.3rem;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .featured-event-banner h2 {
+            font-size: 4.5rem;
+            line-height: 1.02;
+            letter-spacing: -0.05em;
+            margin-bottom: 1.5rem;
+            max-width: 720px;
+        }
+        .featured-event-banner h2::after {
+            content: '';
+            display: block;
+            width: 90px;
+            height: 3px;
+            background: #ffd95d;
+            margin-top: 1.25rem;
+            border-radius: 999px;
+        }
+        .featured-event-banner p {
+            color: #ece8e0;
+            max-width: 720px;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.85;
+        }
+        .featured-event-banner .btn-gold {
+            padding: 1rem 2.5rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .upcoming-events {
+            background: #151515;
+            padding-top: 3.5rem;
+            padding-bottom: 3.5rem;
+        }
+        .upcoming-list {
+            display: grid;
+            gap: 0.8rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        .upcoming-row {
+            display: grid;
+            grid-template-columns: 120px minmax(0, 1fr) auto;
+            gap: 1.25rem;
+            align-items: center;
+            padding: 1.4rem 1.5rem;
+            border: 1px solid rgba(255,215,0,.08);
+            background: rgba(255,255,255,.02);
+            border-radius: 1.4rem;
+        }
+        .upcoming-date {
+            color: #ffd95d;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-size: .95rem;
+            min-width: 120px;
+        }
+        .upcoming-details h3 {
+            margin: 0 0 .45rem;
+            color: #fff;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+        .upcoming-details p {
+            margin: 0;
+            color: #d0d0d0;
+            line-height: 1.75;
+            font-size: .98rem;
+        }
+        .upcoming-action {
+            text-align: right;
+        }
+        .upcoming-action .btn {
+            min-width: 12rem;
+            border-radius: 1rem;
+            padding: .95rem 1.3rem;
+        }
+        .timeline-section {
+            background: #050505;
+            padding-top: 3.5rem;
+            padding-bottom: 3.5rem;
+        }
+        .vertical-timeline {
+            position: relative;
+            display: grid;
+            gap: 1.2rem;
+            max-width: 760px;
+            margin: 0 auto;
+            padding-left: 3rem;
+        }
+        .vertical-timeline::before {
+            content: '';
+            position: absolute;
+            left: 36px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,215,0,.12);
+        }
+        .timeline-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(50% - 6px);
+            top: 1.2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffd95d;
+            box-shadow: 0 0 0 6px rgba(255,215,0,.08);
+            transition: left .15s ease, top .15s ease;
+        }
+        .timeline-item-date {
+            color: #ffd95d;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-size: .95rem;
+        }
+        .timeline-item h5 {
+            margin: 0 0 .35rem;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+        .timeline-item p {
+            margin: 0;
+            color: #ccc;
+            line-height: 1.75;
+            font-size: .95rem;
+        }
+        /* Enhanced timeline styles */
+        .vertical-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 0;
+        }
+        .vertical-timeline::before {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.9), rgba(255,215,0,0.25));
+        }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 520px;
+            gap: 2rem;
+            align-items: start;
+            padding: 1.2rem 0;
+            position: relative;
+        }
+        .timeline-item:nth-child(odd) {
+            grid-template-columns: 520px 1fr;
+        }
+        .timeline-month-label {
+            font-weight: 800;
+            color: #111;
+            background: linear-gradient(90deg,#ffd95d,#ffb84d);
+            display: inline-block;
+            padding: .6rem .9rem;
+            border-radius: .6rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+        .timeline-item > div:nth-child(2) {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,215,0,0.06);
+            padding: 1.25rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(3,3,3,0.45);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .timeline-item > div:nth-child(2):hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(3,3,3,0.55);
+        }
+        .timeline-item .timeline-item-date {
+            display: inline-block;
+            background: rgba(255,215,0,0.12);
+            color: #ffd95d;
+            padding: .35rem .6rem;
+            border-radius: .6rem;
+            font-weight: 800;
+            margin-bottom: .6rem;
+        }
+        @media (max-width: 991px) {
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .timeline-item:nth-child(odd) { grid-template-columns: 1fr; }
+            .vertical-timeline::before { left: 20px; transform: none; }
+            .timeline-item { padding-left: 3rem; }
+            .timeline-item::before { left: 12px; top: .9rem; }
+            .timeline-item > div:nth-child(2) { margin-left: 0; }
+        }
+        @media (min-width: 1200px) {
+            .vertical-timeline { max-width: 1100px; }
+            .timeline-item { gap: 3rem; }
+            .timeline-item:nth-child(odd) { grid-template-columns: 560px 1fr; }
+            .timeline-item { grid-template-columns: 1fr 560px; }
+            .timeline-item > div:nth-child(2) { padding: 1.5rem 2rem; }
+            .timeline-item::before { top: 1.3rem; box-shadow: 0 0 0 8px rgba(255,215,0,0.08); }
+        }
+        
+        .final-cta {
+            background: #080808;
+            border-top: 1px solid rgba(255,215,0,.12);
+            border-bottom: 1px solid rgba(255,215,0,.12);
+            padding: 3.5rem 0;
+        }
+        .final-cta h2 {
+            font-size: 2.75rem;
+            margin-bottom: 1rem;
+        }
+        .final-cta p {
+            max-width: 700px;
+            color: #ddd;
+            margin: 0 auto 1.75rem;
+        }
+        .final-cta .btn {
+            min-width: 180px;
+        }
+        @media (max-width: 991px) {
+            .featured-event-banner {
+                margin-top: 0;
+                padding: 2.5rem 1.5rem;
+            }
+            .featured-event-banner h2 {
+                font-size: 2.5rem;
+            }
+            .events-hero {
+                padding: 70px 0 50px;
+            }
+            .events-hero .hero-copy h1 {
+                font-size: 3rem;
+            }
+            .vertical-timeline {
+                padding-left: 1rem;
+            }
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+            .timeline-item::before {
+                left: 14px;
+                top: 0.9rem;
+            }
+        }
+        @media (max-width: 575px) {
+            .events-hero {
+                min-height: 55vh;
+                padding: 70px 0 50px;
+            }
+            .events-hero .hero-copy h1 {
+                font-size: 2.35rem;
+            }
+            .featured-event-banner h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-        <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-gold">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-gold d-flex align-items-center" href="../index.html">
-                <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                Kingdom Gathering
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../services/">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../about/">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../contact/">Connect</a></li>
-                </ul>
-                <div class="d-flex d-lg-none justify-content-center mt-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+            <!-- Premium Header -->
+    <header class="premium-header sticky-top">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="../index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                        <div class="brand-text ms-3">
+                            <h1 class="brand-name">Kingdom Gathering</h1>
+                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="d-none d-lg-flex align-items-center ms-3">
-                    <a href="../giving/" class="btn btn-gold btn-sm px-4">Give Online</a>
+                <nav class="col d-none d-lg-block">
+                    <ul class="nav justify-content-center mb-0">
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    </ul>
+                </nav>
+                <div class="col-auto d-none d-lg-block">
+                    <a href="../giving/" class="btn-cta-secondary">Give Online</a>
+                </div>
+                <div class="col-auto d-lg-none ms-auto">
+                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
                 </div>
             </div>
+            <div class="collapse" id="mobileNav">
+                <ul class="nav flex-column mt-3 text-center">
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    <li class="nav-item mt-3"><a href="../giving/" class="btn-cta-secondary">Give Online</a></li>
+                </ul>
+            </div>
         </div>
-    </nav>
-    <section class="events-hero py-5 position-relative overflow-hidden">
-        <div class="events-overlay"></div>
+    </header>
+    <section class="events-hero position-relative overflow-hidden">
         <div class="container position-relative z-2">
             <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h1 class="display-4 fw-bold text-white mb-3">Events & Gatherings</h1>
-                    <p class="lead text-white mb-4">Join us for inspiring conferences, uplifting worship, and community-building experiences led by Kingdom Gathering Church.</p>
-                    <a href="#upcoming" class="btn btn-gold btn-lg">See Upcoming Events</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="upcoming" class="py-5 bg-light">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h2 class="section-title mb-3">Upcoming Events</h2>
-                    <p class="text-muted">See the next major gatherings and seasons for Kingdom Gathering Church in 2026.</p>
-                </div>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-gold text-dark">JUL</span>
-                                <h3 class="text-gold mb-2">Marriage Enrichment 1</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>July 2026</p>
-                            </div>
-                            <i class="fas fa-heart text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A powerful season for couples to grow in grace, communication, and spiritual unity.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">View Calendar</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-dark text-gold">SEP</span>
-                                <h3 class="text-gold mb-2">Kingdom Conference</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>2-5 September 2026</p>
-                            </div>
-                            <i class="fas fa-church text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A four-day gathering for worship, prophetic ministry, leadership training, and breakthrough prayer.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">Reserve Your Seat</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-gold text-dark">OCT</span>
-                                <h3 class="text-gold mb-2">Maun Crusade</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>October 2026</p>
-                            </div>
-                            <i class="fas fa-fire text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A city-wide outreach and crusade event carrying the message of hope and kingdom power.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">Join the Movement</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-dark text-gold">SEP</span>
-                                <h3 class="text-gold mb-2">Yom Kippur Gathering</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>21 September 2026</p>
-                            </div>
-                            <i class="fas fa-star-of-david text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A sacred day of repentance, prayer, and renewed commitment to God’s purposes.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">See Details</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-gold text-dark">NOV</span>
-                                <h3 class="text-gold mb-2">Serowe Crusade</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>1-3 November 2026</p>
-                            </div>
-                            <i class="fas fa-map-marker-alt text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A powerful outreach campaign in Serowe to expand our Kingdom impact and community care.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">Get Involved</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="event-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <span class="event-badge bg-dark text-gold">DEC</span>
-                                <h3 class="text-gold mb-2">Celebration Day</h3>
-                                <p class="text-muted mb-1"><i class="fas fa-calendar-alt me-2"></i>31 December 2026</p>
-                            </div>
-                            <i class="fas fa-fireworks text-gold fa-2x"></i>
-                        </div>
-                        <p class="text-contrast mb-4">A joyful celebration of God’s faithfulness and the milestones of our church family this year.</p>
-                        <a href="#calendar" class="btn btn-gold btn-sm">Celebrate With Us</a>
+                <div class="col-lg-8 text-center hero-copy">
+                    <h1 class="fw-bold text-white mb-4">Events & Gatherings</h1>
+                    <p>Encounter God. Build community. Move with purpose.</p>
+                    <div class="d-flex justify-content-center flex-column flex-sm-row gap-3">
+                        <a href="#upcoming" class="btn btn-gold btn-lg">View Upcoming Events</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="calendar" class="py-5 bg-dark text-white">
+    <section id="featured" class="featured-event-banner container-fluid px-0">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h2 class="section-title-dark mb-3">2026 Event Timeline</h2>
-                    <p class="text-contrast">A beautiful timeline of our year, showing the major celebrations, trainings, crusades, and holy days.</p>
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <span class="badge-date">July 2026</span>
+                    <h2>Maun Crusade • July 2026</h2>
+                    <p>Step into an atmosphere of worship, revival, and Kingdom transformation. Our crusade is a time of encountering God's presence, receiving His Word, and being equipped to impact lives and communities with the Gospel of Jesus Christ.</p>
+                    <a href="../contact/" class="btn btn-gold btn-lg">Reserve Your Seat</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="event-timeline">
+    <section class="upcoming-events" aria-labelledby="upcoming-events-title">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 id="upcoming-events-title" class="section-title mb-3">Upcoming Events</h2>
+                    <p class="text-muted">Minimal, elegant event rows make it easy to scan the next phases of the year.</p>
+                </div>
+            </div>
+            <div class="upcoming-list">
+                <div class="upcoming-row">
+                    <div class="upcoming-date">July 14</div>
+                    <div class="upcoming-details">
+                        <h3>Leadership Workshop</h3>
+                        <p>A focused training session for leaders and ministry teams, designed to grow vision, strategy, and Kingdom leadership across Botswana.</p>
+                    </div>
+                    <div class="upcoming-action">
+                        <a href="../contact/" class="btn btn-gold">Reserve Your Seat</a>
+                    </div>
+                </div>
+                <div class="upcoming-row">
+                    <div class="upcoming-date">September</div>
+                    <div class="upcoming-details">
+                        <h3>Yom Kippur Gathering</h3>
+                        <p>A sacred time of repentance, fasting, and devotion.</p>
+                    </div>
+                    <div class="upcoming-action">
+                        <a href="../contact/" class="btn btn-gold">Learn More</a>
+                    </div>
+                </div>
+                <div class="upcoming-row">
+                    <div class="upcoming-date">October</div>
+                    <div class="upcoming-details">
+                        <h3>Serowe Crusade</h3>
+                        <p>A powerful outreach campaign in Serowe to expand our Kingdom impact and community care.</p>
+                    </div>
+                    <div class="upcoming-action">
+                        <a href="../contact/" class="btn btn-gold">Get Involved</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="timeline-section text-white">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="section-title-dark mb-3">2026 Timeline</h2>
+                    <p class="text-contrast">A clean vertical view of the year's most meaningful gatherings.</p>
+                </div>
+            </div>
+            <div class="vertical-timeline">
                 <div class="timeline-item">
-                    <div class="timeline-date">Jan</div>
-                    <div class="timeline-content">
+                    <div class="timeline-month-label">January</div>
+                    <div>
+                        <div class="timeline-item-date">Jan</div>
                         <h5>Marriage Enrichment 1</h5>
-                        <p>Start the year with biblical renewal and unity for couples.</p>
+                        <p>Start the year with renewal and unity for couples.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">20-22 Jul</div>
-                    <div class="timeline-content">
+                    <div class="timeline-month-label">April</div>
+                    <div>
+                        <div class="timeline-item-date">Apr</div>
                         <h5>Leadership Training</h5>
                         <p>Practical workshops and strategy sessions for church leaders.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">11 Aug</div>
-                    <div class="timeline-content">
-                        <h5>Moitshephi Mataboge’s Birthday</h5>
-                        <p>A day of gratitude and celebration for our spiritual mother.</p>
+                    <div class="timeline-month-label">July</div>
+                    <div>
+                        <div class="timeline-item-date">14 Jul</div>
+                        <h5>Leadership Workshop</h5>
+                        <p>A leadership training event equipping pastors, ministry leaders, and volunteers for the next season.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">2 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Conference Opening Night</h5>
-                        <p>Night prayer and spiritual preparation for the conference.</p>
+                    <div class="timeline-month-label">September</div>
+                    <div>
+                        <div class="timeline-item-date">2-5 Sep</div>
+                        <h5>Kingdom Conference</h5>
+                        <p>Four days of worship, prophetic ministry, and powerful prayer.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">3 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Passover</h5>
-                        <p>A sacred remembrance and worship gathering.</p>
+                    <div class="timeline-month-label"></div>
+                    <div>
+                        <div class="timeline-item-date">21 Sep</div>
+                        <h5>Yom Kippur Gathering</h5>
+                        <p>A sacred time of repentance, fasting, and devotion.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">4 Sep</div>
-                    <div class="timeline-content">
-                        <h5>AGM</h5>
-                        <p>Annual General Meeting for church leadership and members.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">5 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Conference Close</h5>
-                        <p>Final worship service and celebration of God’s move.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">6 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Apostle Nonofo W. Mataboge’s Birthday</h5>
-                        <p>A joyful celebration of our Apostle’s life and leadership.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">14 Nov</div>
-                    <div class="timeline-content">
-                        <h5>Accession Day</h5>
-                        <p>Commemorating a key day of our nation and church prayer.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">July</div>
-                    <div class="timeline-content">
-                        <h5>Maun Crusade</h5>
-                        <p>A powerful outreach event bringing revival to our city.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">21 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Yom Kippur</h5>
-                        <p>A sacred day of repentance, fasting, and renewed devotion.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">September</div>
-                    <div class="timeline-content">
-                        <h5>Marriage Enrichment 2</h5>
-                        <p>A second season for couples to grow deeper in fellowship.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">30 Sep</div>
-                    <div class="timeline-content">
-                        <h5>Independence Day</h5>
-                        <p>Honoring our nation with worship and community prayer.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">1-3 Oct</div>
-                    <div class="timeline-content">
+                    <div class="timeline-month-label">October</div>
+                    <div>
+                        <div class="timeline-item-date">1-3 Oct</div>
                         <h5>Serowe Crusade</h5>
                         <p>A regional outreach campaign bringing spiritual refreshment to Serowe.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-date">October</div>
-                    <div class="timeline-content">
-                        <h5>Apostle International Trip</h5>
-                        <p>International ministry travel and global Kingdom engagement.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">31 Dec</div>
-                    <div class="timeline-content">
+                    <div class="timeline-month-label">December</div>
+                    <div>
+                        <div class="timeline-item-date">31 Dec</div>
                         <h5>Celebration Day</h5>
-                        <p>Ending the year with thanksgiving, praise, and community celebration.</p>
+                        <p>End the year in praise, thanksgiving, and community celebration.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-        <!-- Footer -->
-    <footer class="bg-darker text-white py-5 border-top border-gold">
+
+    <section class="final-cta">
+        <div class="container text-center">
+            <h2 class="fw-bold text-white">Don’t Miss What God Is Doing</h2>
+            <p>Stay connected with upcoming gatherings, worship nights, outreach moments, and ministry events.</p>
+            <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row">
+                <a href="../contact/" class="btn btn-outline-gold btn-lg">Contact Us</a>
+                <a href="https://facebook.com/share/1AbP9GkEg/" class="btn btn-gold btn-lg">Follow Us Online</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
         <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-3 col-md-6">
-                    <a class="navbar-brand fw-bold text-gold d-flex align-items-center mb-3" href="../index.html">
-                        <img src="../images/logo.png" alt="Kingdom Gathering Logo" class="me-2 logo-img">
-                        Kingdom Gathering
+            <div class="row gy-5">
+                <div class="col-lg-4 footer-brand">
+                    <a href="../index.html" class="d-flex align-items-center text-decoration-none text-white mb-3">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="footer-logo">
+                        <div class="ms-3">
+                            <p class="footer-tagline mb-2">Kingdom Gathering Church</p>
+                            <h2 class="footer-brand-name">Kingdom Gathering</h2>
+                        </div>
                     </a>
-                    <p class="text-contrast mb-0">Raising disciples, transforming lives, and advancing God�s Kingdom through faith, leadership, and community.</p>
+                    <p class="footer-mission">Raising disciples, transforming lives, and advancing God’s Kingdom through faith, leadership, and community.</p>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="../ministries/" class="text-contrast text-decoration-none">Ministries</a></li>
-                        <li class="mb-2"><a href="../services/" class="text-contrast text-decoration-none">Services</a></li>
-                        <li class="mb-2"><a href="../events/" class="text-contrast text-decoration-none">Events</a></li>
-                        <li class="mb-2"><a href="../about/" class="text-contrast text-decoration-none">About</a></li>
-                        <li class="mb-2"><a href="../contact/" class="text-contrast text-decoration-none">Connect</a></li>
+                <div class="col-lg-2">
+                    <h3 class="footer-column-title">Explore</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../ministries/" class="footer-link">Ministries</a></li>
+                        <li><a href="../services/" class="footer-link">Services</a></li>
+                        <li><a href="../events/" class="footer-link">Events</a></li>
+                        <li><a href="../about/" class="footer-link">About Us</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Service Times</h6>
-                    <p class="mb-2"><strong>Sunday Worship</strong><br><span class="text-contrast">09:00 AM - 12:00 PM</span></p>
-                    <p class="mb-2"><strong>Midweek Cell Groups</strong><br><span class="text-contrast">6:00 PM - 8:30 PM</span></p>
-                    <p class="mb-0"><strong>Prayer & Fellowship</strong><br><span class="text-contrast">Every week in Maun</span></p>
+                <div class="col-lg-3">
+                    <h3 class="footer-column-title">Connect</h3>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../contact/" class="footer-link">Contact</a></li>
+                        <li><a href="../giving/" class="footer-link">Give</a></li>
+                        <li><a href="../gaborone/" class="footer-link">Gaborone Branch</a></li>
+                    </ul>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h6 class="text-gold fw-bold mb-3">Contact</h6>
-                    <p class="mb-2"><i class="fas fa-map-marker-alt text-gold me-2"></i><span class="text-contrast">Maun, New Disaneng Farms</span></p>
-                    <p class="mb-2"><i class="fas fa-envelope text-gold me-2"></i><a href="mailto:kingdom18gathering@gmail.com" class="text-contrast text-decoration-none">kingdom18gathering@gmail.com</a></p>
-                    <p class="mb-3"><i class="fas fa-phone text-gold me-2"></i><a href="tel:+26776928744" class="text-contrast text-decoration-none">+267 769 28744</a></p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/share/1AbP9GkEg/" class="text-gold me-3 fs-4" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="text-gold me-3 fs-4" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="text-gold fs-4" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-3 footer-service-time">
+                    <h3 class="footer-column-title">Service Times</h3>
+                    <div class="mb-3">
+                        <h6>Sunday Worship</h6>
+                        <p class="mb-0">9:00 AM – 12:00 PM</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Midweek Cell Groups</h6>
+                        <p class="mb-0">6:00 PM – 8:30 PM</p>
+                    </div>
+                    <div>
+                        <h6>Prayer & Fellowship</h6>
+                        <p class="mb-0">Every week in Maun</p>
                     </div>
                 </div>
             </div>
-            <hr class="border-gold my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-contrast mb-0 small">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-contrast mb-0 small">A spiritual home for leaders and community.</p>
-                </div>
+            <div class="row mt-5 pt-4 border-top border-light border-opacity-10">
+                <div class="col text-center text-muted small footer-divider">&copy; 2026 Kingdom Gathering Church. All rights reserved.</div>
             </div>
         </div>
     </footer>
@@ -336,5 +594,8 @@
     <script src="../js/main.js"></script>
 </body>
 </html>
+
+
+
 
 
