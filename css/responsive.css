@@ -77,9 +77,9 @@
 }
 
 @media (max-width: 575px) {
-    .hero-section {
-        min-height: 80vh;
-        padding: 1.25rem 0;
+    #home.hero-section {
+        min-height: 65vh;
+        padding: 40px 0 20px;
     }
 
     .hero-section h1 {

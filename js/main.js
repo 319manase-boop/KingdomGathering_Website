@@ -50,15 +50,17 @@ function initNavigation() {
     // Enhanced scroll effect to navbar
     window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-
+        
         if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.6)';
-            navbar.style.backdropFilter = 'blur(20px) saturate(180%)';
-            navbar.style.background = 'rgba(26, 26, 26, 0.95)';
+            navbar.classList.add('navbar-scrolled');
+            navbar.style.background = 'rgba(12, 12, 12, 0.95)';
+            navbar.style.boxShadow = '0 18px 40px rgba(0, 0, 0, 0.22)';
+            navbar.style.backdropFilter = 'blur(10px)';
         } else {
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.4)';
-            navbar.style.background = 'linear-gradient(135deg, var(--primary-dark) 0%, var(--dark-bg) 50%, var(--primary-dark) 100%)';
+            navbar.classList.remove('navbar-scrolled');
+            navbar.style.background = 'rgba(12, 12, 12, 0.88)';
+            navbar.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.12)';
+            navbar.style.backdropFilter = 'blur(8px)';
         }
     });
 }
