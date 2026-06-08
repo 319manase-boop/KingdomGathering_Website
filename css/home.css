@@ -863,3 +863,28 @@
         display: none;
     }
 }
+
+/* Mobile hero button visibility fix */
+@media (max-width: 768px) {
+    #home .btn-primary-large,
+    #home .btn-primary-large:visited,
+    #home .btn-primary-large:hover,
+    #home .btn-primary-large:focus,
+    #home .btn-primary-large:active {
+        background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+        color: #050505 !important;
+        font-weight: 900 !important;
+        text-shadow: none !important;
+        opacity: 1 !important;
+    }
+
+    #home .btn-secondary-large,
+    #home .btn-secondary-large:visited,
+    #home .btn-secondary-large:hover,
+    #home .btn-secondary-large:focus,
+    #home .btn-secondary-large:active {
+        color: #ffffff !important;
+        border-color: #d4af37 !important;
+        opacity: 1 !important;
+    }
+}
