@@ -154,6 +154,23 @@
             border-radius: 1rem;
             padding: .95rem 1.3rem;
         }
+        @media (max-width: 767px) {
+            .upcoming-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .upcoming-date {
+                min-width: auto;
+                text-align: left;
+            }
+            .upcoming-action {
+                text-align: left;
+            }
+            .upcoming-action .btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
         .timeline-section {
             background: #050505;
             padding-top: 3.5rem;
