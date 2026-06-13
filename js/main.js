@@ -5,16 +5,49 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
     initNavigation();
-    initContactForm();
-    initCounselingForm();
+    // initContactForm();
+    // initCounselingForm();
     initScrollAnimations();
     initSmoothScroll();
+    initAnimateOnScroll();
     initParticleEffects();
     initHeroAnimations();
     initInteractiveElements();
+    initContactForms();
+    initImpactCounters();
     initScrollProgress();
     initPremiumHeader();
+    initWhatsAppFab();
 });
+
+function initImpactCounters() {
+    const counters = document.querySelectorAll('.impact-value');
+    if (!counters.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const counter = entry.target;
+            const target = Number(counter.getAttribute('data-target')) || 0;
+            const suffix = counter.getAttribute('data-suffix') || '';
+            let current = 0;
+            const increment = Math.max(1, Math.floor(target / 80));
+            const update = () => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target + suffix;
+                } else {
+                    counter.textContent = current + suffix;
+                    requestAnimationFrame(update);
+                }
+            };
+            update();
+            obs.unobserve(counter);
+        });
+    }, { threshold: 0.4 });
+
+    counters.forEach(counter => observer.observe(counter));
+}
 
 /* =====================================================
    ENHANCED NAVIGATION FUNCTIONS
@@ -282,70 +315,23 @@ function initNavigation() {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // Close mobile menu when a link is clicked
-            if (navbarCollapse.classList.contains('show')) {
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                 const closeButton = document.querySelector('.navbar-toggler');
-                closeButton.click();
+                if (closeButton) closeButton.click();
             }
         });
     });
 
-    // Add scroll effect to navbar
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
         if (window.scrollY > 50) {
             navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
         } else {
             navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
         }
     });
-}
-
-/* =====================================================
-   CONTACT FORM FUNCTIONS
-   ===================================================== */
-
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Get form values
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-
-            // Validate form
-            if (!validateForm(name, email, subject, message)) {
-                return;
-            }
-
-            // Simulate sending email
-            const originalText = this.querySelector('button[type="submit"]').textContent;
-            const submitBtn = this.querySelector('button[type="submit"]');
-            
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.classList.add('disabled');
-
-            // Simulate API call (in real scenario, this would send to a backend)
-            setTimeout(() => {
-                // Show success message
-                showAlert('success', 'Message Sent!', 'Thank you for contacting us. We will get back to you soon.');
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Restore button
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-                submitBtn.classList.remove('disabled');
-            }, 2000);
-        });
-    }
 }
 
 /* =====================================================
@@ -482,23 +468,133 @@ function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            
-            // Skip if href is just '#'
-            if (href === '#') {
-                return;
-            }
 
+            if (!href || href === '#') return;
             e.preventDefault();
-            
+
+            // If link contains a focus target attribute (data-focus) handled by contact.js
             const target = document.querySelector(href);
             if (target) {
-                const offsetTop = target.offsetTop - 80; // Account for sticky navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                const offset = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - 80);
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+                // try to focus first input inside target
+                const firstInput = target.querySelector('input, textarea, select');
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus({ preventScroll: true }), 500);
+                }
             }
         });
+    });
+}
+
+/* =====================================================
+   ANIMATIONS: Intersection Observer for data-animate
+   ===================================================== */
+function initAnimateOnScroll() {
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => {
+        el.classList.add('fade-in');
+        const delay = Number(el.getAttribute('data-delay')) || 0;
+        if (delay) el.style.transitionDelay = `${delay}ms`;
+        observer.observe(el);
+    });
+}
+
+/* =====================================================
+   Counseling + Prayer form handlers (Supabase)
+   ===================================================== */
+function initContactForms() {
+    // Prayer form: use existing prayer.js if present; ensure spinner behavior
+    const prayerForm = document.getElementById('prayerForm');
+    if (prayerForm) {
+        prayerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('prayerSubmit');
+            const spinner = submitBtn.querySelector('.btn-spinner');
+            const text = submitBtn.querySelector('.btn-text');
+            submitBtn.disabled = true;
+            spinner.classList.remove('d-none');
+            try {
+                const name = document.getElementById('prayerName').value.trim();
+                const email = document.getElementById('prayerEmail').value.trim() || null;
+                const phone = document.getElementById('prayerPhone').value.trim() || null;
+                const message = document.getElementById('prayerMessage').value.trim();
+                const anonymous = document.getElementById('prayerAnonymous').checked;
+
+                const payload = { name, email: anonymous ? null : email, phone: anonymous ? null : phone, message, status: 'new', answered: false };
+                const { error } = await supabaseClient.from('prayer_requests').insert([payload]);
+                if (error) throw error;
+
+                // Success UI
+                alert('Prayer Request Received\n\nThank you for trusting us.\n\nOur intercessory team will stand with you in prayer.\n\nGod bless you.');
+                prayerForm.reset();
+            } catch (err) {
+                console.error(err);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                spinner.classList.add('d-none');
+            }
+        });
+    }
+
+    // Counseling form
+    const counselingForm = document.getElementById('counselingForm');
+    if (counselingForm) {
+        counselingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('counselSubmit');
+            const spinner = submitBtn.querySelector('.btn-spinner');
+            submitBtn.disabled = true; spinner.classList.remove('d-none');
+            try {
+                const name = document.getElementById('counselName').value.trim();
+                const phone = document.getElementById('counselPhone').value.trim();
+                const email = document.getElementById('counselEmail').value.trim();
+                const preferred = document.getElementById('counselPreferred').value;
+                const message = document.getElementById('counselMessage').value.trim();
+
+                const { error } = await supabaseClient.from('counseling_requests').insert([{
+                    name, phone, email, preferred_contact: preferred, message, status: 'new'
+                }]);
+
+                if (error) throw error;
+                alert('Counseling request received. We will contact you soon.');
+                counselingForm.reset();
+            } catch (err) {
+                console.error(err);
+                alert('Unable to submit counseling request. Please try again later.');
+            } finally {
+                submitBtn.disabled = false; spinner.classList.add('d-none');
+            }
+        });
+    }
+}
+
+/* =====================================================
+   WhatsApp Floating Button
+   ===================================================== */
+function initWhatsAppFab() {
+    const toggle = document.getElementById('whatsappToggle');
+    const menu = document.getElementById('whatsappMenu');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => menu.classList.toggle('d-none'));
+    menu.addEventListener('click', (e) => {
+        const a = e.target.closest('a[data-wa]');
+        if (!a) return;
+        e.preventDefault();
+        const text = encodeURIComponent(a.getAttribute('data-wa'));
+        const phone = '26775919290';
+        const url = `https://wa.me/${phone}?text=${text}`;
+        window.open(url, '_blank');
     });
 }
 
@@ -654,3 +750,68 @@ function initPremiumHeader() {
 }
 
 console.log('Kingdom Gathering Church Website - Initialized Successfully');
+
+const givingForm = document.getElementById("givingForm");
+
+if (givingForm) {
+    givingForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim() || null;
+        const amount = Number(document.getElementById("amount").value);
+        const givingType = document.getElementById("givingType").value;
+        const message = document.getElementById("message").value.trim() || null;
+
+        const { error } = await supabaseClient
+            .from("giving_records")
+            .insert([
+                {
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    phone: phone,
+                    amount: amount,
+                    currency: "BWP",
+                    giving_type: givingType,
+                    message: message,
+                    payment_status: "pending",
+                    payment_reference: null,
+                    proof_path: null,
+                    donor_id: null
+                }
+            ]);
+
+        if (error) {
+            console.error(error);
+            alert("Something went wrong. Please try again.");
+        } else {
+            // Hide the form and show payment instructions
+            const formEl = document.getElementById('givingForm');
+            const instructions = document.getElementById('paymentInstructions');
+            if (formEl) formEl.classList.add('d-none');
+            if (instructions) {
+                // optionally fill dynamic references
+                const statusEl = document.getElementById('paymentStatus');
+                if (statusEl) statusEl.textContent = 'Pending Verification';
+                instructions.classList.remove('d-none');
+            }
+
+            // Reset the form fields (keep hidden)
+            if (formEl) formEl.reset();
+
+            // Hook up the submit another gift button
+            const againBtn = document.getElementById('submitAnotherGift');
+            if (againBtn) {
+                againBtn.addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    if (instructions) instructions.classList.add('d-none');
+                    if (formEl) formEl.classList.remove('d-none');
+                    formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            }
+        }
+    });
+}

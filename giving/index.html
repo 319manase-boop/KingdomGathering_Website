@@ -258,6 +258,50 @@
                                 </div>
                             </div>
                         </form>
+                        <!-- Payment instructions (shown after successful submission) -->
+                        <div id="paymentInstructions" class="payment-instructions-card d-none p-4 rounded-4 mt-4" role="status" aria-live="polite">
+                            <div class="payment-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+                                <div>
+                                    <span class="badge bg-gold text-dark mb-2">Next Step</span>
+                                    <h4 class="text-gold mb-2">Thank you for your generosity.</h4>
+                                    <p class="mb-0 text-muted">Your gift record has been received. Complete payment using the details below.</p>
+                                </div>
+                                <div class="payment-status-pill text-uppercase">Pending Verification</div>
+                            </div>
+
+                            <div class="payment-grid row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="payment-box p-3 rounded-4">
+                                        <h6 class="mb-3">Bank Transfer</h6>
+                                        <p class="mb-1"><strong>Bank:</strong> Stanbic Bank</p>
+                                        <p class="mb-1"><strong>Account Name:</strong> Kingdom Gathering</p>
+                                        <p class="mb-1"><strong>Account Number:</strong> 9060003234164</p>
+                                        <p class="mb-1"><strong>Branch Code:</strong> 064767</p>
+                                        <p class="mb-0"><strong>Branch:</strong> Maun</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="payment-box p-3 rounded-4">
+                                        <h6 class="mb-3">Mobile Money</h6>
+                                        <p class="mb-0">+267 759 19290</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-note p-3 rounded-4 mb-4">
+                                <p class="mb-2 fw-semibold">Important</p>
+                                <p class="mb-0">After payment, send proof of payment to WhatsApp: <a href="https://wa.me/26775919290" class="text-gold text-decoration-none">+267 759 19290</a></p>
+                            </div>
+
+                            <div class="payment-footnote mb-4">
+                                <p class="mb-1 text-muted">Reference</p>
+                                <p class="mb-0 fw-semibold">Use your name + giving type</p>
+                            </div>
+
+                            <div class="d-grid">
+                                <button id="submitAnotherGift" class="btn btn-outline-gold">Submit Another Gift</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -450,7 +494,9 @@
 </body>
 </html>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabaseClient.js"></script>
+<script src="../js/main.js"></script>
 
 
 

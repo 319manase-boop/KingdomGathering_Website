@@ -557,6 +557,63 @@ section {
     padding: 1rem 2.5rem;
 }
 
+.payment-instructions-card {
+    background: linear-gradient(180deg, rgba(10,10,10,0.99), rgba(18,18,18,0.95));
+    border: 1px solid rgba(255, 209, 93, 0.22);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
+    color: #f7f1dd;
+}
+
+.payment-instructions-card h4,
+.payment-instructions-card .payment-header .badge {
+    color: #ffd95d;
+}
+
+.payment-instructions-card p,
+.payment-instructions-card .payment-box p,
+.payment-instructions-card .payment-footnote p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.payment-instructions-card .payment-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 209, 93, 0.16);
+}
+
+.payment-instructions-card .payment-status-pill {
+    background: rgba(255, 209, 93, 0.18);
+    color: #ffd95d;
+    border: 1px solid rgba(255, 209, 93, 0.35);
+    padding: 0.8rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 999px;
+    box-shadow: 0 0 18px rgba(255, 209, 93, 0.18);
+    text-transform: uppercase;
+}
+
+.payment-instructions-card .payment-note {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 209, 93, 0.12);
+}
+
+.payment-instructions-card a {
+    color: #ffd95d;
+}
+
+.payment-instructions-card a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.payment-instructions-card .payment-footnote {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.payment-instructions-card .payment-footnote .fw-semibold {
+    color: #ffffff;
+}
+
 .giving-trust-card {
     background: #090909;
     border: 1px solid rgba(212, 175, 55, 0.1);
@@ -665,6 +722,49 @@ section {
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.skeleton-card {
+    min-height: 420px;
+    border-radius: 18px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-block {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.skeleton-card .skeleton-image {
+    height: 220px;
+    margin-bottom: 1rem;
+}
+
+.skeleton-card .skeleton-line {
+    height: 16px;
+    margin-bottom: 0.75rem;
+}
+
+.skeleton-card .skeleton-line.short {
+    width: 55%;
+}
+
+.skeleton-card .skeleton-line.medium {
+    width: 80%;
+}
+
+.skeleton-card .skeleton-line.full {
+    width: 100%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -500px 0;
+    }
+    100% {
+        background-position: 500px 0;
+    }
 }
 
 .service-time-card,
