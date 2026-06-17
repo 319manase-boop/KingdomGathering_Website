@@ -58,7 +58,7 @@ for path in files:
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link {home_active}" href="{prefix}index.html">Home</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {about_active}" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+                        <a class="nav-link dropdown-toggle {about_active}" href="javascript:void(0);" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
                         <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
                             <li><a class="dropdown-item {ourchurch_active}" href="{prefix}about/"><i class="fas fa-church text-gold me-2"></i>Our Church</a></li>
                             <li><a class="dropdown-item {leadership_active}" href="{prefix}leadership/"><i class="fas fa-user-tie text-gold me-2"></i>Leadership</a></li>
@@ -68,7 +68,7 @@ for path in files:
                     <li class="nav-item"><a class="nav-link {services_active}" href="{prefix}services/">Services</a></li>
                     <li class="nav-item"><a class="nav-link {events_active}" href="{prefix}events/">Events</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {more_active}" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                        <a class="nav-link dropdown-toggle {more_active}" href="javascript:void(0);" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
                         <ul class="dropdown-menu" aria-labelledby="moreDropdown">
                             <li><a class="dropdown-item {blog_active}" href="{prefix}blog/"><i class="fas fa-newspaper text-gold me-2"></i>Blog</a></li>
                             <li><a class="dropdown-item {resources_active}" href="{prefix}resources/"><i class="fas fa-book-open text-gold me-2"></i>Resources</a></li>

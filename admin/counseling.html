@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Counseling Requests | Kingdom Gathering Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+</head>
+<body class="admin-mode">
+    <div class="dashboard-shell">
+        <aside class="admin-sidebar d-none d-lg-block">
+            <div class="logo-section">
+                <img src="../images/logo.png" alt="Kingdom Gathering">
+                <p class="org-name mb-0">Kingdom Gathering</p>
+                <p class="org-subtitle mb-0">Admin Portal</p>
+            </div>
+            <nav class="nav flex-column gap-2">
+                <a class="nav-link" href="dashboard.html">📊 Dashboard</a>
+                <a class="nav-link" href="prayer.html">🙏 Prayer Requests</a>
+                <a class="nav-link" href="contact.html">💬 Contact Messages</a>
+                <a class="nav-link active" href="counseling.html">❤️ Counseling</a>
+                <a class="nav-link" href="giving.html">💝 Giving</a>
+                <a class="nav-link" href="blogs.html">📝 Blogs</a>
+                <a class="nav-link" href="events.html">📅 Events</a>
+                <a class="nav-link" href="media.html">🎥 Media</a>
+                <a class="nav-link" href="users.html">👥 Users</a>
+                <a class="nav-link" href="roles.html">🔐 Roles</a>
+                <a class="nav-link" href="settings.html">⚙️ Settings</a>
+                <a class="nav-link" href="javascript:void(0);" id="sidebarLogout">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <a href="../index.html" class="admin-brand">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                        <span>Counseling Requests</span>
+                    </a>
+                    <p class="mb-0 text-muted">Track and manage counseling requests from your community.</p>
+                </div>
+                <div class="admin-header-actions">
+                    <span class="user-pill" id="adminUserEmail">user@example.com</span>
+                    <button id="logoutButton" class="logout-btn">Logout</button>
+                </div>
+            </header>
+
+            <section class="admin-content p-4">
+                <div id="counselingAlertContainer"></div>
+
+                <div class="d-flex gap-3 mb-3 flex-column flex-md-row">
+                    <input id="counselingSearch" class="form-control" placeholder="Search by name, email, or phone">
+                    <select id="counselingStatusFilter" class="form-select" style="max-width: 220px;">
+                        <option value="">All Statuses</option>
+                        <option value="New">New</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+
+                <div class="admin-card p-3">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-muted small">
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Preferred Contact</th>
+                                    <th>Message Preview</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="counselingTableBody">
+                                <tr><td colspan="8" class="text-center py-5">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="counselingModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content bg-dark text-light">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title" id="counselingModalLabel">Counseling Request</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="counselingModalBody"></div>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="counselingMarkContacted" type="button" class="btn btn-warning text-dark">Mark As Contacted</button>
+                                <button id="counselingMarkCompleted" type="button" class="btn btn-info text-dark">Mark As Completed</button>
+                                <button id="counselingArchive" type="button" class="btn btn-outline-secondary">Archive</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="../js/admin/permissions.js"></script>
+    <script src="../js/admin/counseling.js"></script>
+</body>
+</html>

@@ -16,14 +16,7 @@ const recentContactList = document.getElementById('recentContactList');
 const recentCounselingList = document.getElementById('recentCounselingList');
 
 async function protectDashboard() {
-    const { data, error } = await supabaseClient.auth.getSession();
-
-    if (error || !data?.session) {
-        window.location.href = './login.html';
-        return null;
-    }
-
-    return data.session;
+    return await checkPagePermission('dashboard');
 }
 
 function createListItem(title, subtitle, status, date) {

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact Messages | Kingdom Gathering Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+</head>
+<body class="admin-mode">
+    <div class="dashboard-shell">
+        <aside class="admin-sidebar d-none d-lg-flex flex-column">
+            <div class="logo-section">
+                <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                <p class="org-name">Kingdom Gathering</p>
+                <p class="org-subtitle">Admin Portal</p>
+            </div>
+            <div class="nav-section-label">Navigation</div>
+            <nav class="nav flex-column gap-1">
+                <a class="nav-link" href="dashboard.html">📊 Dashboard</a>
+                <a class="nav-link" href="prayer.html">🙏 Prayer Requests</a>
+                <a class="nav-link active" href="contact.html">💬 Contact Messages</a>
+                <a class="nav-link" href="counseling.html">👥 Counseling</a>
+                <a class="nav-link" href="giving.html">💰 Giving</a>
+                <a class="nav-link" href="blogs.html">📝 Blogs</a>
+                <a class="nav-link" href="events.html">📅 Events</a>
+                <a class="nav-link" href="media.html">📸 Media</a>
+            </nav>
+            <div class="nav-section-label mt-auto">Account</div>
+            <nav class="nav flex-column gap-1 mt-3">
+                <a class="nav-link" href="users.html">👤 Users</a>
+                <a class="nav-link" href="roles.html">🔐 Roles</a>
+                <a class="nav-link" href="settings.html">⚙️ Settings</a>
+                <a class="nav-link" href="javascript:void(0);" id="sidebarLogout">🚪 Logout</a>
+            </nav>
+        </aside>
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <a href="../index.html" class="admin-brand">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                        <div>
+                            <span>Contact Messages</span>
+                            <p>Review and manage messages submitted through your website</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="admin-header-actions">
+                    <span class="user-pill" id="adminUserEmail">user@example.com</span>
+                    <button id="logoutButton" class="logout-btn">Logout</button>
+                </div>
+            </header>
+            <div class="admin-content">
+                <div id="contactAlertContainer"></div>
+
+                <h1 class="page-title">Contact Messages</h1>
+                <p class="page-description">Manage messages sent through your contact forms</p>
+
+                <!-- Statistics -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Messages</div>
+                        <div class="stat-value" id="totalMessages">0</div>
+                        <div class="stat-change">All time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Unread</div>
+                        <div class="stat-value" id="unreadMessages">0</div>
+                        <div class="stat-change">Pending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Read</div>
+                        <div class="stat-value" id="readMessages">0</div>
+                        <div class="stat-change positive">Reviewed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Archived</div>
+                        <div class="stat-value" id="archivedMessages">0</div>
+                        <div class="stat-change">Stored</div>
+                    </div>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="action-bar">
+                    <div class="action-bar-left">
+                        <input id="contactSearch" class="search-input" placeholder="🔍 Search by name, email, or subject...">
+                        <select id="contactStatusFilter" class="filter-select">
+                            <option value="">All Statuses</option>
+                            <option value="New">New</option>
+                            <option value="Read">Read</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="action-bar-right">
+                        <button class="btn-add" id="refreshBtn">🔄 Refresh</button>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Subject</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contactTableBody">
+                                <tr><td colspan="6" class="text-center py-5"><div class="loading-spinner mx-auto mb-3"></div>Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav id="paginationContainer" class="mt-4"></nav>
+
+                <!-- Modal -->
+                <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Message Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="contactModalBody"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                <button id="contactMarkRead" type="button" class="btn btn-outline-gold btn-sm">✓ Mark Read</button>
+                                <button id="contactArchive" type="button" class="btn btn-outline-secondary btn-sm">Archive</button>
+                                <button id="contactDelete" type="button" class="btn btn-outline-danger btn-sm">🗑️ Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+                                <button id="contactArchive" type="button" class="btn btn-outline-secondary">Archive</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="../js/admin/permissions.js"></script>
+    <script src="../js/admin/ui-helpers.js"></script>
+    <script src="../js/admin/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* Contact page specific styles — premium black & gold */
+:root{--gold:#d4af37;--bg-black:#070707}
+body{background:var(--bg-black);color:#fff}
+
+/* Hero Section */
+.contact-hero{padding:80px 0;text-align:center;background:linear-gradient(135deg, rgba(7,7,7,0.8) 0%, rgba(7,7,7,0.6) 100%)}
+.contact-hero .section-title-dark{font-size:2.25rem;margin-bottom:0.5rem}
+.hero-ctas{max-width:900px;margin:0 auto}
+
+/* Glass Cards */
+.glass-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));border:1px solid rgba(212,175,55,0.12);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,0.6);}
+.bg-form{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:0.9rem;border-radius:12px}
+.border-gold-subtle{border:1px solid rgba(212,175,55,0.2)!important}
+.form-label{text-transform:none;color:rgba(255,255,255,0.85)}
+.section-eyebrow{text-transform:uppercase;letter-spacing:0.08em}
+.text-gold{color:var(--gold)}
+
+/* Buttons */
+.btn-gold{background:var(--gold);color:#111;border-radius:12px;border:1px solid var(--gold);padding:0.85rem 1.2rem;transition:transform .18s ease,box-shadow .18s ease;font-weight:600}
+.btn-gold:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(212,175,55,0.12);color:#111}
+.btn-outline-gold{color:var(--gold);border:1px solid var(--gold);background:transparent;border-radius:12px;padding:0.75rem 1rem;transition:all .18s ease;font-weight:600}
+.btn-outline-gold:hover{background:rgba(212,175,55,0.08);transform:translateY(-2px)}
+.btn-lg{padding:0.95rem 1.5rem;font-size:1rem}
+
+/* Social Links */
+.social-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--gold);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.social-link:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(212,175,55,0.09);background:rgba(212,175,55,0.06)}
+
+/* Quick Connect Cards */
+.quick-connect-card{transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);border:1px solid rgba(212,175,55,0.08);cursor:pointer;text-decoration:none !important;background:inherit;padding:inherit;border:none;box-shadow:none;display:block;text-align:inherit}
+.quick-connect-card:focus{outline:2px solid rgba(212,175,55,0.4);outline-offset:2px}
+.quick-connect-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.25)}
+.quick-connect-card .card-icon{transition:all .3s ease}
+.quick-connect-card:hover .card-icon{transform:scale(1.1)}
+.quick-connect-card h5,
+.quick-connect-card p,
+.quick-connect-card a,
+.quick-connect-card div{text-decoration:none !important;color:inherit}
+.quick-connect-card h5{color:rgba(255,255,255,1) !important}
+.quick-connect-card p{color:rgba(255,255,255,0.95) !important;font-size:0.95rem}
+.quick-connect-card .text-gold{color:var(--gold) !important}
+.hover-lift{transition:transform .3s ease,box-shadow .3s ease}
+.hover-lift:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(212,175,55,0.15)}
+
+/* Quick Connect Card as Link Wrapper */
+.quick-connect-card-link{display:block;text-decoration:none !important;color:inherit;transition:transform .3s ease}
+
+/* Location Map */
+.location-map-card{border:1px solid rgba(212,175,55,0.12);border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.6)}
+.location-map-card iframe{filter:invert(0.92) contrast(1.1)}
+
+/* Animations */
+.fade-in-section{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+.fade-in-section.visible{opacity:1;transform:none}
+
+/* Response Cards */
+#contactResponse .success-card,#contactResponse .error-card,
+.page-modal .success-card,
+.page-modal .error-card{padding:2rem;border-radius:14px}
+.success-card{background:linear-gradient(180deg, rgba(29,29,29,0.98), rgba(12,12,12,0.98));border:1px solid rgba(212,175,55,0.14);box-shadow:0 28px 70px rgba(0,0,0,0.6)}
+.success-card h3{color:var(--gold);margin-bottom:1rem}
+.error-card{background:linear-gradient(180deg, rgba(29,10,10,0.98), rgba(12,6,6,0.98));border:1px solid rgba(255,80,80,0.12);box-shadow:0 28px 70px rgba(0,0,0,0.6)}
+.error-card h3{color:#ff5050;margin-bottom:1rem}
+
+/* Modal Styles */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1050;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.page-modal{position:fixed;top:50%;left:50%;transform:translate(-50%, -50%) scale(0.96);width:min(100%,760px);max-width:760px;max-height:90vh;z-index:1060;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.page-modal:not(.d-none){opacity:1;pointer-events:auto;transform:translate(-50%, -50%) scale(1)}
+.modal-window{position:relative;background:rgba(8,8,8,0.98);border:1px solid rgba(212,175,55,0.18);box-shadow:0 32px 90px rgba(0,0,0,0.65);border-radius:24px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;z-index:1061}
+.modal-dialog-scrollable .modal-body{max-height:calc(90vh - 280px);overflow-y:auto;padding-right:8px;flex:1}
+.modal-dialog-scrollable .modal-footer{position:relative;background:linear-gradient(180deg, rgba(8,8,8,0.98), rgba(8,8,8,0.98));padding-top:12px;padding-bottom:6px;border-top:1px solid rgba(255,255,255,0.03);flex-shrink:0;z-index:1062}
+.modal-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.6);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .2s ease,background .2s ease;z-index:1}
+.modal-close:hover{transform:scale(1.05);background:rgba(255,255,255,0.1)}
+.modal-title{font-size:2rem;margin-bottom:0.5rem}
+.modal-description{color:rgba(255,255,255,0.75);margin-bottom:1.5rem}
+
+/* Ensure modal forms are responsive */
+.page-modal .form-control{border-radius:12px}
+.page-modal .btn-gold{width:100%}
+
+/* Final CTA Section */
+.final-cta-section{background:linear-gradient(135deg, rgba(7,7,7,0.95) 0%, rgba(20,20,20,0.95) 100%);border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1)}
+
+/* WhatsApp FAB */
+.whatsapp-fab{position:fixed;bottom:30px;right:30px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.whatsapp-btn{width:56px;height:56px;border-radius:50%;background:#25D366;border:none;color:#fff;cursor:pointer;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all .3s ease;animation:whatsapp-pulse 2s ease-in-out infinite}
+.whatsapp-btn:hover{transform:scale(1.1);box-shadow:0 8px 20px rgba(37,211,102,0.4)}
+.whatsapp-btn i{animation:inherit}
+
+/* WhatsApp Pulse Animation */
+@keyframes whatsapp-pulse{0%,100%{box-shadow:0 4px 12px rgba(0,0,0,0.3)}50%{box-shadow:0 4px 12px rgba(37,211,102,0.2),0 0 0 12px rgba(37,211,102,0.1)}}
+
+/* WhatsApp Tooltip */
+.whatsapp-tooltip{position:absolute;bottom:70px;right:0;background:rgba(0,0,0,0.9);color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s ease;border:1px solid rgba(212,175,55,0.3)}
+.whatsapp-fab:hover .whatsapp-tooltip{opacity:1}
+
+/* WhatsApp Menu */
+.whatsapp-menu{position:absolute;bottom:75px;right:0;background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(20,20,20,0.95));border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:12px;min-width:220px;box-shadow:0 8px 24px rgba(0,0,0,0.4);animation:slideUp .3s ease}
+.whatsapp-menu h6{color:var(--gold);font-size:13px;font-weight:600;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em}
+.whatsapp-menu a{display:block;padding:10px 12px;color:#fff;text-decoration:none;border-radius:6px;font-size:13px;transition:all .2s ease;margin-bottom:4px}
+.whatsapp-menu a:hover{background:rgba(212,175,55,0.1);color:var(--gold);padding-left:16px}
+.whatsapp-menu a:last-child{margin-bottom:0}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:768px){
+    .contact-hero{padding:40px 0}
+    .contact-hero .section-title-dark{font-size:1.6rem}
+    .btn-gold,.btn-outline-gold{width:100%}
+    .glass-card{padding:1.25rem}
+    .whatsapp-fab{bottom:20px;right:20px}
+    .whatsapp-btn{width:50px;height:50px;font-size:24px}
+    .location-map-card{height:300px}
+}

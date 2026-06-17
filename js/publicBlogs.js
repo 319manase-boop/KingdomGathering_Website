@@ -150,14 +150,22 @@ async function fetchPublishedBlogs() {
     showLoadingSkeletons();
 
     try {
-        const { data, error } = await supabaseClient
-    .from("blogs")
-    .select("id,title,slug,excerpt,content,featured_image_path,published_at,status")
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
+        console.log("=== fetchPublishedBlogs START ===");
+        console.log("Operation: fetch published blogs for public display");
+        console.log("Query: select * from blogs where status = 'published' order by published_at desc");
 
-    console.log("Fetched blogs:", data);
-console.log("Blog fetch error:", error);
+        const { data, error } = await supabaseClient
+            .from('blogs')
+            .select('*')
+            .eq('status', 'published')
+            .order('published_at', { ascending: false });
+
+        console.log("Response (fetchPublishedBlogs):", data);
+        console.log("Error (fetchPublishedBlogs):", error);
+        console.log("Published blogs count:", data ? data.length : 0);
+        if (data && data.length > 0) {
+            console.log("Published blog titles:", data.map(b => b.title));
+        }
 
         if (error) {
             sharedBlogData.error = error;
@@ -167,6 +175,7 @@ console.log("Blog fetch error:", error);
 
         sharedBlogData.posts = data || [];
         sharedBlogData.loaded = true;
+        console.log("=== fetchPublishedBlogs SUCCESS ===");
         return sharedBlogData.posts;
     } catch (error) {
         sharedBlogData.error = error;

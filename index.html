@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingdom Gathering Church - Maun, Botswana</title>
+    <title>Kingdom Gathering Church | Building Disciples. Transforming Lives.</title>
+    <meta name="description" content="Kingdom Gathering Church is a Christ-centered church in Botswana committed to worship, prayer, discipleship, leadership development, and Kingdom expansion.">
+    <meta name="keywords" content="church, Botswana, worship, prayer, discipleship, Christian community, Maun, Gaborone">
+    <meta property="og:title" content="Kingdom Gathering Church | Building Disciples. Transforming Lives.">
+    <meta property="og:description" content="Kingdom Gathering Church is a Christ-centered church in Botswana committed to worship, prayer, discipleship, leadership development, and Kingdom expansion.">
+    <meta property="og:image" content="https://kingdomgatheringchurch.org/images/og-image.png">
+    <meta property="og:url" content="https://kingdomgatheringchurch.org">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kingdom Gathering Church | Building Disciples. Transforming Lives.">
+    <meta name="twitter:description" content="Kingdom Gathering Church is a Christ-centered church in Botswana committed to worship, prayer, discipleship, leadership development, and Kingdom expansion.">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -25,8 +35,8 @@
                     <a href="index.html" class="brand-logo d-flex align-items-center text-decoration-none">
                         <img src="images/logo.png" alt="Kingdom Gathering" class="logo-large">
                         <div class="brand-text ms-3">
-                            <h1 class="brand-name">Kingdom Gathering</h1>
-                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                            <h1 class="brand-name" data-setting="church_name">Kingdom Gathering</h1>
+                            <p class="brand-tagline" data-setting="tagline">A Citadel of Grace & Truth</p>
                         </div>
                     </a>
                 </div>
@@ -65,7 +75,7 @@
 <section id="home" class="hero-section text-white">
     <div class="hero-overlay"></div>
     <div class="hero-background-glow"></div>
-    <div class="hero-particles"></div>
+    <div id="particles" class="hero-particles"></div>
 
     <!-- Apostle Background Image -->
     <div class="hero-apostle-layer">
@@ -80,7 +90,7 @@
             <h1 class="hero-title">
                 Building Disciples.<br>
                 Transforming Lives.<br>
-                Expanding <span class="hero-highlight">God’s</span> Kingdom.
+                Expanding <span class="hero-highlight">God's</span> Kingdom.
             </h1>
 
             <p class="hero-subtitle">
@@ -107,7 +117,7 @@
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
-                <div class="welcome-image"></div>
+                <div class="welcome-image" style="background-image: url('images/black_worship.webp');"></div>
             </div>
 
             <div class="col-lg-6">
@@ -166,7 +176,7 @@
         <div class="text-center mb-5">
             <p class="section-eyebrow">You Belong Here</p>
             <h2 class="section-title">Join Us This Week</h2>
-            <p class="section-subtitle">There’s a place for you to worship, grow, and connect in every season of life.</p>
+                <p class="section-subtitle">There's a place for you to worship, grow, and connect in every season of life.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
@@ -197,19 +207,56 @@
     </div>
 </section>
 
-<!-- Featured Event -->
+<!-- Featured Events -->
 <section class="featured-event-section">
     <div class="container">
-        <div class="featured-event-box">
-            <p class="section-eyebrow">Next Big Event</p>
-            <h2>Leadership Workshop • 14 July 2026</h2>
-            <p class="section-subtitle">
-                A focused event for leaders, ministry teams, and emerging servants to grow in vision, strategy, and spiritual leadership.
-            </p>
-            <a href="events/" class="btn btn-gold">Reserve Your Seat</a>
+        <div class="text-center mb-5">
+            <p class="section-eyebrow">Upcoming Gatherings</p>
+            <h2 class="section-title-dark">Featured Events</h2>
+            <p class="section-subtitle">Join us for worship, teaching, and community at Kingdom Gathering's next gatherings.</p>
+        </div>
+
+        <div id="homepageFeaturedEvents" class="row g-4"></div>
+        <div id="homepageFeaturedEventsEmpty" class="row g-4 d-none">
+            <div class="col-12">
+                <div class="featured-event-empty-state bg-black rounded-4 p-5 text-center shadow-lg border border-gold">
+                    <p class="section-eyebrow text-gold">Upcoming Gatherings</p>
+                    <h2 class="section-title-dark mb-3">Upcoming events will be announced soon.</h2>
+                    <p class="section-subtitle text-white mb-4">Check back soon for the next Kingdom Gathering event.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="events/" class="btn btn-gold">View More Events</a>
+                        <a href="contact/" class="btn btn-outline-gold">Request Prayer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="homepageFeaturedEventsError" class="row g-4 d-none">
+            <div class="col-12">
+                <div class="featured-event-error-state bg-black rounded-4 p-5 text-center shadow-lg border border-danger">
+                    <h2 class="section-title-dark mb-3">Unable to load events</h2>
+                    <p class="section-subtitle text-white mb-4">Please refresh the page or check again later.</p>
+                    <button id="homepageFeaturedEventsRetry" class="btn btn-gold">Refresh</button>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<section class="latest-blogs-section py-5 bg-black text-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="section-eyebrow">Latest Insights</p>
+            <h2 class="section-title">Recent Blog Posts</h2>
+            <p class="section-subtitle">Stories, devotionals, and church news from Kingdom Gathering.</p>
+        </div>
+        <div id="homepageBlogCards" class="row g-4"></div>
+        <div id="homepageBlogEmptyState" class="text-center mt-4 d-none">
+            <p class="section-subtitle">No recent blog posts yet. Stay tuned for updates.</p>
+        </div>
+    </div>
+</section>
+
+
 
 <section class="py-5 bg-light">
     <div class="container">
@@ -217,32 +264,13 @@
             <div class="col-lg-6">
                 <p class="section-eyebrow mb-3">Gaborone Branch</p>
                 <h2 class="section-title mb-3">Connect with Kingdom Gathering Gaborone</h2>
-                <a href="https://www.facebook.com/share/1J9jquGVpE/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg mt-3">Visit the Gaborone Branch Page</a>
+                <a href="https://www.facebook.com/kingdomgatheringgaborone" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg mt-3">Visit the Gaborone Branch Page</a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="section-card p-4 rounded-4 border border-gold h-100">
-                    <h3 class="text-gold mb-3">Leadership Workshop</h3>
-                    <p class="text-muted mb-3">14 July 2026 — a focused event for leaders, ministry teams, and emerging servants to grow in vision, strategy, and spiritual leadership.</p>
-                    <a href="events/" class="btn btn-outline-gold">Reserve Your Seat</a>
-                </div>
-            </div>
-                <div class="col-lg-6">
-                <div class="section-card p-4 rounded-4 border border-gold h-100">
-                    <h3 class="text-gold mb-3">Maun Crusade</h3>
-                    <p class="text-muted mb-3">Step into an atmosphere of worship, revival, and Kingdom transformation. Our crusade is a time of encountering God's presence, receiving His Word, and being equipped to impact lives and communities with the Gospel of Jesus Christ.</p>
-                    <a href="events/" class="btn btn-outline-gold">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Featured event cards are now dynamically loaded from Supabase -->
 
 <!-- Final CTA -->
 <section class="final-cta-section">
@@ -250,88 +278,20 @@
         <h2 class="section-title-dark">Ready to Take Your Next Step?</h2>
         <p class="section-subtitle">Visit us, connect with a ministry, or join us in worship this week.</p>
         <a href="contact/" class="btn btn-gold btn-lg">Plan Your Visit</a>
-    </div>
-</section>
-
-<!-- Premium Footer -->
-<footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
-    <div class="container">
-        <div class="row g-5 mb-5">
-            <!-- Column 1: Brand -->
-            <div class="col-lg-3 col-md-6">
-                <div class="footer-brand mb-3">
-                    <img src="images/logo.png" alt="Kingdom Gathering" class="footer-logo mb-3">
-                    <h3 class="footer-brand-name">Kingdom Gathering</h3>
-                    <p class="footer-tagline">A Citadel of Grace & Truth</p>
-                    <p class="footer-mission text-secondary">Raising disciples, transforming lives, and advancing God's Kingdom through faith, leadership, and community.</p>
-                </div>
-            </div>
-
-            <!-- Column 2: Explore -->
-            <div class="col-lg-3 col-md-6">
-                <h5 class="footer-column-title">Explore</h5>
-                <ul class="list-unstyled footer-links">
-                    <li><a href="ministries/" class="footer-link">Ministries</a></li>
-                    <li><a href="services/" class="footer-link">Services</a></li>
-                    <li><a href="events/" class="footer-link">Events</a></li>
-                    <li><a href="about/" class="footer-link">About Us</a></li>
-                </ul>
-            </div>
-
-            <!-- Column 3: Gather With Us -->
-            <div class="col-lg-3 col-md-6">
-                <h5 class="footer-column-title">Gather With Us</h5>
-                <div class="footer-service-time mb-4">
-                    <h6 class="text-gold mb-2">Sunday Worship</h6>
-                    <p class="text-secondary mb-0">09:00 AM - 12:00 PM<br><small>Main Sanctuary, Maun</small></p>
-                </div>
-                <div class="footer-service-time">
-                    <h6 class="text-gold mb-2">Midweek Cell Groups</h6>
-                    <p class="text-secondary mb-0">6:00 PM - 8:30 PM<br><small>Fellowship Center</small></p>
-                </div>
-            </div>
-
-            <!-- Column 4: Connect -->
-            <div class="col-lg-3 col-md-6">
-                <h5 class="footer-column-title">Connect</h5>
-                <ul class="list-unstyled footer-links">
-                    <li><a href="contact/" class="footer-link">Contact Us</a></li>
-                    <li><a href="giving/" class="footer-link">Give Online</a></li>
-                    <li><a href="https://www.facebook.com/share/1J9jquGVpE/?mibextid=wwXIfr" class="footer-link" target="_blank" rel="noopener">Gaborone Branch</a></li>
-                </ul>
-                <div class="social-links mt-4">
-                    <a href="https://facebook.com/share/1AbP9GkEg/" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-9491yN5Kgba" class="social-link" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
         </div>
+    </section>
 
-        <div class="footer-divider border-top border-gold my-5"></div>
+    <!-- Premium Footer (shared) -->
+    <div data-footer-placeholder></div>
 
-        <!-- Footer Bottom -->
-        <div class="row align-items-center py-4">
-            <div class="col-md-6">
-                <p class="text-secondary small mb-0">&copy; 2026 Kingdom Gathering Church. All rights reserved.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <p class="text-secondary small mb-0">A spiritual home for leaders and community.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabaseClient.js"></script>
-<script src="js/main.js"></script>
-
-<!-- Hero Particles Script -->
-<script>
-function createParticles() {
-    const container = document.getElementById('particles');
-    if (!container) return;
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/homeDynamic.js"></script>
+    <script src="js/footer-loader.js"></script>
     
     const particleCount = 8;
     for (let i = 0; i < particleCount; i++) {
@@ -355,3 +315,4 @@ document.addEventListener('DOMContentLoaded', createParticles);
 </script>
 
 </body>
+

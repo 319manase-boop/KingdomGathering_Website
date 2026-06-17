@@ -1,54 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media - Blog Manager</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Management | Kingdom Gathering Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
 </head>
+<body>
+    <div class="dashboard-shell d-flex flex-column flex-lg-row">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar d-none d-lg-block col-lg-2">
+            <div class="mb-5 text-center">
+                <img src="../images/logo.png" alt="Kingdom Gathering" style="width: 72px;" class="mb-3">
+                <p class="text-gold fw-bold mb-0">Kingdom Gathering</p>
+                <small class="text-muted">Admin Portal</small>
+            </div>
+            <div class="nav-section-label">Navigation</div>
+            <nav class="nav flex-column gap-2">
+                <a class="nav-link" href="dashboard.html">📊 Dashboard</a>
+                <a class="nav-link" href="prayer.html">🙏 Prayer Requests</a>
+                <a class="nav-link" href="contact.html">💬 Contact Messages</a>
+                <a class="nav-link" href="counseling.html">❤️ Counseling</a>
+                <a class="nav-link" href="giving.html">💝 Giving</a>
+                <a class="nav-link active" href="blogs.html">📝 Blogs</a>
+                <a class="nav-link" href="events.html">📅 Events</a>
+                <a class="nav-link" href="users.html">👥 Users</a>
+                <a class="nav-link" href="roles.html">🔐 Roles & Permissions</a>
+                <a class="nav-link" href="settings.html">⚙️ Settings</a>
+            </nav>
+            <div class="nav-section-label mt-4">Account</div>
+            <a class="nav-link" href="javascript:void(0);" id="sidebarLogout">🚪 Logout</a>
+        </aside>
 
-<body class="bg-light">
+        <!-- Main Content -->
+        <main class="admin-main flex-grow-1">
+            <!-- Header -->
+            <header class="admin-header d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+                <div>
+                    <a href="../index.html" class="admin-brand mb-3 mb-md-0">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                        <span>📝 Blog Posts</span>
+                    </a>
+                    <p class="mb-0 text-muted">Create and manage blog posts for your community.</p>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <span class="user-pill" id="adminUserEmail">user@example.com</span>
+                    <button id="logoutButton" class="logout-btn">Logout</button>
+                </div>
+            </header>
 
-<div class="container py-5">
+            <!-- Content Section -->
+            <section class="admin-content">
+                <div id="blogsAlertContainer"></div>
 
-    <h2 class="mb-4">Create Blog Post</h2>
+                <!-- Statistics Grid -->
+                <div class="stats-grid mb-4">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Posts</div>
+                        <div class="stat-value" id="totalPosts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Published</div>
+                        <div class="stat-value" id="publishedPosts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Drafts</div>
+                        <div class="stat-value" id="draftPosts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Archived</div>
+                        <div class="stat-value" id="archivedPosts">0</div>
+                    </div>
+                </div>
 
-    <form id="blogForm">
+                <!-- Action Bar -->
+                <div class="action-bar mb-3">
+                    <div class="action-bar-left">
+                        <div class="search-input-group">
+                            <input id="blogsSearch" class="form-control" placeholder="🔍 Search posts..." aria-label="Search">
+                        </div>
+                        <select id="blogsStatusFilter" class="form-select">
+                            <option value="">All Statuses</option>
+                            <option value="Published">Published</option>
+                            <option value="Draft">Draft</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="action-bar-right">
+                        <button id="refreshBtn" class="btn btn-outline-light" title="Refresh">🔄</button>
+                        <button id="createBlogBtn" class="btn btn-accent">+ New Post</button>
+                    </div>
+                </div>
 
-        <div class="mb-3">
-            <label>Title</label>
-            <input type="text" id="title" class="form-control" required>
+                <!-- Table Card -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Published</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="blogsTableBody">
+                                <tr><td colspan="5" class="text-center py-4">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container" id="paginationContainer"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Blog Modal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Blog Post</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="blogForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title *</label>
+                            <input type="text" class="form-control bg-form text-light" id="blogTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Slug</label>
+                            <input type="text" class="form-control bg-form text-light" id="blogSlug" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Excerpt</label>
+                            <textarea class="form-control bg-form text-light" id="blogExcerpt" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control bg-form text-light" id="blogContent" rows="6"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Featured Image Path</label>
+                            <input type="text" class="form-control bg-form text-light" id="blogImage">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tags (comma-separated)</label>
+                            <input type="text" class="form-control bg-form text-light" id="blogTags">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select bg-form text-light" id="blogStatus">
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="blogDelete" type="button" class="btn btn-danger d-none">Delete</button>
+                    <button id="blogSave" type="button" class="btn btn-accent">Save</button>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label>Excerpt</label>
-            <textarea id="excerpt" class="form-control" rows="3"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label>Content</label>
-            <textarea id="content" class="form-control" rows="8"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label>Image URL</label>
-            <input type="text" id="image" class="form-control">
-        </div>
-
-        <button class="btn btn-warning w-100">
-            Publish Blog
-        </button>
-
-    </form>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../supabaseClient.js"></script>
-<script src="../blogs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/admin/permissions.js"></script>
+    <script src="../js/admin/ui-helpers.js"></script>
+    <script src="../js/admin/blogs.js"></script>
 </body>
 </html>

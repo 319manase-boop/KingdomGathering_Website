@@ -513,38 +513,44 @@ function initAnimateOnScroll() {
    Counseling + Prayer form handlers (Supabase)
    ===================================================== */
 function initContactForms() {
-    // Prayer form: use existing prayer.js if present; ensure spinner behavior
+    // Prayer form: prefer initPrayerForm from js/prayer.js if present
     const prayerForm = document.getElementById('prayerForm');
     if (prayerForm) {
-        prayerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = document.getElementById('prayerSubmit');
-            const spinner = submitBtn.querySelector('.btn-spinner');
-            const text = submitBtn.querySelector('.btn-text');
-            submitBtn.disabled = true;
-            spinner.classList.remove('d-none');
-            try {
-                const name = document.getElementById('prayerName').value.trim();
-                const email = document.getElementById('prayerEmail').value.trim() || null;
-                const phone = document.getElementById('prayerPhone').value.trim() || null;
-                const message = document.getElementById('prayerMessage').value.trim();
-                const anonymous = document.getElementById('prayerAnonymous').checked;
+        if (typeof initPrayerForm === 'function') {
+            initPrayerForm();
+        } else {
+            prayerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = document.getElementById('prayerSubmit');
+                if (!submitBtn) {
+                    console.error('Prayer submit button not found');
+                    return;
+                }
+                const spinner = submitBtn.querySelector('.btn-spinner');
+                submitBtn.disabled = true;
+                if (spinner) spinner.classList.remove('d-none');
+                try {
+                    const name = document.getElementById('prayerName').value.trim();
+                    const email = document.getElementById('prayerEmail').value.trim() || null;
+                    const phone = document.getElementById('prayerPhone').value.trim() || null;
+                    const message = document.getElementById('prayerMessage').value.trim();
+                    const anonymous = document.getElementById('prayerAnonymous').checked;
 
-                const payload = { name, email: anonymous ? null : email, phone: anonymous ? null : phone, message, status: 'new', answered: false };
-                const { error } = await supabaseClient.from('prayer_requests').insert([payload]);
-                if (error) throw error;
+                    const payload = { name, email: anonymous ? null : email, phone: anonymous ? null : phone, message, status: 'new', answered: false };
+                    const { error } = await supabaseClient.from('prayer_requests').insert([payload]);
+                    if (error) throw error;
 
-                // Success UI
-                alert('Prayer Request Received\n\nThank you for trusting us.\n\nOur intercessory team will stand with you in prayer.\n\nGod bless you.');
-                prayerForm.reset();
-            } catch (err) {
-                console.error(err);
-                alert('Something went wrong. Please try again.');
-            } finally {
-                submitBtn.disabled = false;
-                spinner.classList.add('d-none');
-            }
-        });
+                    alert('Prayer Request Received\n\nThank you for trusting us.\n\nOur intercessory team will stand with you in prayer.\n\nGod bless you.');
+                    prayerForm.reset();
+                } catch (err) {
+                    console.error(err);
+                    alert('Something went wrong. Please try again.');
+                } finally {
+                    submitBtn.disabled = false;
+                    if (spinner) spinner.classList.add('d-none');
+                }
+            });
+        }
     }
 
     // Counseling form
@@ -765,29 +771,46 @@ if (givingForm) {
         const givingType = document.getElementById("givingType").value;
         const message = document.getElementById("message").value.trim() || null;
 
-        const { error } = await supabaseClient
+        console.log("=== GIVING FORM SUBMISSION ===");
+        console.log("Operation: submit new giving record");
+
+        const payload = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone: phone,
+            amount: amount,
+            currency: "BWP",
+            giving_type: givingType,
+            message: message,
+            payment_status: "pending",
+            payment_reference: null,
+            proof_path: null,
+            donor_id: null
+        };
+
+        console.log("Giving payload:", payload);
+
+        const { data, error } = await supabaseClient
             .from("giving_records")
-            .insert([
-                {
-                    first_name: firstName,
-                    last_name: lastName,
-                    email: email,
-                    phone: phone,
-                    amount: amount,
-                    currency: "BWP",
-                    giving_type: givingType,
-                    message: message,
-                    payment_status: "pending",
-                    payment_reference: null,
-                    proof_path: null,
-                    donor_id: null
-                }
-            ]);
+            .insert([payload])
+            .select();
+
+        console.log("Giving response:", data);
+        console.log("Giving error:", error);
 
         if (error) {
-            console.error(error);
+            console.error("❌ GIVING SUBMISSION FAILED:", error);
             alert("Something went wrong. Please try again.");
         } else {
+            console.log("✅ GIVING SUBMISSION SUCCESS - Record ID:", data?.[0]?.id);
+            console.log("⚠️  ADMIN PAGE NOTE: Admin giving page must be manually refreshed to see new record.");
+            console.log("    Reason: No real-time subscription set up yet.");
+            console.log("    To see the record immediately:");
+            console.log("    1. Go to admin giving page");
+            console.log("    2. Click 'Refresh' button (if available)");
+            console.log("    3. Or manually reload the page (F5)");
+            
             // Hide the form and show payment instructions
             const formEl = document.getElementById('givingForm');
             const instructions = document.getElementById('paymentInstructions');

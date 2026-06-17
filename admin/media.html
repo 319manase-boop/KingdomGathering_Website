@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Media Management | Kingdom Gathering Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+</head>
+<body class="admin-mode">
+    <div class="dashboard-shell">
+        <aside class="admin-sidebar d-none d-lg-block">
+            <div class="logo-section">
+                <img src="../images/logo.png" alt="Kingdom Gathering">
+                <p class="org-name mb-0">Kingdom Gathering</p>
+                <p class="org-subtitle mb-0">Admin Portal</p>
+            </div>
+            <nav class="nav flex-column gap-2">
+                <a class="nav-link" href="dashboard.html">📊 Dashboard</a>
+                <a class="nav-link" href="prayer.html">🙏 Prayer Requests</a>
+                <a class="nav-link" href="contact.html">💬 Contact Messages</a>
+                <a class="nav-link" href="counseling.html">❤️ Counseling</a>
+                <a class="nav-link" href="giving.html">💝 Giving</a>
+                <a class="nav-link" href="blogs.html">📝 Blogs</a>
+                <a class="nav-link" href="events.html">📅 Events</a>
+                <a class="nav-link active" href="media.html">🎥 Media</a>
+                <a class="nav-link" href="users.html">👥 Users</a>
+                <a class="nav-link" href="roles.html">🔐 Roles</a>
+                <a class="nav-link" href="settings.html">⚙️ Settings</a>
+                <a class="nav-link" href="javascript:void(0);" id="sidebarLogout">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <a href="../index.html" class="admin-brand">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                        <span>Media Assets</span>
+                    </a>
+                    <p class="mb-0 text-muted">Manage and organize media files from Supabase Storage.</p>
+                </div>
+                <div class="admin-header-actions">
+                    <span class="user-pill" id="adminUserEmail">user@example.com</span>
+                    <button id="logoutButton" class="logout-btn">Logout</button>
+                </div>
+            </header>
+
+            <section class="admin-content p-4">
+                <div id="mediaAlertContainer"></div>
+
+                <div class="admin-card p-4 mb-4">
+                    <h5 class="text-gold mb-3">Upload Media</h5>
+                    <form id="uploadForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Bucket</label>
+                                <select id="uploadBucket" class="form-select bg-dark text-light" required>
+                                    <option value="">Select a bucket...</option>
+                                    <option value="blog-images">Blog Images</option>
+                                    <option value="event-posters">Event Posters</option>
+                                    <option value="gallery">Gallery</option>
+                                    <option value="leadership-images">Leadership Images</option>
+                                    <option value="branch-images">Branch Images</option>
+                                    <option value="ministry-images">Ministry Images</option>
+                                    <option value="sermon-pdfs">Sermon PDFs</option>
+                                    <option value="videos">Videos</option>
+                                    <option value="giving-proofs">Giving Proofs (Private)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">File</label>
+                                <input type="file" id="uploadFile" class="form-control bg-dark text-light" required>
+                            </div>
+                            <div class="col-12">
+                                <button id="uploadBtn" type="button" class="btn btn-warning text-dark">Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="d-flex gap-2 mb-3 flex-column flex-md-row">
+                    <input id="mediaSearch" class="form-control" placeholder="Search by file name">
+                    <select id="mediaBucketFilter" class="form-select" style="max-width: 220px;">
+                        <option value="">All Buckets</option>
+                        <option value="blog-images">Blog Images</option>
+                        <option value="event-posters">Event Posters</option>
+                        <option value="gallery">Gallery</option>
+                        <option value="leadership-images">Leadership Images</option>
+                        <option value="branch-images">Branch Images</option>
+                        <option value="ministry-images">Ministry Images</option>
+                        <option value="sermon-pdfs">Sermon PDFs</option>
+                        <option value="videos">Videos</option>
+                        <option value="giving-proofs">Giving Proofs</option>
+                    </select>
+                </div>
+
+                <div id="mediaGrid" class="media-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabaseClient.js"></script>
+    <script src="../js/admin/permissions.js"></script>
+    <script src="../js/admin/media.js"></script>
+</body>
+</html>

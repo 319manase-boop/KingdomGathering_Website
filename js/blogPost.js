@@ -53,20 +53,32 @@ async function loadBlogPost() {
     }
 
     try {
+        console.log("=== loadBlogPost START ===");
+        console.log("Operation: load published blog post by slug");
+        console.log("Slug:", slug);
+        console.log("Query: select * from blogs where slug = ? AND status = 'published' limit 1");
+
         const { data, error } = await supabaseClient
             .from("blogs")
-            .select("title,slug,content,featured_image_path,category,published_at,status")
+            .select("*")
             .eq("slug", slug)
             .eq("status", "published")
+            .order("published_at", { ascending: false })
             .limit(1)
             .single();
 
+        console.log("Response (loadBlogPost):", data);
+        console.log("Error (loadBlogPost):", error);
+
         if (error || !data) {
             showPostError("This blog post could not be loaded. It may no longer be published.");
-            console.error(error);
+            console.error("Blog post load failed:", error);
+            console.log("=== loadBlogPost FAILED ===");
             return;
         }
 
+        console.log("=== loadBlogPost SUCCESS ===");
+        console.log("Loaded post:", data.title);
         renderPost(data);
     } catch (exception) {
         console.error(exception);

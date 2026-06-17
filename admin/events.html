@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Event Management | Kingdom Gathering Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+</head>
+<body class="admin-mode">
+    <div class="dashboard-shell">
+        <aside class="admin-sidebar d-none d-lg-block">
+            <div class="logo-section">
+                <img src="../images/logo.png" alt="Kingdom Gathering">
+                <p class="org-name mb-0">Kingdom Gathering</p>
+                <p class="org-subtitle mb-0">Admin Portal</p>
+            </div>
+            <nav class="nav flex-column gap-2">
+                <a class="nav-link" href="dashboard.html">📊 Dashboard</a>
+                <a class="nav-link" href="prayer.html">🙏 Prayer Requests</a>
+                <a class="nav-link" href="contact.html">💬 Contact Messages</a>
+                <a class="nav-link" href="counseling.html">❤️ Counseling</a>
+                <a class="nav-link" href="giving.html">💝 Giving</a>
+                <a class="nav-link" href="blogs.html">📝 Blogs</a>
+                <a class="nav-link active" href="events.html">📅 Events</a>
+                <a class="nav-link" href="media.html">🎥 Media</a>
+                <a class="nav-link" href="users.html">👥 Users</a>
+                <a class="nav-link" href="roles.html">🔐 Roles</a>
+                <a class="nav-link" href="settings.html">⚙️ Settings</a>
+                <a class="nav-link" href="javascript:void(0);" id="sidebarLogout">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <a href="../index.html" class="admin-brand">
+                        <img src="../images/logo.png" alt="Kingdom Gathering Logo">
+                        <span>Events</span>
+                    </a>
+                    <p class="mb-0 text-muted">Manage and publish events for your community.</p>
+                </div>
+                <div class="admin-header-actions">
+                    <span class="user-pill" id="adminUserEmail">user@example.com</span>
+                    <button id="logoutButton" class="logout-btn">Logout</button>
+                </div>
+            </header>
+
+            <section class="admin-content p-4">
+                <div id="eventsAlertContainer"></div>
+
+                <div class="d-flex gap-2 mb-3 flex-column flex-lg-row flex-wrap">
+                    <input id="eventsSearch" class="form-control" placeholder="Search by title, branch, or description">
+                    <select id="eventsStatusFilter" class="form-select" style="max-width: 200px;">
+                        <option value="">All Statuses</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Published">Published</option>
+                        <option value="Canceled">Canceled</option>
+                    </select>
+                    <select id="eventsBranchFilter" class="form-select" style="max-width: 200px;">
+                        <option value="">All Branches</option>
+                    </select>
+                    <button id="createEventBtn" class="btn btn-warning text-dark">+ New Event</button>
+                </div>
+
+                <div class="admin-card p-3">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-muted small">
+                                    <th>Title</th>
+                                    <th>Branch</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Capacity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventsTableBody">
+                                <tr><td colspan="8" class="text-center py-5">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content bg-dark text-light">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title">Event</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="eventForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Title *</label>
+                                        <input type="text" class="form-control bg-dark text-light" id="eventTitle" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Slug</label>
+                                        <input type="text" class="form-control bg-dark text-light" id="eventSlug" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Branch *</label>
+                                        <select class="form-select bg-dark text-light" id="eventBranch" required></select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Short Description</label>
+                                        <textarea class="form-control bg-dark text-light" id="eventShortDesc" rows="2"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control bg-dark text-light" id="eventDesc" rows="4"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Location</label>
+                                        <input type="text" class="form-control bg-dark text-light" id="eventLocation">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Start Date & Time *</label>
+                                            <input type="datetime-local" class="form-control bg-dark text-light" id="eventStartAt" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">End Date & Time</label>
+                                            <input type="datetime-local" class="form-control bg-dark text-light" id="eventEndAt">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Capacity</label>
+                                            <input type="number" class="form-control bg-dark text-light" id="eventCapacity" min="0">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Registration Required</label>
+                                            <select class="form-select bg-dark text-light" id="eventRegistration">
+                                                <option value="false">No</option>
+                                                <option value="true">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Poster Path</label>
+                                        <input type="text" class="form-control bg-dark text-light" id="eventPoster">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tags (comma-separated)</label>
+                                        <input type="text" class="form-control bg-dark text-light" id="eventTags">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-select bg-dark text-light" id="eventStatus">
+                                            <option value="Draft">Draft</option>
+                                            <option value="Published">Published</option>
+                                            <option value="Canceled">Canceled</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button id="eventDelete" type="button" class="btn btn-danger d-none">Delete</button>
+                                <button id="eventSave" type="button" class="btn btn-warning text-dark">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabaseClient.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../js/admin/permissions.js"></script>
+<script src="../js/admin/events.js"></script>
+</body>
+</html>

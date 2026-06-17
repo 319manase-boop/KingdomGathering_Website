@@ -1,508 +1,459 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact / Plan Your Visit | Kingdom Gathering Church</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact | Kingdom Gathering Church</title>
+    <meta name="description" content="Connect with Kingdom Gathering Church for prayer, counseling, visiting information, giving support, and general inquiries.">
+    <meta name="keywords" content="contact, Kingdom Gathering Church, prayer, counseling, Botswana, church contact">
+    <meta property="og:title" content="Contact | Kingdom Gathering Church">
+    <meta property="og:description" content="Connect with Kingdom Gathering Church for prayer, counseling, visiting information, giving support, and general inquiries.">
+    <meta property="og:image" content="https://kingdomgatheringchurch.org/images/og-image.png">
+    <meta property="og:url" content="https://kingdomgatheringchurch.org/contact/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="icon" href="../images/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/contact.css">
 </head>
-<body>
-            <!-- Premium Header -->
+<body class="homepage">
+    <!-- Navigation (Premium Header) -->
     <header class="premium-header sticky-top">
         <div class="container py-3">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <a href="../index.html" class="brand-logo d-flex align-items-center text-decoration-none">
-                        <img src="../images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                    <a href="/index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="/images/logo.png" alt="Kingdom Gathering" class="logo-large">
                         <div class="brand-text ms-3">
-                            <h1 class="brand-name">Kingdom Gathering</h1>
-                            <p class="brand-tagline">A Citadel of Grace & Truth</p>
+                            <h1 class="brand-name" data-setting="church_name">Kingdom Gathering</h1>
+                            <p class="brand-tagline" data-setting="tagline">A Citadel of Grace & Truth</p>
                         </div>
                     </a>
                 </div>
                 <nav class="col d-none d-lg-block">
                     <ul class="nav justify-content-center mb-0">
-                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
-                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
-                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
-                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
-                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="/ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="/services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="/events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="/about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link active" href="/contact/">Connect</a></li>
                     </ul>
                 </nav>
                 <div class="col-auto d-none d-lg-block">
-                    <a href="../giving/" class="btn-cta-secondary">Give Online</a>
+                    <a href="/giving/" class="btn-cta-secondary">Give Online</a>
                 </div>
-                <div class="col-auto d-lg-none ms-auto">
-                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-            </div>
-            <div class="collapse" id="mobileNav">
-                <ul class="nav flex-column mt-3 text-center">
-                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
-                    <li class="nav-item mb-2"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
-                    <li class="nav-item mt-3"><a href="../giving/" class="btn-cta-secondary">Give Online</a></li>
-                </ul>
             </div>
         </div>
     </header>
-    <main id="contact">
-    <!-- Connect Hero -->
-    <section class="connect-hero text-white py-8">
-        <div class="hero-overlay"></div>
-        <div class="container text-center hero-content" data-animate="fade-up">
-            <p class="hero-eyebrow">How can we help you take your next step?</p>
-            <h1 class="display-3 fw-bold mb-3 hero-title">Let's Connect</h1>
-            <p class="hero-subtitle mb-4 lead">Whether you're planning your first visit, requesting prayer, joining a ministry or seeking counseling, we're here to walk with you.</p>
-            <div class="hero-buttons d-flex justify-content-center gap-3 flex-wrap">
-                <a href="../visit/index.html" class="btn btn-gold btn-lg hero-cta">Plan Your Visit</a>
-                <a href="#prayerForm" class="btn btn-outline-gold btn-lg hero-cta" data-focus="#prayerName">Request Prayer</a>
-            </div>
-            <div class="hero-action-pill-row d-flex justify-content-center flex-wrap gap-2 mt-4">
-                <span class="hero-action-pill">🙏 Request Prayer</span>
-                <span class="hero-action-pill">🏠 Plan Your First Visit</span>
-                <span class="hero-action-pill">❤️ Join a Ministry</span>
-                <span class="hero-action-pill">🤝 Speak With Someone</span>
-            </div>
-        </div>
-    </section>
 
-    <!-- Choose Your Next Step -->
-    <section class="py-5">
+    <!-- Hero Section -->
+    <section class="contact-hero py-5">
         <div class="container">
-            <div class="text-center mb-5">
-                <p class="section-eyebrow">Choose Your Next Step</p>
-                <h2 class="section-title mb-3">How can we help you today?</h2>
-                <p class="section-subtitle mx-auto" style="max-width:700px;">Select one of the options below and we'll guide you through the next steps — whether you're visiting, seeking prayer, joining a ministry, or needing counsel.</p>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <a href="../visit/index.html" class="card-link">
-                        <div class="card step-card p-4 text-center h-100" data-animate="fade-up">
-                            <div class="mb-3 display-6 text-gold icon"><i class="fas fa-landmark"></i></div>
-                            <h5 class="mb-2">Plan Your Visit</h5>
-                            <p class="mb-3 text-muted">New to Kingdom Gathering? We'd love to welcome you.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <a href="#prayerForm" class="card-link" data-focus="#prayerName">
-                        <div class="card step-card p-4 text-center h-100" data-animate="fade-up" data-delay="80">
-                            <div class="mb-3 display-6 text-gold icon"><i class="fas fa-praying-hands"></i></div>
-                            <h5 class="mb-2">Prayer Request</h5>
-                            <p class="mb-3 text-muted">Share your prayer request with us — we care and pray with you.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <a href="../ministries/index.html" class="card-link">
-                        <div class="card step-card p-4 text-center h-100" data-animate="fade-up" data-delay="160">
-                            <div class="mb-3 display-6 text-gold icon"><i class="fas fa-users"></i></div>
-                            <h5 class="mb-2">Join a Ministry</h5>
-                            <p class="mb-3 text-muted">Find a place to grow, serve, and belong.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <a href="#counsel" class="card-link" data-focus="#counselName">
-                        <div class="card step-card p-4 text-center h-100" data-animate="fade-up" data-delay="240">
-                            <div class="mb-3 display-6 text-gold icon"><i class="fas fa-heart"></i></div>
-                            <h5 class="mb-2">Salvation & Counseling</h5>
-                            <p class="mb-3 text-muted">Need spiritual guidance or counseling? We're here to listen.</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-5 bg-contrast">
-        <div class="container">
-            <div class="text-center mb-4">
-                <p class="section-eyebrow">Kingdom Gathering Impact</p>
-                <h2 class="section-title mb-3">Our Journey Together</h2>
-                <p class="section-subtitle mx-auto" style="max-width:700px;">Every invitation, every life, every ministry matters in the Kingdom.</p>
-            </div>
-            <div class="row g-4 text-center">
-                <div class="col-sm-6 col-md-3">
-                    <div class="impact-card p-4 rounded-4">
-                        <div class="impact-value" data-target="7">0</div>
-                        <p class="impact-label">Years of Ministry</p>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="impact-card p-4 rounded-4">
-                        <div class="impact-value" data-target="3">0</div>
-                        <p class="impact-label">Branches</p>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="impact-card p-4 rounded-4">
-                        <div class="impact-value" data-target="1000" data-suffix="+">0</div>
-                        <p class="impact-label">Lives Impacted</p>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="impact-card p-4 rounded-4">
-                        <div class="impact-value" data-target="50" data-suffix="+">0</div>
-                        <p class="impact-label">Weekly Volunteers</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Visit Us -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-5">
-                    <div class="visit-highlight-card rounded-4 overflow-hidden shadow-soft">
-                        <img src="../images/black_worship.webp" alt="Kingdom Gathering worship" class="img-fluid w-100">
-                        <div class="p-4 bg-black bg-opacity-75 text-white">
-                            <p class="section-eyebrow text-gold mb-2">Visit Us</p>
-                            <h3 class="mb-3">Sunday Worship, Prayer & Community</h3>
-                            <p class="mb-3">Experience warm worship, biblical teaching, and a family atmosphere where every guest is welcomed.</p>
-                            <ul class="visit-list list-unstyled mb-0">
-                                <li><strong>Sunday Worship</strong> — 9:00 AM</li>
-                                <li><strong>Prayer & Community</strong> — Wednesdays, 6:00 PM</li>
-                                <li><strong>Location</strong> — New Disaneng Farms, Maun</li>
-                                <li><strong>Directions</strong> — Just off the main road toward the church campus</li>
-                                <li><strong>Plan Your Visit</strong> — We’ll help you arrive with confidence.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="visit-details-card visit-card p-4">
-                        <h3 class="text-gold mb-3">Your first visit made simple</h3>
-                        <p class="text-muted mb-3">Arrive as you are. We’ll welcome your family, answer your questions, and make sure your first experience feels like home.</p>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <p class="mb-2"><strong>📍</strong> Maun Branch, New Disaneng Farms</p>
-                                <p class="mb-2"><strong>📍</strong> Gaborone Branch available for enquiries</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="mb-2"><strong>📞</strong> <a href="tel:+26775919290" class="text-decoration-none">+267 759 19290</a></p>
-                                <p class="mb-2"><strong>✉</strong> <a href="mailto:kingdom18gathering@gmail.com" class="text-decoration-none">kingdom18gathering@gmail.com</a></p>
-                            </div>
-                        </div>
-                        <a href="../gaborone/" class="btn btn-outline-gold mt-3">Gaborone Branch Info</a>
-                    </div>
-                    <div class="map-card visit-card p-0 overflow-hidden mt-4">
-                        <iframe src="https://www.google.com/maps?q=Maun,+New+Disaneng+Farms&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="prayer" class="py-5">
-        <div class="container">
-            <div class="text-center mb-4">
-                <p class="section-eyebrow">Prayer Request</p>
-                <h2 class="section-title mb-3">Share Your Request</h2>
-                <p class="section-subtitle mx-auto" style="max-width:700px;">Our prayer team is standing with you. Fill out the form below and we’ll pray for your need.</p>
-            </div>
-            <form id="prayerForm" class="p-4 visit-card">
-                <div class="mb-3">
-                    <label for="prayerName" class="form-label text-gold">Name</label>
-                    <input type="text" id="prayerName" class="form-control" placeholder="Your name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="prayerEmail" class="form-label text-gold">Email</label>
-                    <input type="email" id="prayerEmail" class="form-control" placeholder="Your email (optional)">
-                </div>
-
-                <div class="mb-3">
-                    <label for="prayerPhone" class="form-label text-gold">Phone Number</label>
-                    <input type="tel" id="prayerPhone" class="form-control" placeholder="Phone number (optional)">
-                </div>
-
-                <div class="mb-3">
-                    <label for="prayerMessage" class="form-label text-gold">Prayer Request</label>
-                    <textarea id="prayerMessage" class="form-control" rows="5" placeholder="Share your prayer request" required></textarea>
-                </div>
-
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="prayerAnonymous">
-                    <label class="form-check-label text-muted" for="prayerAnonymous">Keep this request anonymous</label>
-                </div>
-                <button type="submit" class="btn btn-gold w-100" id="prayerSubmit">
-                    <span class="btn-text">Send Prayer Request</span>
-                    <span class="btn-spinner spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
-                </button>
-                <p class="form-note text-muted mt-3 small">🔒 Your request will remain confidential and receive prayer from our care team.</p>
-            </form>
-        </div>
-    </section>
-
-    <section id="counsel" class="py-5 bg-light">
-        <div class="container">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-7" data-animate="fade-up">
-                    <p class="section-eyebrow text-gold mb-2">PASTORAL CARE</p>
-                    <h2 class="section-title mb-4">You Are Not Alone</h2>
-                    <div class="scripture-card featured-scripture mb-4 p-5 rounded-4 shadow-soft">
-                        <p class="mb-3 scripture-text">"Come to Me, all you who are weary and burdened,<br>and I will give you rest."</p>
-                        <p class="mb-0 scripture-reference">— Matthew 11:28</p>
-                    </div>
-                    <p class="text-muted mb-4">
-                        Every season of life comes with challenges, but you were never meant to walk through them alone.
-                    </p>
-                    <p class="text-muted mb-3">
-                        Whether you're facing anxiety, grief, family struggles, uncertainty, or simply need someone to pray with you,
-                        our pastoral care team is here to listen, encourage, and stand with you in faith.
-                    </p>
-                    <p class="text-muted mb-4">
-                        No judgment.<br>
-                        No pressure.<br>
-                        Just compassionate hearts pointing you to Christ.
-                    </p>
-                    <div class="row g-3 mb-4 feature-list">
-                        <div class="col-md-4">
-                            <div class="feature-card p-3 rounded-4">
-                                <div class="feature-icon mb-3">❤️</div>
-                                <h6 class="mb-2">Confidential Support</h6>
-                                <p class="mb-0 text-muted small">Every conversation is handled with care, wisdom, and confidentiality.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="feature-card p-3 rounded-4">
-                                <div class="feature-icon mb-3">🙏</div>
-                                <h6 class="mb-2">Prayer & Encouragement</h6>
-                                <p class="mb-0 text-muted small">Receive biblical encouragement and prayer from our pastoral team.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="feature-card p-3 rounded-4">
-                                <div class="feature-icon mb-3">🤝</div>
-                                <h6 class="mb-2">Walk Together</h6>
-                                <p class="mb-0 text-muted small">We believe healing happens in God's presence and within His family.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-summary-card p-4 rounded-4 shadow-soft border border-gold border-opacity-20 mb-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <p class="text-uppercase text-gold fw-bold mb-1">Prayer & Inquiries</p>
-                                <a href="tel:+26775919290" class="d-block text-dark fw-semibold fs-6">+267 759 19290</a>
-                                <a href="mailto:kingdom18gathering@gmail.com?subject=Counseling Request" class="d-block text-dark text-decoration-none">kingdom18gathering@gmail.com</a>
-                            </div>
-                        </div>
-                        <p class="text-muted small mb-0">A caring team is ready to receive your request and walk with you in every step.</p>
-                    </div>
-                    <blockquote class="quote-block fst-italic text-center text-muted mb-0 px-3 py-4 rounded-4">
-                        <p class="mb-2">"God is our refuge and strength,<br>an ever-present help in trouble."</p>
-                        <footer class="text-gold fw-semibold">Psalm 46:1</footer>
-                    </blockquote>
-                </div>
-                <div class="col-lg-5">
-                    <div class="visit-card p-4">
-                        <h5 class="mb-3">Reach out for support</h5>
-                        <p class="mb-2 text-muted">You don't have to walk alone. Our pastoral care team is here to listen, pray and encourage you.</p>
-                        <form id="counselingForm" class="mt-3">
-                            <div class="mb-3">
-                                <label for="counselName" class="form-label text-gold">Name</label>
-                                <input type="text" id="counselName" class="form-control" placeholder="Your name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="counselPhone" class="form-label text-gold">Phone</label>
-                                <input type="tel" id="counselPhone" class="form-control" placeholder="Phone number" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="counselEmail" class="form-label text-gold">Email</label>
-                                <input type="email" id="counselEmail" class="form-control" placeholder="Your email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="counselPreferred" class="form-label text-gold">Preferred Contact</label>
-                                <select id="counselPreferred" class="form-select">
-                                    <option value="email">Email</option>
-                                    <option value="phone">Phone</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="counselMessage" class="form-label text-gold">Message</label>
-                                <textarea id="counselMessage" class="form-control" rows="4" placeholder="How can we support you?" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-gold w-100" id="counselSubmit">
-                                <span class="btn-text">Speak With Someone</span>
-                                <span class="btn-spinner spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <p class="section-eyebrow text-gold mb-2">Welcome</p>
+                    <h1 class="display-5 section-title-dark mb-3">We're Here to Walk With You</h1>
+                    <p class="section-subtitle mb-4">Whether you're planning your first visit, seeking prayer, or just want to connect, there's a place for you here.</p>
+                    
+                    <!-- 4 CTA Buttons -->
+                    <div class="hero-ctas row g-3 justify-content-center">
+                        <div class="col-12 col-sm-6 col-lg-5">
+                            <button type="button" class="btn btn-gold btn-lg w-100" data-modal-target="modal-contact">
+                                <i class="fas fa-envelope me-2"></i> Send a Message
                             </button>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-5">
+                            <button type="button" class="btn btn-outline-gold btn-lg w-100" data-modal-target="modal-prayer">
+                                <i class="fas fa-praying-hands me-2"></i> Request Prayer
+                            </button>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-5">
+                            <button type="button" class="btn btn-outline-gold btn-lg w-100" data-modal-target="modal-counseling">
+                                <i class="fas fa-heart me-2"></i> Talk to Someone
+                            </button>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-5">
+                            <a href="https://wa.me/26775919290?text=Hello%20Kingdom%20Gathering.%20I%20would%20like%20to%20plan%20a%20visit%20to%20the%20Gaborone%20branch." class="btn btn-outline-gold btn-lg w-100" target="_blank" rel="noopener">
+                                <i class="fas fa-calendar-check me-2"></i> Plan Your Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <main class="py-5">
+        <div class="container">
+            <!-- Contact Information & Form -->
+            <div class="row g-4 mb-5">
+                <!-- Left Column: Contact Information -->
+                <div class="col-lg-5">
+                    <div class="glass-card p-4 mb-4 fade-in-section">
+                        <h4 class="text-gold mb-3 d-flex align-items-center">
+                            <i class="fas fa-info-circle me-2"></i> Contact Information
+                        </h4>
+                        <div class="mb-4">
+                            <p class="mb-2"><strong>📞 Phone:</strong></p>
+                            <a href="tel:+26775919290" class="text-gold text-decoration-none fs-6" data-setting="main_phone">+267 759 19290</a>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-2"><strong>✉️ Email:</strong></p>
+                            <a href="mailto:kingdom18gathering@gmail.com" class="text-gold text-decoration-none" data-setting="main_email">kingdom18gathering@gmail.com</a>
+                        </div>
+                        <hr class="my-3 border-gold border-opacity-25">
+                        <div class="mb-3">
+                            <h5 class="text-gold mb-2">🕒 Office Hours</h5>
+                            <p class="text-muted mb-0">Monday – Friday<br>08:00 AM – 5:00 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="glass-card p-4 fade-in-section">
+                        <h4 class="text-gold mb-3 d-flex align-items-center">
+                            <i class="fas fa-share-alt me-2"></i> Connect With Us
+                        </h4>
+                        <div class="social-icons d-flex gap-3">
+                            <a href="https://www.facebook.com/kingdomgatheringchurch" class="social-link" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/kingdomgatheringchurch?igsh=MXF6djc2NnVicnE0ZQ==" class="social-link" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@kingdom.gatheringbw?_r=1&_t=ZS-97HvuVXY3E5" class="social-link" aria-label="TikTok" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                            <a href="javascript:void(0);" class="social-link" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Contact Form ONLY -->
+                <div class="col-lg-7">
+                    <div id="contactFormCard" class="glass-card p-4 fade-in-section">
+                        <h4 class="text-gold mb-3 d-flex align-items-center">
+                            <i class="fas fa-message me-2"></i> Send Us a Message
+                        </h4>
+                        <p class="text-muted mb-4">We'd love to hear from you. Fill out the form below and our team will get back to you soon.</p>
+                        
+                        <form id="contactForm" novalidate>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Name <span class="text-gold">*</span></label>
+                                    <input id="contactName" class="form-control bg-form text-white border-gold-subtle" placeholder="Your full name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Email <span class="text-gold">*</span></label>
+                                    <input id="contactEmail" type="email" class="form-control bg-form text-white border-gold-subtle" placeholder="your@email.com" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Phone</label>
+                                    <input id="contactPhone" class="form-control bg-form text-white border-gold-subtle" placeholder="(Optional)">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Subject <span class="text-gold">*</span></label>
+                                    <input id="contactSubject" class="form-control bg-form text-white border-gold-subtle" placeholder="What is this about?" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-muted">Message <span class="text-gold">*</span></label>
+                                    <textarea id="contactMessage" rows="5" class="form-control bg-form text-white border-gold-subtle" placeholder="Your message here..." required></textarea>
+                                </div>
+                                <div class="col-12 d-grid">
+                                    <button id="contactSubmit" class="btn btn-gold btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i> Send Message
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Meet Us Online -->
-    <section class="py-5 bg-dark text-white">
-        <div class="container">
-            <div class="text-center mb-4">
-                <p class="section-eyebrow">Meet Us Online</p>
-                <h2 class="section-title-dark">Stay connected</h2>
-                <p class="section-subtitle mx-auto" style="max-width:700px;">Follow our community on social media for news, highlights, teachings, and encouragement.</p>
-            </div>
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <a href="https://facebook.com/share/1AbP9GkEg/" target="_blank" rel="noopener" class="card social-card p-4 text-decoration-none text-white h-100">
-                        <div class="social-card-body d-flex flex-column h-100">
-                            <div>
-                                <div class="display-6 text-gold mb-2"><i class="fab fa-facebook-f"></i></div>
-                                <h5 class="mb-2">Facebook</h5>
-                                <p class="mb-3">Stay updated with church news.</p>
-                            </div>
-                            <div class="mt-auto d-flex justify-content-end align-items-center">
-                                <span class="social-card-cta">Visit →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="https://instagram.com/kingdomgatheringchurch" target="_blank" rel="noopener" class="card social-card p-4 text-decoration-none text-white h-100">
-                        <div class="social-card-body d-flex flex-column h-100">
-                            <div>
-                                <div class="display-6 text-gold mb-2"><i class="fab fa-instagram"></i></div>
-                                <h5 class="mb-2">Instagram</h5>
-                                <p class="mb-3">Moments from worship and community life.</p>
-                            </div>
-                            <div class="mt-auto d-flex justify-content-end align-items-center">
-                                <span class="social-card-cta">Visit →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="https://tiktok.com/@kingdom.gatheringbw" target="_blank" rel="noopener" class="card social-card p-4 text-decoration-none text-white h-100">
-                        <div class="social-card-body d-flex flex-column h-100">
-                            <div>
-                                <div class="display-6 text-gold mb-2"><i class="fab fa-tiktok"></i></div>
-                                <h5 class="mb-2">TikTok</h5>
-                                <p class="mb-3">Short messages, worship highlights, and stories.</p>
-                            </div>
-                            <div class="mt-auto d-flex justify-content-end align-items-center">
-                                <span class="social-card-cta">Visit →</span>
-                            </div>
-                        </div>
-                    </a>
+                    <div id="contactResponse" class="d-none fade-in-section"></div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Upcoming Events -->
-    <section class="py-5 bg-contrast">
-        <div class="container">
-            <div class="text-center mb-4">
-                <p class="section-eyebrow">Upcoming Events</p>
-                <h2 class="section-title mb-3">Join Us for What’s Next</h2>
-                <p class="section-subtitle mx-auto" style="max-width:700px;">Stay connected to our next gatherings, prayer nights, and ministry days.</p>
-            </div>
-            <div id="eventsContainer" class="row g-4"></div>
-            <div id="eventsEmptyState" class="text-center text-muted mt-4 d-none">
-                <p>No upcoming events are available right now. Check back soon or visit our Events page.</p>
-            </div>
+            <!-- Quick Connect Cards Section -->
+            <section class="py-5">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="display-6 text-white mb-2">Other Ways to Connect</h2>
+                        <p class="text-muted lead">Choose what fits your needs best.</p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Prayer Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <button type="button" class="quick-connect-card glass-card p-4 h-100 fade-in-section text-start hover-lift" data-modal-target="modal-prayer">
+                            <div class="card-icon mb-3 display-6 text-gold">
+                                <i class="fas fa-praying-hands"></i>
+                            </div>
+                            <h5 class="text-white mb-2">Request Prayer</h5>
+                            <p class="text-muted mb-3">Share your prayer request with our care team. We're standing with you in faith.</p>
+                            <div class="text-gold fw-semibold">
+                                Learn More <i class="fas fa-arrow-right ms-2"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Counseling Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <button type="button" class="quick-connect-card glass-card p-4 h-100 fade-in-section text-start hover-lift" data-modal-target="modal-counseling">
+                            <div class="card-icon mb-3 display-6 text-gold">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h5 class="text-white mb-2">Talk to Someone</h5>
+                            <p class="text-muted mb-3">Speak confidentially with one of our pastors or care team. You don't have to walk alone.</p>
+                            <div class="text-gold fw-semibold">
+                                Learn More <i class="fas fa-arrow-right ms-2"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Visit Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="https://wa.me/26775919290?text=Hello%20Kingdom%20Gathering%2C%20I%20would%20like%20to%20inquire%20about%20the%20current%20Gaborone%20meeting%20location." class="quick-connect-card-link" target="_blank" rel="noopener">
+                            <div class="quick-connect-card glass-card p-4 h-100 fade-in-section text-center hover-lift">
+                                <div class="card-icon mb-3 display-6 text-gold">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <h5 class="text-white mb-2">Plan Your Visit</h5>
+                                <p class="text-muted mb-3">Your first visit should feel like coming home. We'll help you arrive with confidence.</p>
+                                <div class="text-gold fw-semibold">
+                                    Learn More <i class="fas fa-arrow-right ms-2"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Find a Kingdom Gathering Near You -->
+            <section class="py-5 mt-4">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="glass-card p-5 fade-in-section">
+                            <h3 class="text-gold mb-4 d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt me-3 display-6"></i> 
+                                <span>Find Us</span>
+                            </h3>
+
+                            <!-- Maun Campus -->
+                            <div class="mb-4">
+                                <h5 class="text-white mb-2">🟡 Maun Campus</h5>
+                                <p class="text-muted mb-2"><strong>Main Sanctuary</strong></p>
+                                <p class="text-muted mb-1">New Disaneng Farms, Maun</p>
+                                <p class="text-muted mb-3"><strong>Sunday Worship:</strong> 9:30 AM</p>
+                                <a href="https://www.google.com/maps?q=Maun,+New+Disaneng+Farms" target="_blank" rel="noopener" class="btn btn-outline-gold btn-sm">
+                                    <i class="fas fa-directions me-2"></i> Get Directions
+                                </a>
+                            </div>
+
+                            <hr class="my-4 border-gold border-opacity-25">
+
+                            <!-- Gaborone Fellowship -->
+                            <div>
+                                <h5 class="text-white mb-2">🟡 Gaborone Fellowship</h5>
+                                <p class="text-muted mb-3"> <strong>Click below to inquire about the current meeting location.</strong></p>
+                                <a href="https://wa.me/26775919290?text=Hello%20Kingdom%20Gathering.%20I%20would%20like%20to%20plan%20a%20visit%20to%20the%20Gaborone%20branch." target="_blank" rel="noopener" class="btn btn-gold btn-sm">
+                                    <i class="fab fa-whatsapp me-2"></i> Inquire About Gaborone Location
+                                </a>
+                            </div>
+
+                            <!-- Serowe Branch -->
+                            <div class="mt-4">
+                                <h5 class="text-white mb-2">🟡 Serowe Branch</h5>
+                                <p class="text-muted mb-3"> <strong>Click below to inquire about the current meeting location.</strong></p>
+                                <a href="https://wa.me/26775919290?text=Hello%20Kingdom%20Gathering.%20I%20would%20like%20to%20know%20the%20current%20Serowe%20meeting%20location." target="_blank" rel="noopener" class="btn btn-gold btn-sm">
+                                    <i class="fab fa-whatsapp me-2"></i> Inquire About Serowe Location
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="location-map-card overflow-hidden rounded-4 fade-in-section" style="height: 400px;">
+                            <iframe src="https://www.google.com/maps?q=Maun,+New+Disaneng+Farms&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+    </main>
 
     <!-- Final CTA -->
-    <section class="final-cta-section text-center">
+    <section class="final-cta-section py-5 text-center">
         <div class="container">
-            <h2 class="section-title-dark mb-3">Ready To Call Kingdom Gathering Home?</h2>
-            <p class="section-subtitle mx-auto" style="max-width:760px;">Everyone has a place here. We would love to welcome you this Sunday.</p>
-            <a href="../visit/index.html" class="btn btn-gold btn-lg mt-3">Plan Your Visit</a>
+            <h2 class="display-5 text-white mb-3">Ready to Call Kingdom Gathering Home?</h2>
+            <p class="lead text-muted mx-auto mb-4" style="max-width: 700px;">Whether you're searching for hope, community, or a place to grow in Christ, there's a place for you here. Every guest is welcomed.</p>
+            <a href="https://wa.me/26775919290?text=Hello%20Kingdom%20Gathering.%20I%20would%20like%20to%20plan%20a%20visit%20to%20the%20Gaborone%20branch." class="btn btn-gold btn-lg" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp me-2"></i> Inquire About Gaborone Location
+            </a>
         </div>
     </section>
-    </main>
-                <!-- Premium Footer -->
-    <footer class="premium-footer bg-black text-white pt-5 pb-3 border-top border-gold">
-        <div class="container">
-            <div class="row gy-5">
-                <div class="col-lg-4 footer-brand">
-                    <a href="../index.html" class="d-flex align-items-center text-decoration-none text-white">
-                        <img src="../images/logo.png" alt="Kingdom Gathering" class="footer-logo">
-                        <div class="ms-3">
-                            <p class="footer-tagline mb-2">Kingdom Gathering Church</p>
-                            <h2 class="footer-brand-name">Kingdom Gathering</h2>
+
+    <!-- Modal Overlay and Dialogs -->
+    <div id="modalOverlay" class="modal-overlay d-none" aria-hidden="true"></div>
+
+    <div id="modal-contact" class="page-modal d-none" role="dialog" aria-modal="true" aria-labelledby="modalContactLabel">
+        <div class="modal-window glass-card p-4 p-md-5">
+            <button type="button" class="modal-close" data-modal-close aria-label="Close send a message modal"><i class="fas fa-times"></i></button>
+            <h3 id="modalContactLabel" class="modal-title">Send a Message</h3>
+            <p class="modal-description">Share your prayer, question, or encouragement with our team. We'll follow up by email or phone.</p>
+            <form id="modalContactForm" novalidate>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Name <span class="text-gold">*</span></label>
+                        <input id="modalContactName" class="form-control bg-form text-white border-gold-subtle" placeholder="Your full name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Email <span class="text-gold">*</span></label>
+                        <input id="modalContactEmail" type="email" class="form-control bg-form text-white border-gold-subtle" placeholder="your@email.com" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Phone</label>
+                        <input id="modalContactPhone" class="form-control bg-form text-white border-gold-subtle" placeholder="Optional">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Subject <span class="text-gold">*</span></label>
+                        <input id="modalContactSubject" class="form-control bg-form text-white border-gold-subtle" placeholder="What is this about?" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted">Message <span class="text-gold">*</span></label>
+                        <textarea id="modalContactMessage" rows="5" class="form-control bg-form text-white border-gold-subtle" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <div class="col-12 d-grid">
+                        <button id="modalContactSubmit" type="submit" class="btn btn-gold btn-lg" data-original-text="Send Message">
+                            <i class="fas fa-paper-plane me-2"></i> Send Message
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <div id="modalContactResponse" class="d-none"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-prayer" class="page-modal d-none" role="dialog" aria-modal="true" aria-labelledby="modalPrayerLabel">
+        <div class="modal-window glass-card p-4 p-md-5 modal-dialog-scrollable">
+            <button type="button" class="modal-close" data-modal-close aria-label="Close prayer request modal"><i class="fas fa-times"></i></button>
+            <h3 id="modalPrayerLabel" class="modal-title">Request Prayer</h3>
+            <p class="modal-description">Send your prayer request privately to our care team. We stand with you in faith.</p>
+
+            <div class="modal-body">
+                <form id="modalPrayerForm" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Name <span class="text-gold">*</span></label>
+                            <input id="modalPrayerName" class="form-control bg-form text-white border-gold-subtle" placeholder="Your full name" required>
                         </div>
-                    </a>
-                    <p class="footer-mission mt-4">1 Timothy 3:15</p>
-                </div>
-                <div class="col-lg-2">
-                    <h3 class="footer-column-title">Explore</h3>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="../ministries/" class="footer-link">Ministries</a></li>
-                        <li><a href="../services/" class="footer-link">Services</a></li>
-                        <li><a href="../events/" class="footer-link">Events</a></li>
-                        <li><a href="../about/" class="footer-link">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3">
-                    <h3 class="footer-column-title">Connect</h3>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="../contact/" class="footer-link">Contact</a></li>
-                        <li><a href="../giving/" class="footer-link">Give</a></li>
-                        <li><a href="../gaborone/" class="footer-link">Gaborone Branch</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2">
-                    <h3 class="footer-column-title">Quick Links</h3>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="/privacy.html" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="/terms.html" class="footer-link">Terms</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 footer-service-time">
-                    <h3 class="footer-column-title">Service Times</h3>
-                    <div class="mb-3">
-                        <h6>Sunday Worship</h6>
-                        <p class="mb-0">9:00 AM – 11:00 AM</p>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Email <span class="text-gold">*</span></label>
+                            <input id="modalPrayerEmail" type="email" class="form-control bg-form text-white border-gold-subtle" placeholder="your@email.com" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Phone</label>
+                            <input id="modalPrayerPhone" class="form-control bg-form text-white border-gold-subtle" placeholder="Optional">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted">Prayer Request <span class="text-gold">*</span></label>
+                            <textarea id="modalPrayerMessage" rows="5" class="form-control bg-form text-white border-gold-subtle" placeholder="How can we pray for you?" required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <div id="modalPrayerResponse" class="d-none"></div>
+                        </div>
                     </div>
-                    <div>
-                        <h6>Prayer & Community</h6>
-                        <p class="mb-0">Wednesdays, 6:00 PM</p>
-                    </div>
-                </div>
+                </form>
             </div>
-            <div class="row mt-5 pt-4 border-top border-light border-opacity-10">
-                <div class="col text-center text-muted small footer-divider">&copy; Kingdom Gathering Church<br>Made with excellence for the Kingdom.</div>
+
+            <div class="modal-footer">
+                <div class="w-100">
+                    <button id="modalPrayerSubmit" type="button" class="btn btn-gold btn-lg" data-original-text="Submit Prayer Request">
+                        <i class="fas fa-praying-hands me-2"></i> Submit Prayer Request
+                    </button>
+                </div>
             </div>
         </div>
-    </footer>
-    <!-- Floating WhatsApp quick menu -->
+    </div>
+
+    <div id="modal-counseling" class="page-modal d-none" role="dialog" aria-modal="true" aria-labelledby="modalCounselingLabel">
+        <div class="modal-window glass-card p-4 p-md-5 modal-dialog-scrollable">
+            <button type="button" class="modal-close" data-modal-close aria-label="Close counseling request modal"><i class="fas fa-times"></i></button>
+            <h3 id="modalCounselingLabel" class="modal-title">Talk to Someone</h3>
+            <p class="modal-description">Submit a confidential counseling request and we will connect you with a caring member of our team.</p>
+
+            <div class="modal-body">
+                <form id="modalCounselingForm" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Name <span class="text-gold">*</span></label>
+                            <input id="modalCounselingName" class="form-control bg-form text-white border-gold-subtle" placeholder="Your full name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Email <span class="text-gold">*</span></label>
+                            <input id="modalCounselingEmail" type="email" class="form-control bg-form text-white border-gold-subtle" placeholder="your@email.com" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Phone</label>
+                            <input id="modalCounselingPhone" class="form-control bg-form text-white border-gold-subtle" placeholder="Optional">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Preferred Contact <span class="text-gold">*</span></label>
+
+                            <select id="modalCounselingPreferredContact"
+                                    class="form-control bg-form text-white border-gold-subtle"
+                                    required>
+                                <option value="">Select</option>
+                                <option value="Phone">Phone</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                                <option value="Email">Email</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted">Share a Brief Summary <span class="text-gold">*</span></label>
+                            <textarea id="modalCounselingMessage" rows="5" class="form-control bg-form text-white border-gold-subtle" placeholder="Briefly describe how we can support you." required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <div id="modalCounselingResponse" class="d-none"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="w-100">
+                    <button id="modalCounselingSubmit" type="button" class="btn btn-gold btn-lg" data-original-text="Submit Counseling Request">
+                        <i class="fas fa-heart me-2"></i> Submit Counseling Request
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Footer (shared) -->
+    <div data-footer-placeholder></div>
+
+    <!-- Floating WhatsApp Button with Animation -->
     <div id="whatsappFab" class="whatsapp-fab" aria-hidden="false">
-        <button id="whatsappToggle" class="whatsapp-btn" aria-label="Open WhatsApp menu">💬</button>
+        <div class="whatsapp-tooltip" role="tooltip">Need help? Chat with us</div>
+        <button id="whatsappToggle" class="whatsapp-btn" aria-label="Open WhatsApp menu" title="Chat with us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </button>
         <div id="whatsappMenu" class="whatsapp-menu d-none" role="dialog" aria-label="WhatsApp options">
-            <h6 class="mb-2">Need Help?</h6>
+            <h6 class="mb-2">How can we help?</h6>
             <ul class="list-unstyled mb-0">
-                <li><a href="#" data-wa="Request Prayer">Request Prayer</a></li>
-                <li><a href="#" data-wa="Plan a Visit">Plan a Visit</a></li>
-                <li><a href="#" data-wa="Counseling Request">Counseling</a></li>
-                <li><a href="#" data-wa="General Inquiry">General Inquiry</a></li>
+                <li><a href="javascript:void(0);" data-wa="I would like to know more about Kingdom Gathering">General Inquiry</a></li>
+                <li><a href="javascript:void(0);" data-wa="I would like to know the current Gaborone meeting location">Gaborone Location</a></li>
+                <li><a href="javascript:void(0);" data-wa="I would like to visit on Sunday">Plan a Visit</a></li>
+                <li><a href="javascript:void(0);" data-wa="I need prayer support">Prayer Support</a></li>
             </ul>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabaseClient.js"></script>
-<script src="../js/publicEvents.js"></script>
-<script src="../js/main.js"></script>
-<script src="../js/contact.js"></script>
-<script src="../js/prayer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabaseClient.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/contact.js"></script>
+    <script src="/js/footer-loader.js"></script>
 </body>
 </html>
-
-
-
-
-
+                      

@@ -1,0 +1,2 @@
+Footer patch required: shared footer placeholder not yet applied to public pages.
+Plan: replace individual <footer class="premium-footer..."> blocks with <div data-footer-placeholder></div> and add js/footer-loader.js to the page bottom.
