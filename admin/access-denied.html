@@ -16,11 +16,25 @@
     </style>
 </head>
 <body>
+    <!-- Access denied page is intentionally not RBAC-protected. -->
     <div class="access-denied-container">
         <div class="access-denied-code">403</div>
         <h1 class="access-denied-title">Access Denied</h1>
         <p class="access-denied-message">You do not have permission to access this page.</p>
+
         <a href="dashboard.html" class="access-denied-link">Back to Dashboard</a>
+
+        <button onclick="clearSession()" class="access-denied-link mt-3" style="background: transparent;">
+            Sign Out & Return to Login
+        </button>
     </div>
+
+    <script>
+        function clearSession() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = "./login.html";
+        }
+    </script>
 </body>
 </html>

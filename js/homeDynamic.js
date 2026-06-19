@@ -2,7 +2,7 @@ const homepageFeaturedEvents = document.getElementById('homepageFeaturedEvents')
 const homepageFeaturedEventsEmpty = document.getElementById('homepageFeaturedEventsEmpty');
 const homepageFeaturedEventsError = document.getElementById('homepageFeaturedEventsError');
 const homepageFeaturedEventsRetry = document.getElementById('homepageFeaturedEventsRetry');
-const homepageBlogCards = document.getElementById('homepageBlogCards');
+const homepageLatestblog = document.getElementById('homepageLatestblog');
 const homepageBlogEmptyState = document.getElementById('homepageBlogEmptyState');
 const homepageGalleryGrid = document.getElementById('homepageGalleryGrid');
 const homepageGalleryEmptyState = document.getElementById('homepageGalleryEmptyState');
@@ -119,33 +119,57 @@ function renderFeaturedEventsLoading() {
     }
 }
 
-function renderHomeBlogs(posts) {
-    if (!homepageBlogCards) return;
+function getBlogImageUrl(post, defaultImage = 'images/logo.png') {
+    if (post?.featured_image_path) {
+        return post.featured_image_path;
+    }
+    return defaultImage;
+}
 
-    homepageBlogCards.innerHTML = '';
+function getBlogPublishedDate(post) {
+    const dateValue = post.published_at || post.created_at;
+    return formatPublishedDate(dateValue);
+}
+
+function renderHomeBlogs(posts) {
+    if (!homepageLatestblog) return;
+
+    homepageLatestblog.innerHTML = '';
     if (!posts || posts.length === 0) {
         homepageBlogEmptyState?.classList.remove('d-none');
         return;
     }
 
     homepageBlogEmptyState?.classList.add('d-none');
-    posts.forEach(post => {
-        const imageUrl = post.featured_image_path || 'images/logo.png';
-        const excerpt = post.excerpt || post.short_description || 'Read more about this update from Kingdom Gathering.';
-        homepageBlogCards.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100 border-0 shadow-lg bg-black text-white">
-                    <img src="${imageUrl}" class="card-img-top" alt="${post.title}" style="height: 260px; object-fit: cover;" onerror="this.src='images/logo.png'">
-                    <div class="card-body d-flex flex-column">
-                        <small class="text-gold mb-2">${formatPublishedDate(post.published_at)}</small>
-                        <h5 class="card-title fw-bold">${post.title || 'Untitled post'}</h5>
-                        <p class="card-text text-muted mb-4">${excerpt}</p>
-                        <a href="blog/post.html?slug=${encodeURIComponent(post.slug || '')}" class="btn btn-outline-gold mt-auto">Read More</a>
+    const latestBlog = posts[0];
+    const imageUrl = getBlogImageUrl(latestBlog, 'images/logo.png');
+    const excerpt = latestBlog.excerpt || latestBlog.short_description || 'Read more about this update from Kingdom Gathering.';
+    const category = latestBlog.category || 'Kingdom Insight';
+    const publishedDate = getBlogPublishedDate(latestBlog);
+
+    homepageLatestblog.innerHTML = `
+        <div class="col-lg-10 mx-auto">
+            <div class="card homepage-latestblog-card border-0 shadow-lg bg-black text-white overflow-hidden">
+                <div class="row g-0 gx-lg-5 align-items-center">
+                    <div class="col-lg-5">
+                        <img src="${imageUrl}" class="img-fluid w-100 homepage-latestblog-image" alt="${latestBlog.title}" style="min-height: 320px;" onerror="this.src='images/logo.png'">
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="card-body d-flex flex-column h-100 p-4 p-md-5">
+                            <span class="badge bg-gold text-dark mb-3">${category}</span>
+                            <h3 class="card-title fw-bold mb-3">${latestBlog.title || 'Latest Kingdom Insight'}</h3>
+                            <p class="text-gold mb-3"><i class="fas fa-calendar-alt"></i> ${publishedDate || 'Date coming soon'}</p>
+                            <p class="card-text text-muted mb-5">${excerpt}</p>
+                            <div class="mt-auto d-flex flex-column flex-sm-row gap-3">
+                                <a href="blog/post.html?slug=${encodeURIComponent(latestBlog.slug || '')}" class="btn btn-gold">Read Article</a>
+                                <a href="blog/index.html" class="btn btn-outline-gold">View All Blogs</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        `;
-    });
+        </div>
+    `;
 }
 
 function renderHomeGallery(items) {
@@ -174,8 +198,8 @@ function showLoadingStates() {
     if (homepageFeaturedEvents) {
         renderFeaturedEventsLoading();
     }
-    if (homepageBlogCards) {
-        homepageBlogCards.innerHTML = `
+    if (homepageLatestblog) {
+        homepageLatestblog.innerHTML = `
             <div class="col-12 text-center py-5 text-gold">Loading latest blog posts...</div>
         `;
     }
@@ -241,10 +265,8 @@ async function loadHomepageContent() {
             fetchHomepageEvents(),
             supabaseClient
                 .from('blogs')
-                .select('id,title,slug,excerpt,short_description,featured_image_path,published_at,status')
-                .eq('status', 'published')
-                .order('published_at', { ascending: false })
-                .limit(3),
+                .select('id,title,slug,excerpt,featured_image_path,published_at,created_at,status,category')
+                .order('published_at', { ascending: false }),
             supabaseClient
                 .from('media_assets')
                 .select('id,bucket_name,file_path,content_type,file_name')
@@ -256,10 +278,26 @@ async function loadHomepageContent() {
         const { data: blogData, error: blogError } = blogResponse;
         const { data: galleryData, error: galleryError } = galleryResponse;
 
+        console.log('[blogs] raw blogs:', blogData);
+
+        const publishedBlogs = (blogData || []).filter(blog => {
+            const status = String(blog.status || '').toLowerCase().trim();
+            return status === 'published';
+        });
+
+        publishedBlogs.sort((a, b) => {
+            const aDate = new Date(a.published_at || a.created_at || 0).getTime();
+            const bDate = new Date(b.published_at || b.created_at || 0).getTime();
+            return bDate - aDate;
+        });
+
+        const latestBlog = publishedBlogs.length > 0 ? [publishedBlogs[0]] : [];
+
+        console.log('[blogs] filtered published blogs:', publishedBlogs);
+        console.log('[blogs] homepage latest blog:', latestBlog[0]);
         console.log('Homepage featured events data:', homepageEvents);
         console.log('Homepage featuredEvents container:', homepageFeaturedEvents);
         console.log('Homepage featuredEvents first object:', homepageEvents[0]);
-        console.log('Homepage blog data:', blogData);
         console.log('Homepage blog error:', blogError);
         console.log('Homepage gallery data:', galleryData);
         console.log('Homepage gallery error:', galleryError);
@@ -270,7 +308,7 @@ async function loadHomepageContent() {
             renderFeaturedEvents([]);
         }
 
-        renderHomeBlogs(blogData || []);
+        renderHomeBlogs(latestBlog);
         renderHomeGallery(galleryData || []);
     } catch (error) {
         console.error('Error loading homepage content:', error);

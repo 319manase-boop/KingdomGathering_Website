@@ -34,7 +34,7 @@ function renderPost(post) {
         imageEl.alt = post.title || "Blog post image";
     }
     if (dateEl) {
-        const publishedDate = new Date(post.published_at).toLocaleDateString("en-US", {
+        const publishedDate = new Date(post.published_at || post.created_at).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -56,13 +56,12 @@ async function loadBlogPost() {
         console.log("=== loadBlogPost START ===");
         console.log("Operation: load published blog post by slug");
         console.log("Slug:", slug);
-        console.log("Query: select * from blogs where slug = ? AND status = 'published' limit 1");
+        console.log("Query: select * from blogs where slug = ? limit 1");
 
         const { data, error } = await supabaseClient
             .from("blogs")
             .select("*")
             .eq("slug", slug)
-            .eq("status", "published")
             .order("published_at", { ascending: false })
             .limit(1)
             .single();
@@ -73,6 +72,14 @@ async function loadBlogPost() {
         if (error || !data) {
             showPostError("This blog post could not be loaded. It may no longer be published.");
             console.error("Blog post load failed:", error);
+            console.log("=== loadBlogPost FAILED ===");
+            return;
+        }
+
+        const status = String(data.status || '').toLowerCase().trim();
+        if (status !== 'published') {
+            showPostError("This blog post could not be loaded. It may no longer be published.");
+            console.error("Blog post not published:", data.status);
             console.log("=== loadBlogPost FAILED ===");
             return;
         }

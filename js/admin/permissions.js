@@ -2,12 +2,25 @@
 
 const PERMISSION_MATRIX = {
     admin: ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
-    pastor: ['dashboard', 'prayer', 'contact', 'counseling', 'events'],
+    pastor: ['dashboard', 'prayer', 'contact', 'counseling', 'events', 'blogs', 'media'],
     media: ['dashboard', 'blogs', 'events', 'media'],
     finance: ['dashboard', 'giving'],
     member: [],
     guest: []
 };
+
+const ROLE_ALIAS_MAP = {
+    'super admin': 'admin',
+    'administrator': 'admin',
+    'apostle': 'pastor',
+    'pastoral care': 'pastor',
+    'media team': 'media'
+};
+
+function normalizeRole(role) {
+    const normalized = String(role || '').trim().toLowerCase();
+    return ROLE_ALIAS_MAP[normalized] || normalized;
+}
 
 async function getAdminSession() {
     const { data, error } = await supabaseClient.auth.getSession();
@@ -21,6 +34,7 @@ async function getAdminSession() {
 async function checkAdminAuth() {
     const session = await getAdminSession();
     if (!session) {
+        console.log('Redirecting to login because no valid admin session was found.');
         window.location.href = './login.html';
         return null;
     }
@@ -28,59 +42,47 @@ async function checkAdminAuth() {
 }
 
 async function getUserRole(userId) {
-    console.log("=== getUserRole START ===");
-    console.log("Operation: Query users table for role_id and status");
-    console.log("Payload: userId =", userId);
-    
     const { data: userData, error: userError } = await supabaseClient
         .from("users")
         .select("role_id, status")
         .eq("id", userId)
         .single();
 
-    console.log("Response (users query):", userData);
-    console.log("Error (users query):", userError);
+    console.log("SESSION USER ID:", userId);
+    console.log("USER DATA FROM USERS TABLE:", userData);
+    console.log("USER ERROR:", userError);
 
-    if (userError || !userData || userData.status !== "active") {
-        console.log("getUserRole failed at users query");
+    if (userError || !userData) {
         return null;
     }
 
-    console.log("Operation: Query roles table for role name");
-    console.log("Payload: roleId =", userData.role_id);
-    
+    if (normalizeRole(userData.status) !== "active") {
+        console.warn("User is not active:", userData.status);
+        return null;
+    }
+
+    if (!userData.role_id) {
+        console.warn("User has no role_id");
+        return null;
+    }
+
     const { data: roleData, error: roleError } = await supabaseClient
         .from("roles")
         .select("name")
         .eq("id", userData.role_id)
         .single();
 
-    console.log("Response (roles query):", roleData);
-    console.log("Error (roles query):", roleError);
+    console.log("ROLE DATA FROM ROLES TABLE:", roleData);
+    console.log("ROLE ERROR:", roleError);
 
     if (roleError || !roleData) {
-        console.log("getUserRole failed at roles query - THIS IS THE 403 ERROR");
-        console.log("Missing RLS policy on 'roles' table for authenticated users");
         return null;
     }
 
-    console.log("=== getUserRole SUCCESS ===");
-    return roleData.name;
-}
+    const finalRole = normalizeRole(roleData.name);
+    console.log("FINAL RESOLVED ROLE:", finalRole);
 
-async function getCurrentUserRole() {
-    if (window.__adminUserRole) {
-        return window.__adminUserRole;
-    }
-
-    const session = await getAdminSession();
-    if (!session) {
-        return null;
-    }
-
-    const role = await getUserRole(session.user.id);
-    window.__adminUserRole = role;
-    return role;
+    return finalRole;
 }
 
 function getPageKeyFromHref(href) {
@@ -98,31 +100,72 @@ async function applySidebarPermissions() {
     if (!role) return;
 
     const allowedPages = PERMISSION_MATRIX[role] || [];
+
     document.querySelectorAll('.admin-sidebar a.nav-link').forEach(link => {
         const href = link.getAttribute('href');
         if (!href || href.startsWith('#')) return;
+
         const pageKey = getPageKeyFromHref(href);
         if (!pageKey) return;
+
         if (!allowedPages.includes(pageKey)) {
             link.style.display = 'none';
         }
     });
 }
 
+async function getCurrentUserRole() {
+    if (window.__adminUserRole) {
+        return normalizeRole(window.__adminUserRole);
+    }
+
+    const session = await getAdminSession();
+
+    if (!session) {
+        return null;
+    }
+
+    const role = await getUserRole(session.user.id);
+    const normalizedRole = normalizeRole(role);
+
+    window.__adminUserRole = normalizedRole;
+
+    console.log("CURRENT USER ROLE RESOLVED:", normalizedRole);
+
+    return normalizedRole;
+}
+
+window.getCurrentUserRole = getCurrentUserRole;
+
 async function checkPagePermission(pageKey) {
+    console.log('checkPagePermission called with pageKey:', pageKey);
     const session = await checkAdminAuth();
     if (!session) return false;
 
     const role = await getCurrentUserRole();
+
     if (!role) {
-        window.location.href = './access-denied.html';
-        return false;
+        console.warn('No valid role found. Redirecting to access-denied.');
+        console.log('Current page:', pageKey);
+        console.warn("ACCESS DENIED REDIRECT BLOCKED FOR DEBUG");
+return false;
     }
 
+    const normalizedPageKey = String(pageKey || '').trim().toLowerCase();
     const allowedPages = PERMISSION_MATRIX[role] || [];
-    if (!allowedPages.includes(pageKey)) {
-        window.location.href = './access-denied.html';
-        return false;
+
+    console.log('PAGE KEY:', normalizedPageKey);
+    console.log('Current role:', role);
+    console.log('ALLOWED PAGES:', allowedPages);
+
+    if (!allowedPages.includes(normalizedPageKey)) {
+        console.log('Redirecting to access-denied because page is not allowed for this role.', {
+            normalizedPageKey,
+            role,
+            allowedPages
+        });
+        console.warn("ACCESS DENIED REDIRECT BLOCKED FOR DEBUG");
+return false;
     }
 
     await applySidebarPermissions();
@@ -142,11 +185,9 @@ function setupLogoutButtons() {
         window.location.href = './login.html';
     };
 
-    const logoutButton = document.getElementById('logoutButton');
-    const sidebarLogout = document.getElementById('sidebarLogout');
+    document.getElementById('logoutButton')?.addEventListener('click', signOutAndRedirect);
 
-    logoutButton?.addEventListener('click', signOutAndRedirect);
-    sidebarLogout?.addEventListener('click', async (event) => {
+    document.getElementById('sidebarLogout')?.addEventListener('click', async (event) => {
         event.preventDefault();
         await signOutAndRedirect();
     });
@@ -155,7 +196,16 @@ function setupLogoutButtons() {
 async function setupAdminPage(pageKey) {
     const session = await checkPagePermission(pageKey);
     if (!session) return null;
+
     attachAdminUserEmail(session);
     setupLogoutButtons();
+
     return session;
 }
+
+window.getAdminSession = getAdminSession;
+window.checkAdminAuth = checkAdminAuth;
+window.getUserRole = getUserRole;
+window.getCurrentUserRole = getCurrentUserRole;
+window.checkPagePermission = checkPagePermission;
+window.setupAdminPage = setupAdminPage;

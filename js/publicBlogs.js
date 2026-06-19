@@ -41,13 +41,13 @@ function renderBlogCard(post) {
     const imageUrl = post.featured_image_path || "../images/logo.png";
     const excerpt = post.excerpt || (post.content ? `${post.content.slice(0, 120)}...` : "No description available.");
     const category = post.category || "Church Insight";
-    const publishedDate = formatPublishedDate(post.published_at);
+    const publishedDate = formatPublishedDate(post.published_at || post.created_at);
 
     const card = document.createElement("div");
     card.className = "col-lg-4 col-md-6";
     card.innerHTML = `
         <div class="card h-100 border-0 shadow-lg">
-            <img src="${imageUrl}" class="card-img-top" alt="${post.title}" style="height: 250px; object-fit: cover;">
+            <img src="${imageUrl}" class="card-img-top" alt="${post.title}" style="height: 250px; object-fit: cover;" onerror="this.src='../images/logo.png'">
             <div class="card-body d-flex flex-column">
                 <div class="mb-3">
                     <span class="badge bg-gold text-dark">${category}</span>
@@ -66,13 +66,13 @@ function renderResourceCard(post) {
     const imageUrl = post.featured_image_path || "../images/logo.png";
     const excerpt = post.excerpt || (post.content ? `${post.content.slice(0, 120)}...` : "No description available.");
     const category = post.category || "Resource";
-    const publishedDate = formatPublishedDate(post.published_at);
+    const publishedDate = formatPublishedDate(post.published_at || post.created_at);
 
     const card = document.createElement("div");
     card.className = "col-lg-4 col-md-6";
     card.innerHTML = `
         <div class="card h-100 border-0 shadow-lg">
-            <img src="${imageUrl}" class="card-img-top" alt="${post.title}" style="height: 250px; object-fit: cover;">
+            <img src="${imageUrl}" class="card-img-top" alt="${post.title}" style="height: 250px; object-fit: cover;" onerror="this.src='../images/logo.png'">
             <div class="card-body d-flex flex-column">
                 <div class="mb-3">
                     <span class="badge bg-gold text-dark">${category}</span>
@@ -152,19 +152,26 @@ async function fetchPublishedBlogs() {
     try {
         console.log("=== fetchPublishedBlogs START ===");
         console.log("Operation: fetch published blogs for public display");
-        console.log("Query: select * from blogs where status = 'published' order by published_at desc");
+        console.log("Query: select * from blogs order by published_at desc");
 
         const { data, error } = await supabaseClient
             .from('blogs')
             .select('*')
-            .eq('status', 'published')
             .order('published_at', { ascending: false });
 
-        console.log("Response (fetchPublishedBlogs):", data);
+        console.log("[blogs] raw blogs:", data);
         console.log("Error (fetchPublishedBlogs):", error);
-        console.log("Published blogs count:", data ? data.length : 0);
-        if (data && data.length > 0) {
-            console.log("Published blog titles:", data.map(b => b.title));
+        console.log("All blogs count:", data ? data.length : 0);
+
+        const publishedBlogs = (data || []).filter(blog => {
+            const status = String(blog.status || '').toLowerCase().trim();
+            return status === 'published';
+        });
+
+        console.log("[blogs] filtered published blogs:", publishedBlogs);
+        console.log("Published blogs count:", publishedBlogs.length);
+        if (publishedBlogs.length > 0) {
+            console.log("Published blog titles:", publishedBlogs.map(b => b.title));
         }
 
         if (error) {
@@ -173,7 +180,13 @@ async function fetchPublishedBlogs() {
             return [];
         }
 
-        sharedBlogData.posts = data || [];
+        publishedBlogs.sort((a, b) => {
+            const aDate = new Date(a.published_at || a.created_at || 0).getTime();
+            const bDate = new Date(b.published_at || b.created_at || 0).getTime();
+            return bDate - aDate;
+        });
+
+        sharedBlogData.posts = publishedBlogs;
         sharedBlogData.loaded = true;
         console.log("=== fetchPublishedBlogs SUCCESS ===");
         return sharedBlogData.posts;

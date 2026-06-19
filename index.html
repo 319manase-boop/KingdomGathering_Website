@@ -249,7 +249,7 @@
             <h2 class="section-title">Recent Blog Posts</h2>
             <p class="section-subtitle">Stories, devotionals, and church news from Kingdom Gathering.</p>
         </div>
-        <div id="homepageBlogCards" class="row g-4"></div>
+        <div id="homepageLatestblog" class="row g-4"></div>
         <div id="homepageBlogEmptyState" class="text-center mt-4 d-none">
             <p class="section-subtitle">No recent blog posts yet. Stay tuned for updates.</p>
         </div>
@@ -292,27 +292,6 @@
     <script src="js/main.js"></script>
     <script src="js/homeDynamic.js"></script>
     <script src="js/footer-loader.js"></script>
-    
-    const particleCount = 8;
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: ${Math.random() * 3 + 1}px;
-            height: ${Math.random() * 3 + 1}px;
-            background: rgba(212, 175, 55, ${Math.random() * 0.3 + 0.1});
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            animation: subtleParticles ${Math.random() * 8 + 6}s ease-in-out infinite;
-            animation-delay: ${Math.random() * 3}s;
-        `;
-        container.appendChild(particle);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', createParticles);
-</script>
 
 </body>
 

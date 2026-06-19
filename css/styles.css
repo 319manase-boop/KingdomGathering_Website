@@ -4,3 +4,77 @@
 @import url('responsive.css');
 @import url('premium.css');
 @import url('admin.css');
+
+/* Tighten homepage latest blog spacing and typography */
+.homepage-latestblog-card .card-body {
+	padding: 1.25rem 1.5rem;
+}
+
+/* Reduce vertical spacing on mobile */
+@media (max-width: 767.98px) {
+	.homepage-latestblog-card .card-body {
+		padding: 1rem;
+	}
+	.homepage-latestblog-card h3 {
+		font-size: 1.25rem;
+		margin-bottom: .5rem;
+	}
+	.homepage-latestblog-card .card-text {
+		margin-bottom: .75rem;
+	}
+}
+
+/* Desktop tweaks: slightly larger title, tighter meta spacing */
+@media (min-width: 768px) {
+	.homepage-latestblog-card h3 {
+		font-size: 1.6rem;
+		line-height: 1.15;
+	}
+	.homepage-latestblog-card .card-body { 
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+	}
+	.homepage-latestblog-card .text-gold {
+		margin-bottom: .6rem;
+	}
+}
+
+/* Image column: ensure consistent min-height and overflow handling */
+.homepage-latestblog-image { 
+	min-height: 320px;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Buttons: tighten spacing when stacked on mobile */
+.homepage-latestblog-card .btn { 
+	padding: .5rem 1rem;
+}
+.homepage-latestblog-card .mt-auto { 
+	margin-top: 12px !important;
+}
+
+/* Admin user management styles */
+.stat-card { cursor: default; transition: transform .18s ease, box-shadow .18s ease; }
+.stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+.stat-icon { width: 44px; height: 44px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; }
+
+.badge-gold { background: linear-gradient(180deg,#d4af37,#b8891f); color:#111; }
+.badge-purple { background:#6f42c1; color:#fff; }
+.badge-blue { background:#0d6efd; color:#fff; }
+.badge-green { background:#198754; color:#fff; }
+.badge-orange { background:#fd7e14; color:#111; }
+.badge-teal { background:#20c997; color:#111; }
+.badge-secondary { background:#6c757d; color:#fff; }
+
+.avatar-placeholder { font-weight:700; }
+
+.user-drawer { position: fixed; right: -420px; top: 0; bottom: 0; width: 420px; z-index: 1050; transition: right .28s ease; border-left:1px solid rgba(255,255,255,.04); }
+.user-drawer.open { right: 0; }
+.user-drawer .drawer-inner { height: 100%; overflow:auto; }
+
+/* chips active */
+.chip.active { background: linear-gradient(90deg,#d4af37,#b8891f); color:#111; }
+
+/* small helpers */
+.text-gold { color: #d4af37 !important; }

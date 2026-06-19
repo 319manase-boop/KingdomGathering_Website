@@ -1,4 +1,68 @@
-                        </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Insights | Kingdom Gathering Church</title>
+    <meta name="description" content="Kingdom Gathering Church blog posts and insights on worship, discipleship, prayer, and Kingdom life.">
+    <meta property="og:title" content="Kingdom Insights | Kingdom Gathering Church">
+    <meta property="og:description" content="Kingdom Gathering Church blog posts and insights on worship, discipleship, prayer, and Kingdom life.">
+    <meta property="og:image" content="https://kingdomgatheringchurch.org/images/og-image.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/premium.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="icon" href="../images/logo.png" type="image/png">
+    <style>
+        body.blog-page { background: #050505; color: #f4e4aa; }
+        .hero-section { min-height: 560px; }
+        .hero-section .lead, .hero-section .text-contrast { color: #ebe1b5; }
+        .hero-section .btn { min-width: 180px; }
+        .blog-list-section { background: #090909; }
+        .blog-card { background: #111; border: 1px solid rgba(212, 175, 55, 0.18); }
+        .blog-card .card-body { padding: 1.8rem; }
+        .blog-card h5 { color: #fff; }
+        .blog-card p { color: #d4d4d4; }
+        .blog-card .badge { background: #d4af37; color: #111; }
+        .blog-card a.btn { min-width: 160px; }
+        .newsletter-card { background: #111; border: 1px solid rgba(212, 175, 55, 0.18); }
+        .newsletter-card .form-control { background: #0d0d0d; border-color: #333; color: #f5e7b0; }
+        .newsletter-card .form-control::placeholder { color: #8a7e57; }
+    </style>
+</head>
+<body class="blog-page">
+    <header class="premium-header sticky-top">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="../index.html" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <img src="../images/logo.png" alt="Kingdom Gathering" class="logo-large">
+                        <div class="brand-text ms-3">
+                            <h1 class="brand-name" data-setting="church_name">Kingdom Gathering</h1>
+                            <p class="brand-tagline" data-setting="tagline">A Citadel of Grace & Truth</p>
+                        </div>
+                    </a>
+                </div>
+                <nav class="col d-none d-lg-block">
+                    <ul class="nav justify-content-center mb-0">
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../ministries/">Ministries</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../services/">Services</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../events/">Events</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link premium-nav-link" href="../contact/">Connect</a></li>
+                    </ul>
+                </nav>
+                <div class="col-auto d-none d-lg-block">
+                    <a href="../giving/" class="btn-cta-secondary">Give Online</a>
+                </div>
+                <div class="col-auto d-lg-none ms-auto">
+                    <button class="btn-mobile-toggle" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
                 </div>
             </div>
             <div class="collapse" id="mobileNav">
@@ -14,37 +78,38 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%), url('../images/pastorbackground.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
+    <section class="hero-section bg-black text-white">
         <div class="hero-overlay"></div>
-        <div class="container text-center text-white">
+        <div class="container text-center">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <h1 class="display-3 fw-bold mb-4 animate-fade-in">Kingdom Insights</h1>
-                    <p class="lead mb-4 animate-fade-in-delay">Inspiring thoughts, biblical teachings, and Kingdom perspectives to enrich your faith journey.</p>
-                    <p class="text-contrast mb-5 animate-fade-in-delay-2">Explore our latest articles, devotionals, and spiritual reflections from Kingdom Gathering Church.</p>
-                    <div class="animate-fade-in-delay-2">
-                        <i class="fas fa-chevron-down text-gold fs-1 animate-bounce"></i>
-                    </div>
+                    <h1 class="display-3 fw-bold mb-4">Kingdom Insights</h1>
+                    <p class="lead mb-4">Inspiring thoughts, biblical teachings, and Kingdom perspectives to enrich your faith journey.</p>
+                    <p class="text-contrast mb-5">Explore our latest articles, devotionals, and spiritual reflections from Kingdom Gathering Church.</p>
+                    <a href="#blogCards" class="btn btn-gold me-3 mb-3">Browse Articles</a>
+                    <a href="../contact/" class="btn btn-outline-gold mb-3">Connect With Us</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Blog Posts Section -->
-    <section class="py-5 bg-light">
+    <section class="py-5 blog-list-section text-white">
         <div class="container">
+            <div class="text-center mb-5">
+                <p class="section-eyebrow">Kingdom Insights</p>
+                <h2 class="section-title">Latest Articles</h2>
+                <p class="section-subtitle">Discover published blogs that inspire faith, leadership, and Kingdom living.</p>
+            </div>
             <div id="blogCards" class="row g-4"></div>
             <div id="blogEmptyState" class="alert alert-warning text-center d-none mt-4 border-0 shadow-sm">
                 No published articles are available right now. Please check back soon.
             </div>
 
-            <!-- Newsletter Signup -->
             <div class="row mt-5">
-                <div class="col-lg-8 mx-auto text-center">
-                    <div class="bg-white p-5 rounded shadow-lg">
+                <div class="col-lg-8 mx-auto">
+                    <div class="newsletter-card p-5 rounded shadow-lg text-white">
                         <h3 class="text-gold mb-3">Stay Connected</h3>
-                        <p class="text-muted mb-4">Subscribe to our newsletter for weekly inspiration, upcoming events, and Kingdom insights delivered to your inbox.</p>
+                        <p class="text-muted mb-4">Subscribe for weekly inspiration, upcoming events, and Kingdom insights delivered to your inbox.</p>
                         <form class="row g-3 justify-content-center">
                             <div class="col-md-6">
                                 <input type="email" class="form-control" placeholder="Enter your email" required>
@@ -59,7 +124,6 @@
         </div>
     </section>
 
-    <!-- Premium Footer (shared) -->
     <div data-footer-placeholder></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

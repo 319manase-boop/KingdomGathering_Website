@@ -21,6 +21,19 @@ function setLoading(isLoading) {
     signInText.textContent = isLoading ? 'Signing In' : 'Sign In';
 }
 
+async function redirectIfSignedIn() {
+    try {
+        const { data } = await supabaseClient.auth.getSession();
+        if (data?.session) {
+            window.location.href = './dashboard.html';
+        }
+    } catch (error) {
+        console.warn('Login session check failed:', error);
+    }
+}
+
+redirectIfSignedIn();
+
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -62,6 +75,7 @@ adminLoginForm.addEventListener('submit', async (event) => {
 
         showAlert('Signed in successfully. Redirecting to dashboard...', 'success');
 
+        console.log('Redirecting to dashboard because successful login session exists.');
         setTimeout(() => {
             window.location.href = './dashboard.html';
         }, 900);

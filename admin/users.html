@@ -50,81 +50,143 @@
             <section class="admin-content p-4">
                 <div id="usersAlertContainer"></div>
 
-                <div class="d-flex gap-2 mb-3 flex-column flex-md-row">
-                    <input id="usersSearch" class="form-control" placeholder="Search by name or email">
-                    <select id="usersRoleFilter" class="form-select" style="max-width: 200px;">
-                        <option value="">All Roles</option>
-                        <option value="Super Admin">Super Admin</option>
-                        <option value="Apostle">Apostle</option>
-                        <option value="Media Team">Media Team</option>
-                        <option value="Pastoral Care">Pastoral Care</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Administrator">Administrator</option>
-                    </select>
-                    <select id="usersStatusFilter" class="form-select" style="max-width: 180px;">
-                        <option value="">All Statuses</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-start mb-4 gap-3">
+                    <div>
+                        <h2 class="mb-1 display-6">👥 User Management</h2>
+                        <p class="text-muted mb-0">Manage church staff accounts, permissions and roles.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button id="refreshUsersBtn" class="btn btn-outline-light">Refresh</button>
+                        <button id="openAddUser" class="btn btn-gold">+ Add User</button>
+                    </div>
                 </div>
 
+                <!-- Statistics cards -->
+                <div class="row g-3 mb-4" id="usersStats">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card bg-black text-white rounded-3 p-3 border border-gold">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="stat-icon bg-gold text-dark rounded-circle p-2"><i class="fas fa-users"></i></div>
+                                <div>
+                                    <div class="h5 mb-0" id="statTotalUsers">0</div>
+                                    <div class="text-muted small">Total Users</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card bg-black text-white rounded-3 p-3 border border-gold">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="stat-icon bg-gold text-dark rounded-circle p-2"><i class="fas fa-user-check"></i></div>
+                                <div>
+                                    <div class="h5 mb-0" id="statActiveUsers">0</div>
+                                    <div class="text-muted small">Active Users</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card bg-black text-white rounded-3 p-3 border border-gold">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="stat-icon bg-gold text-dark rounded-circle p-2"><i class="fas fa-user-shield"></i></div>
+                                <div>
+                                    <div class="h5 mb-0" id="statRoles">0</div>
+                                    <div class="text-muted small">Roles</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card bg-black text-white rounded-3 p-3 border border-gold">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="stat-icon bg-gold text-dark rounded-circle p-2"><i class="fas fa-envelope-open-text"></i></div>
+                                <div>
+                                    <div class="h5 mb-0" id="statInvites">0</div>
+                                    <div class="text-muted small">Pending Invitations</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="mb-3">
+                    <div class="d-flex gap-2 flex-column flex-md-row mb-2">
+                        <input id="usersSearch" class="form-control" placeholder="Search by name or email">
+                        <div class="btn-group btn-group-sm" role="group" id="roleChips" aria-label="Role filters">
+                            <!-- Dynamic role chips populated by JS -->
+                            <button class="btn btn-outline-light active chip" data-role="">All</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User table -->
                 <div class="admin-card p-3">
                     <div class="table-responsive">
                         <table class="table table-dark table-hover align-middle mb-0">
                             <thead>
                                 <tr class="text-muted small">
+                                    <th>Avatar</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Role</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
-                                    <th></th>
+                                    <th>Created</th>
+                                    <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="usersTableBody">
-                                <tr><td colspan="7" class="text-center py-5">Loading...</td></tr>
+                                <tr><td colspan="8" class="text-center py-5" id="usersEmptyState">Loading users...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                <!-- Empty state template -->
+                <template id="usersEmptyTemplate">
+                    <div class="text-center py-5 text-gold">
+                        <div class="display-1">👥</div>
+                        <h4 class="mt-3">No staff members found</h4>
+                        <p class="text-muted">Create your first church staff account.</p>
+                        <button id="emptyAddUser" class="btn btn-gold">+ Add User</button>
+                    </div>
+                </template>
+
+                <!-- Add User Modal -->
+                <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true" aria-labelledby="addUserModalLabel">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
                         <div class="modal-content bg-dark text-light">
                             <div class="modal-header border-0">
-                                <h5 class="modal-title">Edit User</h5>
+                                <h5 class="modal-title" id="addUserModalLabel">Add Staff Member</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="userForm">
+                                <form id="addUserForm">
                                     <div class="mb-3">
                                         <label class="form-label">Full Name</label>
-                                        <input type="text" class="form-control bg-dark text-light" id="userName" readonly>
+                                        <input type="text" class="form-control bg-dark text-light" id="newFullName" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control bg-dark text-light" id="userEmail" readonly>
+                                        <input type="email" class="form-control bg-dark text-light" id="newEmail" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Phone</label>
-                                        <input type="text" class="form-control bg-dark text-light" id="userPhone">
+                                        <input type="text" class="form-control bg-dark text-light" id="newPhone">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Role</label>
-                                        <select class="form-select bg-dark text-light" id="userRole">
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="Super Admin">Super Admin</option>
-                                            <option value="Apostle">Apostle</option>
-                                            <option value="Media Team">Media Team</option>
-                                            <option value="Pastoral Care">Pastoral Care</option>
-                                            <option value="Finance">Finance</option>
+                                        <select class="form-select bg-dark text-light" id="newRole" required>
+                                            <option value="">Select role</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
-                                        <select class="form-select bg-dark text-light" id="userStatus">
+                                        <select class="form-select bg-dark text-light" id="newStatus">
                                             <option value="active">Active</option>
+                                            <option value="pending">Pending</option>
                                             <option value="inactive">Inactive</option>
                                         </select>
                                     </div>
@@ -132,11 +194,39 @@
                             </div>
                             <div class="modal-footer border-0">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button id="userSave" type="button" class="btn btn-warning text-dark">Save</button>
+                                <button id="createUserBtn" type="button" class="btn btn-gold">Create User</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Delete User Confirmation Modal -->
+                <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-hidden="true" aria-labelledby="deleteUserModalLabel">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content bg-dark text-light border border-gold">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mb-0">Are you sure you want to delete <strong id="deleteUserName"></strong>?</p>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" onclick="executeDeleteUser()">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile drawer -->
+                <div id="userDrawer" class="user-drawer bg-black text-white">
+                    <div class="drawer-inner p-4">
+                        <button id="closeUserDrawer" class="btn-close btn-close-white float-end"></button>
+                        <div id="drawerContent">Loading...</div>
+                    </div>
+                </div>
+
             </section>
         </main>
     </div>
@@ -144,6 +234,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabaseClient.js"></script>
     <script src="../js/admin/permissions.js"></script>
+
+    <script src ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/admin/user-table.js"></script>
+    <script src="../js/admin/user-modal.js"></script>
     <script src="../js/admin/users.js"></script>
 </body>
 </html>
