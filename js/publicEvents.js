@@ -106,40 +106,51 @@
             .select("*")
             .order("start_at", { ascending: true });
 
-        console.log("[publicEvents] all events:", data);
+        console.log("[publicEvents] all events raw:", data);
         console.log("[publicEvents] fetch error:", error);
 
         if (error) {
             return [];
         }
 
-        const now = new Date();
-        const publishedEvents = (data || []).filter(event => {
+        const events = (data || []).map(event => {
             const status = String(event.status || "").toLowerCase().trim();
-            return status === "published";
+            const startDate = event.start_at ? new Date(event.start_at) : null;
+            return {
+                ...event,
+                _status: status,
+                _startDate: startDate,
+            };
         });
 
-        const filtered = publishedEvents.filter(event => {
-            const status = String(event.status || "").toLowerCase().trim();
-            const startDate = new Date(event.start_at);
-            console.log("Checking event:", {
-                title: event.title,
-                status,
-                start_at: event.start_at,
-                parsedDate: startDate,
-                isFuture: startDate >= now
-            });
-            return status === "published" && startDate >= now;
+        const statusCounts = events.reduce((counts, event) => {
+            counts[event._status] = (counts[event._status] || 0) + 1;
+            return counts;
+        }, {});
+        console.log("[publicEvents] status counts:", statusCounts);
+
+        const acceptedStatuses = new Set(["published", "active", "upcoming"]);
+        const validEvents = events.filter(event => {
+            const include = event._status === "" || acceptedStatuses.has(event._status);
+            if (!include) {
+                console.debug("[publicEvents] excluding by status:", event.title, event._status);
+            }
+            return include;
         });
 
-        if (filtered.length === 0 && publishedEvents.length > 0) {
-            console.warn("[publicEvents] No future published events; falling back to all published events.");
-            console.log("[publicEvents] published events fallback:", publishedEvents);
-            return publishedEvents;
+        if (validEvents.length === 0) {
+            console.warn("[publicEvents] No events matched accepted status values; returning all raw events.");
+            return events;
         }
 
-        console.log("[publicEvents] filtered upcoming events:", filtered);
-        return filtered;
+        const now = new Date();
+        const upcomingEvents = validEvents.filter(event => event._startDate && event._startDate >= now);
+        const pastEvents = validEvents.filter(event => event._startDate && event._startDate < now);
+
+        console.log("[publicEvents] upcoming events:", upcomingEvents);
+        console.log("[publicEvents] past events:", pastEvents);
+
+        return [...upcomingEvents, ...pastEvents];
     }
 
     // Fetch featured event (nearest upcoming)
