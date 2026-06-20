@@ -5,60 +5,11 @@ const usersAlertContainer = document.getElementById('usersAlertContainer');
 const usersTableBody = document.getElementById('usersTableBody');
 
 window.__users = [];
-window.__roles = [];
-let deleteUserModalInstance = null;
-let pendingDeleteUserId = null;
 
 function formatDate(value) {
     try { return new Date(value).toLocaleString(); } catch (e) { return ''; }
 }
 
-function normalizeStatus(status) {
-    const s = String(status || '').toLowerCase();
-    if (s === 'disabled') return 'inactive';
-    if (['active', 'pending', 'inactive'].includes(s)) return s;
-    return 'pending';
-}
-
-function titleCase(value) {
-    if (!value) return '';
-    return String(value).replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-}
-
-function getFriendlyRoleName(raw) {
-    if (!raw) return '';
-    const key = String(raw).toLowerCase();
-    const map = {
-        'admin': 'Super Admin',
-        'super admin': 'Super Admin',
-        'pastor': 'Pastor',
-        'media': 'Media Team',
-        'member': 'Member',
-        'guest': 'Guest'
-    };
-    return map[key] || titleCase(raw);
-}
-
-function statusEmoji(status) {
-    const s = String(status || '').toLowerCase();
-    if (s === 'active') return '🟢';
-    if (s === 'pending') return '🟡';
-    return '⚫';
-}
-
-async function callInviteFunction(body) {
-    const { data, error } = await supabaseClient.functions.invoke('admin-user-invite', {
-        body: body
-    });
-
-    if (error) {
-        console.error("EDGE FUNCTION ERROR:", error);
-        throw error;
-    }
-
-    console.log("EDGE FUNCTION RESPONSE:", data);
-    return data;
-}
 function showAlert(type, message, timeout = 4000) {
     const el = document.createElement('div');
     el.className = `alert alert-${type} alert-dismissible fade show`;
@@ -67,6 +18,121 @@ function showAlert(type, message, timeout = 4000) {
     usersAlertContainer.appendChild(el);
     if (timeout) setTimeout(() => { el.classList.remove('show'); el.remove(); }, timeout);
 }
+
+async function invokeAdminUserInvite(action, user) {
+    if (!user || !user.email) {
+        throw new Error('User email is required.');
+    }
+
+    const payload = {
+        action,
+        email: user.email,
+        full_name: user.full_name || '',
+        role_id: user.role_id || '',
+        user_id: user.id || ''
+    };
+
+    if (supabaseClient.functions && typeof supabaseClient.functions.invoke === 'function') {
+        console.debug('Admin invite function: using supabaseClient.functions.invoke');
+        const { data, error } = await supabaseClient.functions.invoke('admin-user-invite', {
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+    }
+
+    const anonKey = window.SUPABASE_ANON_KEY;
+    const baseUrl = supabaseClient.supabaseUrl || window.SUPABASE_URL;
+    if (!anonKey || !baseUrl) {
+        throw new Error('Supabase function invocation is not available.');
+    }
+
+    const url = `${baseUrl.replace(/\/+$/, '')}/functions/v1/admin-user-invite`;
+    console.debug('Admin invite function: falling back to direct fetch', url);
+    const requestBody = JSON.stringify(payload);
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            apikey: anonKey,
+            Authorization: `Bearer ${anonKey}`
+        },
+        body: requestBody
+    });
+
+    const result = await response.json().catch(() => null);
+    if (!response.ok) {
+        console.error('Admin invite fallback failed:', {
+            url,
+            status: response.status,
+            statusText: response.statusText,
+            requestBody,
+            body: result
+        });
+        const message = result?.error || result?.message || 'Unable to invoke invite function.';
+        throw new Error(message);
+    }
+
+    return result;
+}
+
+window.sendInvite = async function (user) {
+    try {
+        const data = await invokeAdminUserInvite('invite', user);
+        showAlert('success', data?.message || 'Invite email sent.');
+        await loadUsers();
+    } catch (err) {
+        console.error('Send invite failed:', err);
+        showAlert('danger', err.message || 'Unable to send invite.');
+    }
+};
+
+window.resetPasswordUser = async function (user) {
+    try {
+        const data = await invokeAdminUserInvite('reset_password', user);
+        showAlert('success', data?.message || 'Password reset email sent.');
+    } catch (err) {
+        console.error('Password reset failed:', err);
+        showAlert('danger', err.message || 'Unable to send password reset email.');
+    }
+};
+
+window.toggleUserStatus = async function (user) {
+    if (!user) return;
+    const newStatus = String(user.status || '').toLowerCase() === 'active' ? 'inactive' : 'active';
+
+    try {
+        const { error } = await supabaseClient.from('users').update({ status: newStatus }).eq('id', user.id);
+        if (error) throw error;
+        showAlert('success', `User ${newStatus === 'active' ? 'activated' : 'deactivated'}.`);
+        await loadUsers();
+    } catch (err) {
+        console.error('Toggle user status failed:', err);
+        showAlert('danger', err.message || 'Unable to update user status.');
+    }
+};
+
+window.confirmDeleteUser = async function (user) {
+    if (!user) return;
+    if (!confirm(`Delete ${user.full_name || user.email}? This cannot be undone.`)) return;
+
+    try {
+        const { error } = await supabaseClient.from('users').delete().eq('id', user.id);
+        if (error) throw error;
+        showAlert('success', 'User deleted.');
+        await loadUsers();
+    } catch (err) {
+        console.error('Delete user failed:', err);
+        showAlert('danger', err.message || 'Unable to delete user.');
+    }
+};
 
 async function loadUsers() {
     try {
@@ -82,22 +148,17 @@ async function loadUsers() {
             return;
         }
 
-        window.__roles = roles || [];
-        const roleMap = window.__roles.reduce((acc, role) => {
+        const roleMap = (roles || []).reduce((acc, role) => {
             acc[role.id] = role.name;
             return acc;
         }, {});
 
         window.__users = (users || []).map(u => ({
             ...u,
-            rawRole: roleMap[u.role_id] || u.role || '',
-            role: getFriendlyRoleName(roleMap[u.role_id] || u.role || ''),
-            status: normalizeStatus(u.status),
-            invite_token: u.invite_token || ''
+            role: roleMap[u.role_id] || u.role || ''
         }));
 
-        renderDashboardStats(window.__users, window.__roles);
-        renderRoleChips(window.__roles);
+        renderDashboardStats(window.__users);
         renderUsersTable(window.__users, window.__adminUserRole);
     } catch (err) {
         console.error(err);
@@ -106,72 +167,35 @@ async function loadUsers() {
     }
 }
 
-function renderDashboardStats(list, roles) {
+function renderDashboardStats(list) {
     document.getElementById('statTotalUsers').textContent = list.length;
-    document.getElementById('statActiveUsers').textContent = list.filter(u => String(u.status || '').toLowerCase() === 'active').length;
-    document.getElementById('statRoles').textContent = (roles || []).length;
-    document.getElementById('statInvites').textContent = list.filter(u => String(u.status || '').toLowerCase() === 'pending').length;
+    document.getElementById('statActiveUsers').textContent = list.filter(u=>String(u.status||'').toLowerCase()==='active').length;
+    document.getElementById('statRoles').textContent = new Set((list||[]).map(u=>u.role)).size;
+    document.getElementById('statInvites').textContent = list.filter(u=>String(u.status||'').toLowerCase()==='pending').length;
 }
 
 function attachFilterHandlers() {
     usersSearch?.addEventListener('input', () => {
         const q = (usersSearch.value||'').trim().toLowerCase();
         const filtered = window.__users.filter(u => {
-            return !q || (
-                String(u.full_name||'').toLowerCase().includes(q) ||
-                String(u.email||'').toLowerCase().includes(q) ||
-                String(u.phone||'').toLowerCase().includes(q) ||
-                String(u.role||'').toLowerCase().includes(q)
-            );
+            return !q || (String(u.full_name||'').toLowerCase().includes(q) || String(u.email||'').toLowerCase().includes(q));
         });
         renderUsersTable(filtered, window.__adminUserRole);
     });
 
-    // Role chips are generated dynamically in renderRoleChips
-}
-
-function renderRoleChips(roles) {
-    const container = document.getElementById('roleChips');
-    if (!container) return;
-    container.innerHTML = '';
-    const makeBtn = (name, active=false) => {
-        const b = document.createElement('button');
-        b.className = `btn btn-outline-light chip${active? ' active':''}`;
-        b.setAttribute('data-role', name || '');
-        b.textContent = name || 'All';
-        return b;
-    };
-
-    const allBtn = makeBtn('All', true);
-    allBtn.setAttribute('data-role', '');
-    container.appendChild(allBtn);
-    allBtn.addEventListener('click', () => {
-        container.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-        allBtn.classList.add('active');
-        const q = (usersSearch.value||'').trim().toLowerCase();
-        renderUsersTable(window.__users.filter(u => !q || (
-            String(u.full_name||'').toLowerCase().includes(q) ||
-            String(u.email||'').toLowerCase().includes(q) ||
-            String(u.phone||'').toLowerCase().includes(q) ||
-            String(u.role||'').toLowerCase().includes(q)
-        )), window.__adminUserRole);
-    });
-
-    (roles || []).forEach(r => {
-        const name = getFriendlyRoleName(r.name || r.id || '');
-        const btn = makeBtn(name, false);
-        btn.addEventListener('click', () => {
-            container.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-            btn.classList.add('active');
+    document.querySelectorAll('#roleChips .chip').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#roleChips .chip').forEach(c=>c.classList.remove('active'));
+            e.target.classList.add('active');
+            const role = e.target.getAttribute('data-role');
             const q = (usersSearch.value||'').trim().toLowerCase();
-            renderUsersTable(window.__users.filter(u => (!q || (
-                String(u.full_name||'').toLowerCase().includes(q) ||
-                String(u.email||'').toLowerCase().includes(q) ||
-                String(u.phone||'').toLowerCase().includes(q) ||
-                String(u.role||'').toLowerCase().includes(q)
-            )) && (!name || u.role === name)), window.__adminUserRole);
+            const filtered = window.__users.filter(u => {
+                const matchRole = !role || u.role === role;
+                const matchQ = !q || (String(u.full_name||'').toLowerCase().includes(q) || String(u.email||'').toLowerCase().includes(q));
+                return matchRole && matchQ;
+            });
+            renderUsersTable(filtered, window.__adminUserRole);
         });
-        container.appendChild(btn);
     });
 }
 
@@ -182,34 +206,17 @@ function openUserDrawer(user) {
     const drawer = document.getElementById('userDrawer');
     const content = document.getElementById('drawerContent');
     if (!drawer || !content) return;
-    const initials = (user.full_name||'').split(' ').map(s=>s[0]).slice(0,2).join('');
-    const friendlyRole = getFriendlyRoleName(user.rawRole || user.role || '');
-    const isSelf = window.__adminUserId && String(window.__adminUserId) === String(user.id);
     content.innerHTML = `
         <div class="text-center mb-3">
-            <div class="display-4">${escapeHtml(initials)}</div>
+            <div class="display-4">${(user.full_name||'').split(' ').map(s=>s[0]).slice(0,2).join('')}</div>
         </div>
         <h4>${escapeHtml(user.full_name||'')}</h4>
         <p class="text-muted">${escapeHtml(user.email||'')}</p>
         <p>Phone: ${escapeHtml(user.phone||'')}</p>
-        <p>Role: <strong>${escapeHtml(friendlyRole||'')}</strong></p>
-        <p>Status: <span class="badge ${statusBadgeClass(user.status)}">${statusEmoji(user.status)} ${titleCase(user.status)}</span></p>
+        <p>Role: <strong>${escapeHtml(user.role||'')}</strong></p>
+        <p>Status: <strong>${escapeHtml(user.status||'')}</strong></p>
         <p>Created: ${formatDate(user.created_at)}</p>
-        <p>Last updated: ${formatDate(user.updated_at)}</p>
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-sm btn-gold" id="drawerEditBtn">Edit</button>
-            ${isSelf ? '' : `<button class="btn btn-sm btn-outline-light" id="drawerSuspendBtn">${user.status==='active' ? 'Deactivate' : 'Activate'}</button>`}
-            <button class="btn btn-sm btn-outline-light" id="drawerResetBtn">Reset Password</button>
-        </div>
     `;
-    // Attach drawer buttons
-    document.getElementById('drawerEditBtn')?.addEventListener('click', () => openEditModal(user));
-    if (!isSelf) {
-        document.getElementById('drawerSuspendBtn')?.addEventListener('click', async () => { await toggleUserStatus(user); });
-    }
-    document.getElementById('drawerResetBtn')?.addEventListener('click', async () => {
-        await window.resetPasswordUser(user);
-    });
     drawer.classList.add('open');
 }
 document.getElementById('closeUserDrawer')?.addEventListener('click', () => document.getElementById('userDrawer')?.classList.remove('open'));
@@ -223,138 +230,13 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
-async function callInviteFunction(body) {
-    const { data, error } = await supabaseClient.functions.invoke('admin-user-invite', {
-        body
-    });
-
-    if (error) {
-        console.error("EDGE FUNCTION ERROR:", error);
-        throw error;
-    }
-
-    return data;
-}
-
-window.sendInvite = async function(user) {
-    console.log("SEND INVITE CLICKED", user);
-
-    if (!user?.email) {
-        showAlert("danger", "User email is missing.");
-        return;
-    }
-
-    try {
-        await callInviteFunction({
-            action: "invite",
-            email: user.email,
-            full_name: user.full_name,
-            role_id: user.role_id,
-            user_id: user.id
-        });
-
-        showAlert("success", "Invite sent. User can set their password via email.");
-        await loadUsers();
-    } catch (err) {
-        console.error(err);
-        showAlert("danger", "Unable to send invite.");
-    }
-};
-
-window.resetPasswordUser = async function(user) {
-    if (!user?.email) {
-        showAlert("danger", "User email is missing.");
-        return;
-    }
-
-    try {
-        await callInviteFunction({
-            action: "reset_password",
-            email: user.email
-        });
-
-        showAlert("success", "Password reset email sent.");
-    } catch (err) {
-        console.error(err);
-        showAlert("danger", "Unable to send password reset.");
-    }
-};
-
 // Initialize
 (async function init() {
     const session = await setupAdminPage('users');
     if (!session) return;
-    window.__adminUserRole = await getUserRole(session.user.id) || 'admin';
     window.__adminUserId = session.user.id;
+    window.__adminUserRole = await getUserRole(session.user.id) || 'admin';
     initUserModal(loadUsers);
-    initDeleteUserModal();
     attachFilterHandlers();
     await loadUsers();
 })();
-
-function initDeleteUserModal() {
-    const modalEl = document.getElementById('deleteUserModal');
-    if (!modalEl || !window.bootstrap) return;
-    deleteUserModalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
-}
-
-window.confirmDeleteUser = function (user) {
-    if (!user || !deleteUserModalInstance) {
-        return deleteUser(user?.id);
-    }
-
-    pendingDeleteUserId = user.id;
-    document.getElementById('deleteUserName').textContent = escapeHtml(user.full_name || user.email || 'this user');
-    deleteUserModalInstance.show();
-};
-
-async function deleteUser(userId) {
-    if (!userId) return;
-
-    const { error } = await supabaseClient
-        .from("users")
-        .delete()
-        .eq("id", userId);
-
-    if (error) {
-        console.error(error);
-        showAlert("danger", "Unable to delete user.");
-        return;
-    }
-
-    showAlert("success", "User deleted.");
-    await loadUsers();
-}
-
-window.deleteUser = deleteUser;
-
-window.executeDeleteUser = async function () {
-    if (!pendingDeleteUserId) return;
-    const userId = pendingDeleteUserId;
-    pendingDeleteUserId = null;
-    deleteUserModalInstance?.hide();
-    await deleteUser(userId);
-};
-
-window.toggleUserStatus = async function (user) {
-    if (!user || !user.id) return;
-    const current = String(user.status || '').toLowerCase();
-    let nextStatus = 'active';
-
-    if (current === 'active') nextStatus = 'inactive';
-    if (current === 'inactive' || current === 'pending') nextStatus = 'active';
-
-    try {
-        const { error } = await supabaseClient
-            .from('users')
-            .update({ status: nextStatus })
-            .eq('id', user.id);
-
-        if (error) throw error;
-        showAlert('success', `User status updated to ${nextStatus}.`);
-        await loadUsers();
-    } catch (err) {
-        console.error(err);
-        showAlert('danger', 'Unable to update status.');
-    }
-};
