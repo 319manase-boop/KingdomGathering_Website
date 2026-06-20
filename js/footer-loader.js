@@ -1,7 +1,8 @@
 (function() {
     const placeholder = document.querySelector('[data-footer-placeholder]');
     if (!placeholder) return;
-    const BASE_PATH = window.BASE_PATH || (location.hostname.includes('github.io') ? '/KingdomGathering_Website/' : '/');
+    // Prefer an explicit global BASE_PATH, otherwise use root '/'.
+    const BASE_PATH = window.BASE_PATH || '/';
 
     const normalizedPath = location.pathname.startsWith(BASE_PATH)
         ? location.pathname.slice(BASE_PATH.length)
