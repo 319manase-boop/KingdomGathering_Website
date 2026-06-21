@@ -18,8 +18,9 @@ document.addEventListener('click', function(e) {
     
     if(whatsappToggle && whatsappMenu){
         whatsappToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            whatsappMenu.classList.toggle('d-none');
+                if (whatsappToggle.tagName.toLowerCase() === 'a' && whatsappToggle.href) {
+                    return;
+                }
         });
         
         // Close menu when clicking outside
@@ -35,7 +36,7 @@ document.addEventListener('click', function(e) {
                 e.preventDefault();
                 const message = link.getAttribute('data-wa');
                 const encodedMsg = encodeURIComponent(message);
-                window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
+                window.open(`https://wa.me/26775919290?text=${encodedMsg}`, '_blank');
                 whatsappMenu.classList.add('d-none');
             });
         });

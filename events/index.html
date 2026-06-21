@@ -306,6 +306,13 @@
         }
         .final-cta .btn {
             min-width: 180px;
+            max-width: 320px;
+            width: 100%;
+        }
+        @media (min-width: 576px) {
+            .final-cta .btn {
+                width: auto;
+            }
         }
         @media (max-width: 991px) {
             .featured-event-banner {
@@ -474,9 +481,8 @@
         <div class="container text-center">
             <h2 class="fw-bold text-white">Don't Miss What God Is Doing</h2>
             <p>Stay connected with upcoming gatherings, worship nights, outreach moments, and ministry events.</p>
-            <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row">
+            <div class="d-flex justify-content-center align-items-center gap-3 flex-column flex-sm-row">
                 <a href="/contact/" class="btn btn-outline-gold btn-lg">Contact Us</a>
-                <a href="https://www.facebook.com/kingdomgatheringchurch" class="btn btn-gold btn-lg" data-setting="facebook_url" target="_blank" rel="noopener noreferrer">Follow Us Online</a>
             </div>
         </div>
     </section>

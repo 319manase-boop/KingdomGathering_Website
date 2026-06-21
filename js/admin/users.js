@@ -32,31 +32,20 @@ async function invokeAdminUserInvite(action, user) {
         user_id: user.id || ''
     };
 
-    console.log("INVITE PAYLOAD", payload); 
-
     if (supabaseClient.functions && typeof supabaseClient.functions.invoke === 'function') {
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-const accessToken = sessionData?.session?.access_token;
+        console.debug('Admin invite function: using supabaseClient.functions.invoke');
+        const { data, error } = await supabaseClient.functions.invoke('admin-user-invite', {
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-console.log("Admin invite token exists:", !!accessToken);
+        if (error) {
+            throw error;
+        }
 
-console.log("Calling Edge Function...");
-
-const { data, error } = await supabaseClient.functions.invoke('admin-user-invite', {
-    body: payload,
-    headers: {
-        Authorization: `Bearer ${accessToken}`
-    }
-});
-
-console.log("Edge Function data:", data);
-console.log("Edge Function error:", error);
-
-if (error) {
-    throw error;
-}
-
-return data;
+        return data;
     }
 
     const anonKey = window.SUPABASE_ANON_KEY;
