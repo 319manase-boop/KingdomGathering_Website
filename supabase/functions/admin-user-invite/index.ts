@@ -65,7 +65,7 @@ serve(async (req) => {
   }
 
   const baseUrl = new URL(req.url).origin;
-  const redirectTo = REDIRECT_URL || `${baseUrl}/admin/update-password.html`;
+  const redirectTo = REDIRECT_URL || `${baseUrl}/admin/accept-invite.html`;
 
   try {
     if (action === "invite") {

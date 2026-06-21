@@ -23,8 +23,13 @@ function setLoading(isLoading) {
 
 async function redirectIfSignedIn() {
     try {
+        const isLocalhost =
+            location.hostname === '127.0.0.1' ||
+            location.hostname === 'localhost';
+
         const { data } = await supabaseClient.auth.getSession();
-        if (data?.session) {
+
+        if (data?.session && !isLocalhost) {
             window.location.href = './dashboard.html';
         }
     } catch (error) {
