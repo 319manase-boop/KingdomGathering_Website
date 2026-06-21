@@ -32,6 +32,20 @@ function avatarFor(user) {
     const initials = (user.full_name || user.email || '').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
     return `<div class="avatar-placeholder bg-dark text-gold rounded-circle d-inline-flex align-items-center justify-content-center" style="width:40px;height:40px">${initials}</div>`;
 }
+function statusEmoji(status) {
+    const s = String(status || '').toLowerCase();
+
+    if (s === 'active') return '🟢';
+    if (s === 'pending') return '🟡';
+    if (s === 'inactive' || s === 'disabled') return '⚫';
+
+    return '⚪';
+}
+
+function titleCase(value) {
+    const text = String(value || '');
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
 
 window.renderUsersTable = function(users, currentRole) {
     const tbody = document.getElementById('usersTableBody');
