@@ -55,6 +55,8 @@ function openCreateModal() {
     editingUserId = null;
 
     document.getElementById("addUserForm").reset();
+    document.getElementById("newEmail").readOnly = false;
+    document.getElementById("addUserModalLabel").textContent = "Add Staff Member";
     document.getElementById("createUserBtn").textContent = "Create User";
 
     addUserModalInstance.show();
@@ -74,11 +76,9 @@ async function handleSaveUser(e) {
         return;
     }
 
-    const payload = { full_name, email, phone, role_id, status };
-    console.log(payload);
-
+    const btnText = currentMode === "edit" ? "Saving..." : "Creating...";
     btn.disabled = true;
-    btn.textContent = currentMode === "edit" ? "Saving..." : "Creating...";
+    btn.textContent = btnText;
 
     try {
         let response;
@@ -89,20 +89,28 @@ async function handleSaveUser(e) {
                 .update({ full_name, phone, role_id, status })
                 .eq("id", editingUserId);
         } else {
-            response = await supabaseClient
-                .from("users")
-                .insert([payload]);
-        }
+         const payload = {
+  full_name,
+  email,
+  phone,
+  role_id,
+  status: 'pending'
+};
+
+response = await supabaseClient
+  .from("users")
+  .insert([payload]);
 
         if (response.error) throw response.error;
 
         showAlert(
             "success",
-            currentMode === "edit" ? "User updated." : "User created."
+            currentMode === "edit" ? "User updated." : "User created. Invite ready to send."
         );
 
         addUserModalInstance.hide();
         document.getElementById("addUserForm").reset();
+        document.getElementById("newEmail").readOnly = false;
 
         if (typeof refreshUsersCallback === "function") {
             await refreshUsersCallback();
@@ -118,16 +126,22 @@ async function handleSaveUser(e) {
     }
 }
 
-window.openEditModal = function (user) {
+window.openEditModal = async function (user) {
     currentMode = "edit";
     editingUserId = user.id;
 
+    // Ensure roles are loaded so the select has the correct options
+    await loadRolesIntoDropdown();
+
     document.getElementById("newFullName").value = user.full_name || "";
     document.getElementById("newEmail").value = user.email || "";
+    document.getElementById("newEmail").readOnly = true;
     document.getElementById("newPhone").value = user.phone || "";
-    document.getElementById("newRole").value = user.role || "";
-    document.getElementById("newStatus").value = user.status || "active";
+    // Prefer role_id (select option values are role ids); fall back to role name
+    document.getElementById("newRole").value = user.role_id || user.role || "";
+    document.getElementById("newStatus").value = normalizeStatus(user.status) || "active";
 
+    document.getElementById("addUserModalLabel").textContent = "Edit Staff Member";
     document.getElementById("createUserBtn").textContent = "Save Changes";
 
     addUserModalInstance.show();

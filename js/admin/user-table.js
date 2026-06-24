@@ -32,20 +32,6 @@ function avatarFor(user) {
     const initials = (user.full_name || user.email || '').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
     return `<div class="avatar-placeholder bg-dark text-gold rounded-circle d-inline-flex align-items-center justify-content-center" style="width:40px;height:40px">${initials}</div>`;
 }
-function statusEmoji(status) {
-    const s = String(status || '').toLowerCase();
-
-    if (s === 'active') return '🟢';
-    if (s === 'pending') return '🟡';
-    if (s === 'inactive' || s === 'disabled') return '⚫';
-
-    return '⚪';
-}
-
-function titleCase(value) {
-    const text = String(value || '');
-    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-}
 
 window.renderUsersTable = function(users, currentRole) {
     const tbody = document.getElementById('usersTableBody');
@@ -60,7 +46,6 @@ window.renderUsersTable = function(users, currentRole) {
     tbody.innerHTML = users.map(u => {
         const statusAction = getStatusActionLabel(u.status);
         const isSelf = window.__adminUserId && String(window.__adminUserId) === String(u.id);
-        const inviteToken = u.invite_token || '';
         return `
         <tr data-id="${u.id}">
             <td>${avatarFor(u)}</td>
@@ -145,38 +130,7 @@ window.renderUsersTable = function(users, currentRole) {
         });
     });
 
-    // More menu actions
-    tbody.querySelectorAll('.copy-invite').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const tr = e.target.closest('tr');
-            const id = tr.getAttribute('data-id');
-            const user = window.__users.find(u => String(u.id) === String(id));
-            const token = user.invite_token || '';
-            const link = token ? `${location.origin}/admin/invite?token=${token}` : `${location.origin}/admin/users`;
-            try {
-                await navigator.clipboard.writeText(link);
-                showAlert('success', 'Invite link copied to clipboard.');
-            } catch (err) {
-                console.error(err);
-                showAlert('danger', 'Unable to copy link.');
-            }
-        });
-    });
-
-    tbody.querySelectorAll('.send-invite').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-
-        console.log("SEND INVITE MENU CLICKED");
-
-        const tr = e.target.closest('tr');
-        const id = tr.getAttribute('data-id');
-        const user = window.__users.find(u => String(u.id) === String(id));
-
-        await window.sendInvite(user);
-    });
-});
+    
 
     tbody.querySelectorAll('.resend-invite').forEach(btn => {
         btn.addEventListener('click', async (e) => {

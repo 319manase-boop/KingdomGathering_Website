@@ -41,34 +41,34 @@ function validatePasswords(password, confirmPassword) {
 
 async function initializePasswordFlow() {
     try {
-        const searchParams = new URLSearchParams(window.location.search);
-        const type = searchParams.get('type');
-        const accessToken = searchParams.get('access_token');
-        const refreshToken = searchParams.get('refresh_token');
+        const { data: sessionData, error } =
+            await supabaseClient.auth.getSession();
 
-        if ((type === 'recovery' || accessToken || refreshToken) && typeof supabaseClient.auth.getSessionFromUrl === 'function') {
-            const { data, error } = await supabaseClient.auth.getSessionFromUrl();
-            if (error) {
-                showAlert('Unable to validate the password setup link. Request a new reset link or contact your administrator.', 'danger');
-                submitButton.disabled = true;
-                return;
-            }
-            clearUrlTokens();
-            if (!data?.session) {
-                showAlert('Unable to establish a session from the email link. Request a new password reset link.', 'danger');
-                submitButton.disabled = true;
-                return;
-            }
-        }
-
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        if (!sessionData?.session) {
-            showAlert('This page must be opened from the password setup link in your email. If you do not have one, request a password reset from the login page.', 'warning');
+        if (error) {
+            console.error(error);
+            showAlert(
+                'Unable to verify your password setup session.',
+                'danger'
+            );
             submitButton.disabled = true;
+            return;
         }
+
+        if (!sessionData?.session) {
+            showAlert(
+                'This page must be opened from the password setup link in your email.',
+                'warning'
+            );
+            submitButton.disabled = true;
+            return;
+        }
+
     } catch (error) {
         console.error(error);
-        showAlert('Unexpected error loading the password setup page. Please try again or contact support.', 'danger');
+        showAlert(
+            'Unexpected error loading the password setup page.',
+            'danger'
+        );
         submitButton.disabled = true;
     }
 }

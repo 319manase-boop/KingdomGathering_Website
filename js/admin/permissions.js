@@ -1,25 +1,20 @@
 // Admin RBAC and shared page protection
 
 const PERMISSION_MATRIX = {
-    admin: ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
-    pastor: ['dashboard', 'prayer', 'contact', 'counseling', 'events', 'blogs', 'media'],
-    media: ['dashboard', 'blogs', 'events', 'media'],
-    finance: ['dashboard', 'giving'],
-    member: [],
+    super_admin: ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
+    pastor: ['dashboard', 'blogs'],
+    secretary: ['dashboard', 'prayer', 'contact', 'counseling'],
+    media_team: ['dashboard', 'blogs', 'events', 'media'],
+    treasurer: ['dashboard', 'giving'],
+    member: ['dashboard'],
     guest: []
 };
 
-const ROLE_ALIAS_MAP = {
-    'super admin': 'admin',
-    'administrator': 'admin',
-    'apostle': 'pastor',
-    'pastoral care': 'pastor',
-    'media team': 'media'
-};
 
 function normalizeRole(role) {
-    const normalized = String(role || '').trim().toLowerCase();
-    return ROLE_ALIAS_MAP[normalized] || normalized;
+    return String(role || '')
+        .trim()
+        .toLowerCase();
 }
 
 async function getAdminSession() {
@@ -128,8 +123,12 @@ async function getCurrentUserRole() {
     const role = await getUserRole(session.user.id);
     const normalizedRole = normalizeRole(role);
 
-    window.__adminUserRole = normalizedRole;
+   if (!normalizedRole) {
+    console.error('Role could not be resolved');
+    return null;
+}
 
+window.__adminUserRole = normalizedRole;
     console.log("CURRENT USER ROLE RESOLVED:", normalizedRole);
 
     return normalizedRole;
@@ -145,11 +144,14 @@ async function checkPagePermission(pageKey) {
     const role = await getCurrentUserRole();
 
     if (!role) {
-        console.warn('No valid role found. Redirecting to access-denied.');
-        console.log('Current page:', pageKey);
-        console.warn("ACCESS DENIED REDIRECT BLOCKED FOR DEBUG");
-return false;
-    }
+    console.error('No valid role found');
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href = './login.html';
+
+    return false;
+}
 
     const normalizedPageKey = String(pageKey || '').trim().toLowerCase();
     const allowedPages = PERMISSION_MATRIX[role] || [];
@@ -159,14 +161,16 @@ return false;
     console.log('ALLOWED PAGES:', allowedPages);
 
     if (!allowedPages.includes(normalizedPageKey)) {
-        console.log('Redirecting to access-denied because page is not allowed for this role.', {
-            normalizedPageKey,
-            role,
-            allowedPages
-        });
-        console.warn("ACCESS DENIED REDIRECT BLOCKED FOR DEBUG");
-return false;
-    }
+    console.warn(
+        `Access denied: ${role} cannot access ${normalizedPageKey}`
+    );
+
+    alert('Access denied');
+
+    window.location.href = './dashboard.html';
+
+    return false;
+}
 
     await applySidebarPermissions();
     return session;

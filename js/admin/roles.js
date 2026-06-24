@@ -9,16 +9,72 @@ const logoutButton = document.getElementById('logoutButton');
 const sidebarLogout = document.getElementById('sidebarLogout');
 
 const PERMISSION_MATRIX = {
-    'Super Admin': ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
-    'Apostle': ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'settings'],
-    'Media Team': ['dashboard', 'blogs', 'events', 'media'],
-    'Pastoral Care': ['dashboard', 'prayer', 'contact', 'counseling'],
-    'Finance': ['dashboard', 'giving'],
-    'Administrator': ['dashboard', 'prayer', 'contact', 'counseling', 'blogs', 'events', 'settings']
+  'super_admin': [
+    'dashboard',
+    'prayer',
+    'contact',
+    'counseling',
+    'giving',
+    'blogs',
+    'events',
+    'media',
+    'users',
+    'roles',
+    'settings'
+  ],
+
+  'pastor': [
+    'dashboard',
+    'blogs'
+  ],
+
+  'secretary': [
+    'dashboard',
+    'prayer',
+    'contact',
+    'counseling'
+  ],
+
+  'media_team': [
+    'dashboard',
+    'media',
+    'events',
+    'blogs'
+  ],
+
+  'treasurer': [
+    'dashboard',
+    'giving'
+  ],
+
+  'member': [
+    'dashboard'
+  ],
+
+  'guest': []
 };
 
-const FEATURES = ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'];
-const ROLES = ['Super Admin', 'Apostle', 'Media Team', 'Pastoral Care', 'Finance', 'Administrator'];
+const FEATURES = [
+  'dashboard',
+  'prayer',
+  'contact',
+  'counseling',
+  'giving',
+  'blogs',
+  'events',
+  'media',
+  'users',
+  'roles',
+  'settings'
+];
+
+const ROLES = [
+  'Super Admin',
+  'Pastor',
+  'Secretary',
+  'Media Team',
+  'Treasurer'
+];
 
 let roles = [];
 let editingRole = null;
