@@ -89,17 +89,18 @@ async function handleSaveUser(e) {
                 .update({ full_name, phone, role_id, status })
                 .eq("id", editingUserId);
         } else {
-         const payload = {
-  full_name,
-  email,
-  phone,
-  role_id,
-  status: 'pending'
-};
+            const payload = {
+                full_name,
+                email,
+                phone,
+                role_id,
+                status: 'pending'
+            };
 
-response = await supabaseClient
-  .from("users")
-  .insert([payload]);
+            response = await supabaseClient
+                .from("users")
+                .insert([payload]);
+        }
 
         if (response.error) throw response.error;
 
