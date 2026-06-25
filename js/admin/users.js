@@ -113,6 +113,9 @@ async function loadUsers() {
             supabaseClient.from('roles').select('id, name').order('name', { ascending: true })
         ]);
 
+        console.log('USERS FROM DB:', users);
+console.log('ROLES FROM DB:', roles);
+
         if (usersError || rolesError) {
             console.error({ usersError, rolesError });
             showAlert('danger', 'Unable to load users.');
