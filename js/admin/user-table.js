@@ -67,8 +67,7 @@ window.renderUsersTable = function(users, currentRole) {
                             <li><a class="dropdown-item reset-password text-white" href="#">Reset Password</a></li>
                             ${u.status === 'pending' ? '<li><a class="dropdown-item send-invite text-white" href="#">Send Invite</a></li>' : ''}
                             ${u.status === 'pending' ? '<li><a class="dropdown-item resend-invite text-white" href="#">Resend Invite</a></li>' : ''}
-                            <li><a class="dropdown-item copy-invite text-white" href="#" data-token="${inviteToken}">Copy Invite Link</a></li>
-                            ${isSelf ? '' : '<li><a class="dropdown-item suspend-account text-white" href="#">Suspend Account</a></li>'}
+<li><a class="dropdown-item copy-invite text-white" href="#" data-token="${u.invite_token || ''}">Copy Invite Link</a></li>                            ${isSelf ? '' : '<li><a class="dropdown-item suspend-account text-white" href="#">Suspend Account</a></li>'}
                             ${isSelf ? '' : '<li><a class="dropdown-item more-delete text-danger" href="#">Delete Account</a></li>'}
                         </ul>
                     </div>
