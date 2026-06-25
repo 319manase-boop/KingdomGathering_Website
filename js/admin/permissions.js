@@ -38,14 +38,14 @@ async function checkAdminAuth() {
 
 async function getUserRole(userId) {
     const { data: userData, error: userError } = await supabaseClient
-        .from("users")
-        .select("role_id, status")
-        .eq("id", userId)
-        .single();
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .maybeSingle();
 
-    console.log("SESSION USER ID:", userId);
-    console.log("USER DATA FROM USERS TABLE:", userData);
-    console.log("USER ERROR:", userError);
+console.log("LOOKUP USER ID:", userId);
+console.log("USER RECORD:", userData);
+console.log("USER ERROR:", userError);
 
     if (userError || !userData) {
         return null;
