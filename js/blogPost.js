@@ -125,6 +125,9 @@ function getBlogSlugFromLocation() {
 
 // Load and display blog post by slug or friendly blog path
 async function loadBlogPost() {
+    console.log("pathname:", window.location.pathname);
+console.log("href:", window.location.href);
+console.log("slug:", getBlogSlugFromLocation());
     const slug = getBlogSlugFromLocation();
     if (!slug) {
         showPostError("Missing blog reference. Please open this post from the Blog or Resources page.");
