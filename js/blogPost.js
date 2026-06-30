@@ -18,6 +18,11 @@ function showPostError(message) {
     }
 }
 
+function getBlogAuthorName(post) {
+    const authorName = String(post?.author_name || '').trim();
+    return authorName || 'Kingdom Gathering Church';
+}
+
 // Helper: Update page meta tags for social sharing (SEO)
 function updatePageMetadata(post) {
     const metadata = generateBlogMetadata(post);
@@ -48,6 +53,7 @@ function updatePageMetadata(post) {
 function renderPost(post) {
     const titleEl = document.getElementById("postTitle");
     const imageEl = document.getElementById("postImage");
+    const authorEl = document.getElementById("postAuthor");
     const dateEl = document.getElementById("postDate");
     const categoryEl = document.getElementById("postCategory");
     const bodyEl = document.getElementById("postBody");
@@ -63,13 +69,14 @@ function renderPost(post) {
         imageEl.src = post.featured_image_path || "../images/logo.png";
         imageEl.alt = post.title || "Blog post image";
     }
+    if (authorEl) authorEl.textContent = `By ${getBlogAuthorName(post)}`;
     if (dateEl) {
         const publishedDate = new Date(post.published_at || post.created_at).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
         });
-        dateEl.textContent = ` ${publishedDate}`;
+        dateEl.innerHTML = `<i class="fas fa-calendar-alt"></i> ${publishedDate}`;
     }
     if (categoryEl) categoryEl.textContent = post.category || "Kingdom Insight";
     if (bodyEl) bodyEl.textContent = post.content || "This post has no content yet.";
@@ -142,7 +149,7 @@ console.log("slug:", getBlogSlugFromLocation());
 
         const { data, error } = await supabaseClient
             .from("blogs")
-            .select("*")
+            .select("id,title,slug,excerpt,content,featured_image_path,published_at,created_at,status,category,author_name")
             .eq("slug", slug)
             .order("published_at", { ascending: false })
             .limit(1)

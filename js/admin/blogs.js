@@ -88,7 +88,7 @@ async function loadBlogs() {
 
         const { data, error } = await supabaseClient
             .from('blogs')
-            .select('*')
+            .select('id,title,slug,excerpt,content,featured_image_path,tags,status,published_at,created_at,author_name')
             .order('published_at', { ascending: false });
 
         console.log('Response (blogs query - all posts):', data);
@@ -295,6 +295,7 @@ function openBlogModal(blog = null) {
     
     if (blog) {
         document.getElementById('blogTitle').value = blog.title || '';
+        document.getElementById('blogAuthorName').value = blog.author_name || '';
         document.getElementById('blogSlug').value = blog.slug || '';
         document.getElementById('blogExcerpt').value = blog.excerpt || '';
         document.getElementById('blogContent').value = blog.content || '';
@@ -304,6 +305,7 @@ function openBlogModal(blog = null) {
         document.getElementById('blogDelete').classList.remove('d-none');
     } else {
         document.getElementById('blogForm').reset();
+        document.getElementById('blogAuthorName').value = '';
         document.getElementById('blogSlug').value = '';
         document.getElementById('blogStatus').value = 'Draft';
         document.getElementById('blogDelete').classList.add('d-none');
@@ -317,6 +319,12 @@ async function saveBlog() {
     const title = document.getElementById('blogTitle').value.trim();
     if (!title) {
         showAlert('warning', 'Title is required.');
+        return;
+    }
+
+    const authorName = document.getElementById('blogAuthorName').value.trim();
+    if (!authorName) {
+        showAlert('warning', 'Author name is required.');
         return;
     }
 
@@ -336,6 +344,7 @@ async function saveBlog() {
 
     const payload = {
         title,
+        author_name: authorName,
         slug,
         excerpt,
         content,

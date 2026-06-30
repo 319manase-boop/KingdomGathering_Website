@@ -19,6 +19,11 @@ function formatPublishedDate(dateString) {
     });
 }
 
+function getAuthorDisplayName(post) {
+    const authorName = String(post?.author_name || '').trim();
+    return authorName || 'Kingdom Gathering Church';
+}
+
 function createSkeletonCard() {
     const wrapper = document.createElement("div");
     wrapper.className = "col-lg-4 col-md-6";
@@ -54,6 +59,7 @@ function renderBlogCard(post) {
                     <span class="text-muted ms-2"><i class="fas fa-calendar-alt"></i> ${publishedDate}</span>
                 </div>
                 <h5 class="card-title fw-bold">${post.title}</h5>
+                <p class="card-text text-muted small mb-3">By ${getAuthorDisplayName(post)}</p>
                 <p class="card-text text-muted">${excerpt}</p>
                 <a href="/blogs/${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
             </div>
@@ -79,6 +85,7 @@ function renderResourceCard(post) {
                     <span class="text-muted ms-2"><i class="fas fa-calendar-alt"></i> ${publishedDate}</span>
                 </div>
                 <h5 class="card-title fw-bold">${post.title}</h5>
+                <p class="card-text text-muted small mb-3">By ${getAuthorDisplayName(post)}</p>
                 <p class="card-text text-muted">${excerpt}</p>
                 <a href="/blogs/${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
             </div>
@@ -156,7 +163,7 @@ async function fetchPublishedBlogs() {
 
         const { data, error } = await supabaseClient
             .from('blogs')
-            .select('*')
+            .select('id,title,slug,excerpt,content,featured_image_path,published_at,created_at,status,category,author_name')
             .order('published_at', { ascending: false });
 
         console.log("[blogs] raw blogs:", data);

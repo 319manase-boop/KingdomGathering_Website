@@ -131,6 +131,11 @@ function getBlogPublishedDate(post) {
     return formatPublishedDate(dateValue);
 }
 
+function getBlogAuthorName(post) {
+    const authorName = String(post?.author_name || '').trim();
+    return authorName || 'Kingdom Gathering Church';
+}
+
 function renderHomeBlogs(posts) {
     if (!homepageLatestblog) return;
 
@@ -146,6 +151,7 @@ function renderHomeBlogs(posts) {
     const excerpt = latestBlog.excerpt || latestBlog.short_description || 'Read more about this update from Kingdom Gathering.';
     const category = latestBlog.category || 'Kingdom Insight';
     const publishedDate = getBlogPublishedDate(latestBlog);
+    const authorName = getBlogAuthorName(latestBlog);
 
     homepageLatestblog.innerHTML = `
         <div class="col-lg-10 mx-auto">
@@ -158,6 +164,7 @@ function renderHomeBlogs(posts) {
                         <div class="card-body d-flex flex-column h-100 p-4 p-md-5">
                             <span class="badge bg-gold text-dark mb-3">${category}</span>
                             <h3 class="card-title fw-bold mb-3">${latestBlog.title || 'Latest Kingdom Insight'}</h3>
+                            <p class="text-muted small mb-3">By ${authorName}</p>
                             <p class="text-gold mb-3"><i class="fas fa-calendar-alt"></i> ${publishedDate || 'Date coming soon'}</p>
                             <p class="card-text text-muted mb-5">${excerpt}</p>
                             <div class="mt-auto d-flex flex-column flex-sm-row gap-3">
@@ -265,7 +272,7 @@ async function loadHomepageContent() {
             fetchHomepageEvents(),
             supabaseClient
                 .from('blogs')
-                .select('id,title,slug,excerpt,featured_image_path,published_at,created_at,status,category')
+                .select('id,title,slug,excerpt,featured_image_path,published_at,created_at,status,category,author_name')
                 .order('published_at', { ascending: false }),
             supabaseClient
                 .from('media_assets')
