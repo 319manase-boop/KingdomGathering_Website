@@ -41,8 +41,12 @@ function validatePasswords(password, confirmPassword) {
 
 async function initializePasswordFlow() {
     try {
-        const { data: sessionData, error } =
-            await supabaseClient.auth.getSession();
+        const { data: urlData, error: urlError } = await supabaseClient.auth.getSessionFromUrl({ storeSession: true });
+        if (urlError) {
+            console.error(urlError);
+        }
+
+        const { data: sessionData, error } = await supabaseClient.auth.getSession();
 
         if (error) {
             console.error(error);
@@ -63,6 +67,7 @@ async function initializePasswordFlow() {
             return;
         }
 
+        clearUrlTokens();
     } catch (error) {
         console.error(error);
         showAlert(

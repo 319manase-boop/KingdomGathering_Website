@@ -35,6 +35,14 @@ function showAlert(type, message, timeout = 4000) {
     if (timeout) setTimeout(() => { el.classList.remove('show'); el.remove(); }, timeout);
 }
 
+function getBlogPublicUrl(blog) {
+    const slug = String(blog.slug || '').trim();
+    if (slug) {
+        return `${window.location.origin}/blogs/${encodeURIComponent(slug)}`;
+    }
+    return `${window.location.origin}/blog/post.html?slug=${encodeURIComponent(blog.slug || '')}`;
+}
+
 function generateSlug(title) {
     return title
         .toLowerCase()
@@ -205,8 +213,12 @@ function renderTable(list) {
             <td style="font-size: 0.9rem;">${formatDate(item.published_at) || '—'}</td>
             <td style="font-size: 0.9rem;">${formatDate(item.created_at)}</td>
             <td class="text-end">
-                <div class="table-actions">
+                <div class="table-actions d-flex flex-wrap gap-1 justify-content-end">
+                    <button class="btn btn-sm btn-outline-light view-btn" title="View" data-id="${item.id}">👁</button>
                     <button class="btn btn-sm btn-outline-light edit-btn" title="Edit" data-id="${item.id}">✏️</button>
+                    <button class="btn btn-sm btn-outline-light share-btn" title="Share" data-id="${item.id}">🔗</button>
+                    <button class="btn btn-sm btn-outline-light copy-link-btn" title="Copy Link" data-id="${item.id}">📋</button>
+                    ${String(item.status || '').toLowerCase() === 'published' ? `<button class="btn btn-sm btn-outline-warning unpublish-btn" title="Unpublish" data-id="${item.id}">📤</button>` : ''}
                     <button class="btn btn-sm btn-outline-danger delete-btn" title="Delete" data-id="${item.id}">🗑️</button>
                 </div>
             </td>
@@ -217,11 +229,53 @@ function renderTable(list) {
 }
 
 function attachTableEventListeners() {
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.target.getAttribute('data-id');
+            const blog = blogs.find(b => String(b.id) === String(id));
+            if (blog) window.open(getBlogPublicUrl(blog), '_blank');
+        });
+    });
+
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const id = e.target.getAttribute('data-id');
             const blog = blogs.find(b => String(b.id) === String(id));
             if (blog) openBlogModal(blog);
+        });
+    });
+
+    document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const id = e.target.getAttribute('data-id');
+            const blog = blogs.find(b => String(b.id) === String(id));
+            if (!blog) return;
+            const metadata = generateBlogMetadata(blog);
+            const shared = await nativeShare(metadata);
+            if (!shared) {
+                const modal = initBlogShareModal(blog);
+                modal.show();
+            }
+        });
+    });
+
+    document.querySelectorAll('.copy-link-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const id = e.target.getAttribute('data-id');
+            const blog = blogs.find(b => String(b.id) === String(id));
+            if (!blog) return;
+            await copyBlogLink(getBlogPublicUrl(blog));
+        });
+    });
+
+    document.querySelectorAll('.unpublish-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const id = e.target.getAttribute('data-id');
+            const blog = blogs.find(b => String(b.id) === String(id));
+            if (!blog) return;
+            if (await confirmAction(`Unpublish blog post "${escapeHtml(blog.title)}"?`)) {
+                await updateBlogStatus(blog.id, 'draft');
+            }
         });
     });
 
@@ -330,6 +384,33 @@ async function saveBlog() {
     }
 }
 
+async function updateBlogStatus(id, status) {
+    try {
+        const payload = {
+            status,
+            published_at: status === 'published' ? new Date().toISOString() : null
+        };
+
+        const { data, error } = await supabaseClient
+            .from('blogs')
+            .update(payload)
+            .eq('id', id)
+            .select();
+
+        if (error) {
+            console.error(error);
+            showAlert('danger', `Unable to update blog status (${error.message}).`);
+            return;
+        }
+
+        showAlert('success', status === 'published' ? 'Blog published.' : 'Blog unpublished.');
+        await loadBlogs();
+    } catch (err) {
+        console.error(err);
+        showAlert('danger', 'Unable to update blog status.');
+    }
+}
+
 async function deleteBlog(id) {
     try {
         console.log('Operation: delete blog post');
@@ -359,6 +440,72 @@ async function deleteBlog(id) {
     }
 }
 
+function openMediaPickerModal() {
+    const modalEl = document.getElementById('mediaPickerModal');
+    const modal = new bootstrap.Modal(modalEl);
+    loadMediaPickerImages();
+    modal.show();
+}
+
+function getMediaPublicUrl(asset) {
+    return `${supabaseClient.storageUrl}/object/public/${asset.bucket_name}/${asset.file_path}`;
+}
+
+async function loadMediaPickerImages() {
+    const grid = document.getElementById('mediaPickerGrid');
+    if (!grid) return;
+    grid.innerHTML = '<div class="col-12 text-center py-5 text-muted">Loading images...</div>';
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('media_assets')
+            .select('*')
+            .ilike('content_type', 'image/%')
+            .order('created_at', { ascending: false })
+            .limit(60);
+
+        if (error) {
+            console.error(error);
+            grid.innerHTML = '<div class="col-12 text-center py-5 text-danger">Unable to load media.</div>';
+            return;
+        }
+
+        const assets = data || [];
+        if (!assets.length) {
+            grid.innerHTML = '<div class="col-12 text-center py-5 text-muted">No images found in the media library.</div>';
+            return;
+        }
+
+        grid.innerHTML = assets.map(asset => {
+            const url = getMediaPublicUrl(asset);
+            return `
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="card bg-black border-secondary h-100">
+                        <img src="${url}" class="card-img-top" alt="${escapeHtml(asset.file_name)}" style="height:160px; object-fit:cover;">
+                        <div class="card-body p-2">
+                            <div class="small text-truncate mb-2">${escapeHtml(asset.file_name)}</div>
+                            <button type="button" class="btn btn-sm btn-outline-light w-100 select-media-btn" data-url="${url}">Use Image</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.querySelectorAll('.select-media-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const url = e.target.getAttribute('data-url');
+                document.getElementById('blogImage').value = url;
+                const modalEl = document.getElementById('mediaPickerModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) modal.hide();
+            });
+        });
+    } catch (err) {
+        console.error(err);
+        grid.innerHTML = '<div class="col-12 text-center py-5 text-danger">Unable to load media.</div>';
+    }
+}
+
 // Event Listeners
 document.getElementById('blogTitle')?.addEventListener('input', (e) => {
     document.getElementById('blogSlug').value = generateSlug(e.target.value);
@@ -372,6 +519,7 @@ document.getElementById('blogDelete')?.addEventListener('click', async () => {
         modal.hide();
     }
 });
+document.getElementById('blogSelectImageBtn')?.addEventListener('click', openMediaPickerModal);
 
 createBlogBtn?.addEventListener('click', () => openBlogModal());
 blogsSearch?.addEventListener('input', () => { currentPage = 1; renderPaginatedTable(); });

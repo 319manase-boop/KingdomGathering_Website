@@ -3,6 +3,7 @@
 const PERMISSION_MATRIX = {
     'Super Admin': ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
     'Apostle': ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'settings'],
+    'Pastor': ['dashboard', 'blogs', 'media'],
     'Media Team': ['dashboard', 'blogs', 'events', 'media'],
     'Pastoral Care': ['dashboard', 'prayer', 'contact', 'counseling'],
     'Finance': ['dashboard', 'giving'],

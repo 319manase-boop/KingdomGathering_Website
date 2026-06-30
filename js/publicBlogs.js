@@ -55,7 +55,7 @@ function renderBlogCard(post) {
                 </div>
                 <h5 class="card-title fw-bold">${post.title}</h5>
                 <p class="card-text text-muted">${excerpt}</p>
-                <a href="../blog/post.html?slug=${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
+                <a href="/blogs/${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
             </div>
         </div>
     `;
@@ -80,7 +80,7 @@ function renderResourceCard(post) {
                 </div>
                 <h5 class="card-title fw-bold">${post.title}</h5>
                 <p class="card-text text-muted">${excerpt}</p>
-                <a href="../blog/post.html?slug=${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
+                <a href="/blogs/${encodeURIComponent(post.slug)}" class="btn btn-outline-gold mt-auto">Read More</a>
             </div>
         </div>
     `;

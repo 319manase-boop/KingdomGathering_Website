@@ -25,7 +25,8 @@ const PERMISSION_MATRIX = {
 
   'pastor': [
     'dashboard',
-    'blogs'
+    'blogs',
+    'media'
   ],
 
   'secretary': [

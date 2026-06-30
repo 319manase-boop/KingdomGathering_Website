@@ -1,4 +1,4 @@
-// Admin Media Management
+// Admin Media Library Management
 
 const uploadBucket = document.getElementById('uploadBucket');
 const uploadFile = document.getElementById('uploadFile');
@@ -33,6 +33,11 @@ async function protectPage() {
     return session;
 }
 
+// Media Library UI helpers
+function getEmptyStateMessage() {
+    return 'Your media library is empty. Upload assets to get started.';
+}
+
 function showAlert(type, message, timeout = 4000) {
     const el = document.createElement('div');
     el.className = `alert alert-${type} alert-dismissible fade show`;
@@ -51,6 +56,7 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
+// Check if media asset is an image
 function isImage(contentType) {
     return contentType && contentType.startsWith('image/');
 }
@@ -89,7 +95,7 @@ async function loadMedia() {
 
         if (error) {
             console.error(error);
-            showAlert('danger', 'Unable to load media.');
+            showAlert('danger', 'Unable to load media library.');
             return;
         }
 
@@ -97,13 +103,13 @@ async function loadMedia() {
         renderMedia(media);
     } catch (err) {
         console.error(err);
-        showAlert('danger', 'Unable to load media.');
+        showAlert('danger', 'Unable to load media library.');
     }
 }
 
 function renderMedia(items) {
     if (!items.length) {
-        mediaGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: rgba(255,255,255,0.6);">No media found.</div>';
+        mediaGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: rgba(255,255,255,0.6);">No media library assets found.</div>';
         return;
     }
 
@@ -155,7 +161,7 @@ async function copyURL(id) {
     const url = getPublicURL(item.bucket_name, item.file_path);
     try {
         await navigator.clipboard.writeText(url);
-        showAlert('success', 'URL copied to clipboard.');
+        showAlert('success', 'Media URL copied to clipboard.');
     } catch (err) {
         console.error(err);
         showAlert('danger', 'Unable to copy URL.');
@@ -204,7 +210,7 @@ async function deleteMedia(id) {
         }
 
         await loadMedia();
-        showAlert('success', 'Media deleted.');
+        showAlert('success', 'Media asset deleted from library.');
     } catch (err) {
         console.error(err);
         showAlert('danger', 'Unable to delete media.');
@@ -267,7 +273,7 @@ async function uploadMedia() {
 
         document.getElementById('uploadForm').reset();
         await loadMedia();
-        showAlert('success', 'File uploaded successfully.');
+        showAlert('success', 'Media asset uploaded to library.');
         uploadBtn.disabled = false;
         uploadBtn.textContent = 'Upload';
     } catch (err) {
@@ -289,6 +295,11 @@ function applyFilters() {
     });
 
     renderMedia(filtered);
+}
+
+// Media Library helpers
+function getPublicMediaURL(bucket, path) {
+    return getPublicURL(bucket, path);
 }
 
 uploadBtn?.addEventListener('click', uploadMedia);

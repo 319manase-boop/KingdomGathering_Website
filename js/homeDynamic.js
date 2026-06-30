@@ -161,8 +161,8 @@ function renderHomeBlogs(posts) {
                             <p class="text-gold mb-3"><i class="fas fa-calendar-alt"></i> ${publishedDate || 'Date coming soon'}</p>
                             <p class="card-text text-muted mb-5">${excerpt}</p>
                             <div class="mt-auto d-flex flex-column flex-sm-row gap-3">
-                                <a href="blog/post.html?slug=${encodeURIComponent(latestBlog.slug || '')}" class="btn btn-gold">Read Article</a>
-                                <a href="blog/index.html" class="btn btn-outline-gold">View All Blogs</a>
+                                <a href="/blogs/${encodeURIComponent(latestBlog.slug || '')}" class="btn btn-gold">Read Article</a>
+                                <a href="/blog/index.html" class="btn btn-outline-gold">View All Blogs</a>
                             </div>
                         </div>
                     </div>
