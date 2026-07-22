@@ -1,6 +1,7 @@
 (function () {
     const TABLE_NAME = 'newsletter_campaigns';
-    const CAMPAIGN_TYPES = ['Blog', 'Event', 'Announcement'];
+    const VALID_CAMPAIGN_TYPES = ['blog', 'event', 'announcement'];
+    const VALID_STATUSES = ['draft', 'ready', 'scheduled', 'sending', 'sent', 'failed'];
     const MANAGE_ROLES = ['super_admin', 'pastor', 'secretary'];
     const READ_ONLY_ROLES = ['media_team'];
     let cachedCampaigns = [];
@@ -239,18 +240,53 @@
         }
     }
 
+    function normalizeCampaignType(value) {
+        return String(value || '').trim().toLowerCase();
+    }
+
+    function normalizeCampaignStatus(value) {
+        return String(value || 'draft').trim().toLowerCase();
+    }
+
+    function getValidIsoDate(value) {
+        const trimmed = String(value || '').trim();
+        if (!trimmed) return null;
+        const date = new Date(trimmed);
+        return Number.isFinite(date.getTime()) ? date.toISOString() : null;
+    }
+
     function getCampaignPayload(status) {
-        return {
+        const typeInput = document.getElementById('campaignType');
+        const featuredImageUrl = String(document.getElementById('campaignImage').value || '').trim();
+        const scheduledFor = document.getElementById('campaignScheduledFor').value;
+        const campaignType = normalizeCampaignType(typeInput?.value);
+        const normalizedStatus = normalizeCampaignStatus(status);
+
+        const payload = {
             title: document.getElementById('campaignTitle').value.trim(),
             subject: document.getElementById('campaignSubject').value.trim(),
-            campaign_type: document.getElementById('campaignType').value,
+            campaign_type: campaignType,
             content: getEditorContent(),
-            featured_image: document.getElementById('campaignImage').value.trim(),
-            status,
-            scheduled_for: document.getElementById('campaignScheduledFor').value || null,
-            created_by: getCurrentUserId() || null,
-            sent_at: status === 'sent' ? new Date().toISOString() : null
+            status: normalizedStatus,
+            created_by: getCurrentUserId() || null
         };
+
+        if (featuredImageUrl) {
+            payload.featured_image = featuredImageUrl;
+        }
+
+        if (normalizedStatus === 'scheduled') {
+            const scheduledIso = getValidIsoDate(scheduledFor);
+            if (scheduledIso) {
+                payload.scheduled_for = scheduledIso;
+            }
+        }
+
+        if (normalizedStatus === 'sent') {
+            payload.sent_at = new Date().toISOString();
+        }
+
+        return payload;
     }
 
     async function loadCampaigns() {
@@ -324,14 +360,14 @@
         document.getElementById('campaignForm').reset();
         document.getElementById('campaignId').value = '';
         setEditorContent('');
-        document.getElementById('campaignType').value = 'Blog';
+        document.getElementById('campaignType').value = 'blog';
     }
 
     function populateForm(campaign) {
         document.getElementById('campaignId').value = campaign.id || '';
         document.getElementById('campaignTitle').value = campaign.title || '';
         document.getElementById('campaignSubject').value = campaign.subject || '';
-        document.getElementById('campaignType').value = campaign.campaign_type || 'Blog';
+        document.getElementById('campaignType').value = campaign.campaign_type || 'blog';
         setEditorContent(campaign.content || '');
         document.getElementById('campaignImage').value = campaign.featured_image || '';
         document.getElementById('campaignScheduledFor').value = campaign.scheduled_for ? new Date(campaign.scheduled_for).toISOString().slice(0, 16) : '';
@@ -350,19 +386,50 @@
         }
 
         const payload = getCampaignPayload(status);
+        const isValidType = VALID_CAMPAIGN_TYPES.includes(payload.campaign_type);
+        const isValidStatus = VALID_STATUSES.includes(payload.status);
+
         if (!payload.title || !payload.subject) {
             showAlert('danger', 'Please add a title and a subject.');
             return;
         }
 
+        if (!isValidType) {
+            showAlert('danger', 'Please select a valid campaign type.');
+            return;
+        }
+
+        if (!isValidStatus) {
+            showAlert('danger', 'Please use a valid campaign status.');
+            return;
+        }
+
         try {
-            const { error } = await client.from(TABLE_NAME).insert(payload);
-            if (error) throw error;
-            showAlert('success', status === 'scheduled' ? 'Campaign scheduled successfully.' : 'Campaign saved as draft.');
+            const { data, error } = await client
+                .from(TABLE_NAME)
+                .insert(payload)
+                .select()
+                .single();
+
+            if (error) {
+                console.error('[newsletter-campaigns] create failed:', {
+                    message: error.message,
+                    details: error.details,
+                    hint: error.hint,
+                    code: error.code,
+                    payload
+                });
+                throw error;
+            }
+
+            showAlert('success', 'Campaign created successfully.');
             resetForm();
             await loadCampaigns();
+            await refreshAutomationStats();
+            return data;
         } catch (error) {
-            console.error('[newsletter-campaigns] create failed:', error);
+            const message = error?.message || 'Unable to create campaign right now.';
+            console.error('[newsletter-campaigns] create failed:', message);
             showAlert('danger', 'Unable to create campaign right now.');
         }
     }
@@ -380,13 +447,40 @@
         }
 
         const payload = getCampaignPayload(status);
+        const isValidType = VALID_CAMPAIGN_TYPES.includes(payload.campaign_type);
+        const isValidStatus = VALID_STATUSES.includes(payload.status);
+
+        if (!isValidType || !isValidStatus) {
+            showAlert('danger', 'Campaign values are invalid. Please review the form.');
+            return;
+        }
+
         try {
-            const { error } = await client.from(TABLE_NAME).update(payload).eq('id', id);
-            if (error) throw error;
+            const { data, error } = await client
+                .from(TABLE_NAME)
+                .update(payload)
+                .eq('id', id)
+                .select()
+                .single();
+
+            if (error) {
+                console.error('[newsletter-campaigns] update failed:', {
+                    message: error.message,
+                    details: error.details,
+                    hint: error.hint,
+                    code: error.code,
+                    payload
+                });
+                throw error;
+            }
+
             showAlert('success', status === 'scheduled' ? 'Campaign updated and scheduled.' : 'Campaign updated.');
             await loadCampaigns();
+            await refreshAutomationStats();
+            return data;
         } catch (error) {
-            console.error('[newsletter-campaigns] update failed:', error);
+            const message = error?.message || 'Unable to update campaign.';
+            console.error('[newsletter-campaigns] update failed:', message);
             showAlert('danger', 'Unable to update campaign.');
         }
     }

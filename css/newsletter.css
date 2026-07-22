@@ -251,6 +251,57 @@
     margin-top: 1rem;
 }
 
+.campaign-builder {
+    color: #222;
+}
+
+.campaign-builder .form-label,
+.campaign-builder legend {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #3b2d08;
+    font-weight: 700;
+    opacity: 1;
+}
+
+.campaign-builder .form-control,
+.campaign-builder .form-select,
+.campaign-builder textarea,
+.campaign-builder [contenteditable="true"] {
+    color: #f8f8f8;
+    background: #191919;
+    border: 1px solid #444;
+    opacity: 1;
+}
+
+.campaign-builder input::placeholder,
+.campaign-builder textarea::placeholder {
+    color: #b8b8b8;
+    opacity: 1;
+}
+
+.campaign-builder select option {
+    color: #f8f8f8;
+    background: #191919;
+}
+
+.campaign-builder .rich-editor-toolbar button {
+    color: #2c2208;
+    background: #f5ecd1;
+    border: 1px solid #d4bd72;
+    opacity: 1;
+}
+
+.campaign-builder .rich-editor-toolbar button:disabled {
+    color: #777;
+    opacity: 0.55;
+}
+
+.campaign-builder .field-help,
+.campaign-builder small {
+    color: #645b48;
+}
+
 @media (max-width: 768px) {
     .newsletter-card-content {
         grid-template-columns: 1fr;
