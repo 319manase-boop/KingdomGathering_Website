@@ -54,24 +54,9 @@
         setMessage(form, messageEl, 'success', '');
 
         try {
-            const { data: existing, error: lookupError } = await client
-                .from(TABLE_NAME)
-                .select('id, email, status')
-                .eq('email', email)
-                .maybeSingle();
-
-            if (lookupError) {
-                throw lookupError;
-            }
-
-            if (existing) {
-                setMessage(form, messageEl, 'success', 'You are already subscribed. Thank you for staying connected.');
-                return;
-            }
-
             const payload = {
                 email,
-                source,
+                source: 'homepage',
                 status: 'active',
                 campaign_preferences: DEFAULT_CAMPAIGN_PREFERENCES
             };
@@ -81,14 +66,21 @@
                 .insert(payload);
 
             if (insertError) {
+                if (insertError.code === '23505') {
+                    setMessage(form, messageEl, 'error', "You're already subscribed to our newsletter.");
+                    return;
+                }
+
                 throw insertError;
             }
 
             form.reset();
             setMessage(form, messageEl, 'success', 'Thank you for subscribing. We will keep you updated with church news and events.');
         } catch (error) {
-            console.error('[newsletter] Subscription failed:', error);
-            setMessage(form, messageEl, 'error', 'Unable to subscribe right now. Please try again later.');
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.error('[newsletter] Subscription failed:', error);
+            }
+            setMessage(form, messageEl, 'error', "We couldn't complete your subscription. Please try again.");
         } finally {
             setSubmitState(form, false);
         }
