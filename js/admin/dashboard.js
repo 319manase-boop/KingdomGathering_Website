@@ -3,6 +3,7 @@
 const logoutButton = document.getElementById('logoutButton');
 const sidebarLogout = document.getElementById('sidebarLogout');
 const adminUserEmail = document.getElementById('adminUserEmail');
+const sendNewsletterDashboardBtn = document.getElementById('sendNewsletterDashboardBtn');
 const totalPrayers = document.getElementById('totalPrayers');
 const totalContacts = document.getElementById('totalContacts');
 const totalCounseling = document.getElementById('totalCounseling');
@@ -205,6 +206,21 @@ async function fetchRecent(tableName, orderColumn, limit = 5) {
     }
 }
 
+async function setupSendNewsletterButton() {
+    if (!sendNewsletterDashboardBtn) return;
+    const role = await getCurrentUserRole();
+    const allowedNewsletterRoles = ['super_admin', 'pastor', 'secretary'];
+    if (!role || !allowedNewsletterRoles.includes(role)) {
+        sendNewsletterDashboardBtn.classList.add('d-none');
+        return;
+    }
+
+    sendNewsletterDashboardBtn.classList.remove('d-none');
+    sendNewsletterDashboardBtn.addEventListener('click', () => {
+        window.location.href = 'newsletter-campaigns.html';
+    });
+}
+
 async function initializeDashboard() {
     const session = await protectDashboard();
     if (!session) return;
@@ -212,6 +228,7 @@ async function initializeDashboard() {
     adminUserEmail.textContent = session.user.email || 'Admin';
 
     try {
+        await setupSendNewsletterButton();
         await loadStatistics();
         await loadRecentEntries();
     } catch (error) {
