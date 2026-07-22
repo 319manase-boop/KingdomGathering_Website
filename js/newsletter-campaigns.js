@@ -1,8 +1,11 @@
 (function () {
     const TABLE_NAME = 'newsletter_campaigns';
     const CAMPAIGN_TYPES = ['Blog', 'Event', 'Announcement'];
-    const allowedRoles = ['super_admin', 'pastor', 'secretary'];
+    const MANAGE_ROLES = ['super_admin', 'pastor', 'secretary'];
+    const READ_ONLY_ROLES = ['media_team'];
     let cachedCampaigns = [];
+    let currentRole = null;
+    let roleResolved = false;
 
     function getSupabaseClient() {
         return window.supabaseClient || null;
@@ -75,17 +78,68 @@
         }
         controls?.forEach((control) => {
             if (control.id === 'campaignId' || control.id === 'campaignContent') return;
-            if (isReadOnly) {
-                control.disabled = true;
-            } else {
-                control.disabled = false;
-            }
+            control.disabled = isReadOnly;
         });
     }
 
+    function setPermissionLoadingState() {
+        const permissionBadge = document.getElementById('campaignPermissionBadge');
+        if (permissionBadge) {
+            permissionBadge.textContent = 'Loading...';
+            permissionBadge.className = 'newsletter-pill';
+        }
+        setFormMode(true);
+    }
+
     function canManageCampaigns() {
-        const role = window.__adminUserRole || '';
-        return allowedRoles.includes(String(role).toLowerCase());
+        if (!roleResolved) {
+            return false;
+        }
+        return MANAGE_ROLES.includes(String(currentRole || '').toLowerCase());
+    }
+
+    function canReadOnlyCampaigns() {
+        if (!roleResolved) {
+            return false;
+        }
+        return READ_ONLY_ROLES.includes(String(currentRole || '').toLowerCase());
+    }
+
+    async function resolveCampaignPermissions() {
+        setPermissionLoadingState();
+        if (typeof window.getCurrentUserRole !== 'function') {
+            currentRole = window.__adminUserRole || null;
+        } else {
+            currentRole = await window.getCurrentUserRole();
+        }
+        roleResolved = true;
+
+        const rawRole = window.__adminUserRole || 'unknown';
+        const normalizedRole = currentRole || 'unknown';
+        const canManage = canManageCampaigns();
+        const canReadOnly = canReadOnlyCampaigns();
+
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('newsletter-campaigns permission state:', {
+                rawRole,
+                normalizedRole,
+                canManageCampaigns: canManage,
+                canReadOnlyCampaigns: canReadOnly
+            });
+        }
+
+        const permissionBadge = document.getElementById('campaignPermissionBadge');
+        if (permissionBadge) {
+            if (canManage) {
+                permissionBadge.textContent = 'Manage';
+                permissionBadge.className = 'newsletter-pill';
+            } else {
+                permissionBadge.textContent = 'Read Only';
+                permissionBadge.className = 'newsletter-pill bg-secondary';
+            }
+        }
+
+        setFormMode(!canManage);
     }
 
     function validateEmailAddress(value) {
@@ -257,9 +311,9 @@
                 <td>${formatDate(campaign.scheduled_for)}</td>
                 <td>
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-sm btn-outline-light" type="button" onclick="window.editCampaign('${campaign.id}')">Edit</button>
-                        <button class="btn btn-sm btn-outline-warning" type="button" onclick="window.duplicateCampaign('${campaign.id}')">Duplicate</button>
-                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="window.deleteCampaign('${campaign.id}')">Delete</button>
+                        <button class="btn btn-sm btn-outline-light" type="button" onclick="window.editCampaign('${campaign.id}')" ${canManageCampaigns() ? '' : 'disabled'}>Edit</button>
+                        <button class="btn btn-sm btn-outline-warning" type="button" onclick="window.duplicateCampaign('${campaign.id}')" ${canManageCampaigns() ? '' : 'disabled'}>Duplicate</button>
+                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="window.deleteCampaign('${campaign.id}')" ${canManageCampaigns() ? '' : 'disabled'}>Delete</button>
                     </div>
                 </td>
             </tr>
@@ -502,7 +556,7 @@
 
     async function initialize() {
         bindEvents();
-        setFormMode(!canManageCampaigns());
+        await resolveCampaignPermissions();
         await loadCampaigns();
         await refreshAutomationStats();
     }

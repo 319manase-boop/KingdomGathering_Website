@@ -19,7 +19,9 @@
 
     function setMessage(form, messageEl, type, text) {
         if (!messageEl) return;
-        messageEl.className = `newsletter-message ${type === 'success' ? 'is-success' : 'is-error'}`;
+        const baseClass = 'newsletter-message';
+        const typeClass = type === 'success' ? 'is-success' : type === 'error' ? 'is-error' : '';
+        messageEl.className = typeClass ? `${baseClass} ${typeClass}` : baseClass;
         messageEl.textContent = text || '';
     }
 
@@ -51,7 +53,7 @@
         }
 
         setSubmitState(form, true);
-        setMessage(form, messageEl, 'success', '');
+        setMessage(form, messageEl, '', '');
 
         try {
             const payload = {

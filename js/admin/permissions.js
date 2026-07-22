@@ -10,11 +10,26 @@ const PERMISSION_MATRIX = {
     guest: []
 };
 
+const ROLE_ALIAS_MAP = {
+    'super admin': 'super_admin',
+    'super_admin': 'super_admin',
+    'admin': 'super_admin',
+    'administrator': 'super_admin',
+    'pastor': 'pastor',
+    'apostle': 'pastor',
+    'secretary': 'secretary',
+    'media team': 'media_team',
+    'media_team': 'media_team'
+};
 
 function normalizeRole(role) {
-    return String(role || '')
+    const value = String(role || '')
         .trim()
-        .toLowerCase();
+        .toLowerCase()
+        .replace(/-/g, ' ')
+        .replace(/\s+/g, ' ');
+
+    return ROLE_ALIAS_MAP[value] || value.replace(/\s+/g, '_');
 }
 
 async function getAdminSession() {
@@ -123,13 +138,22 @@ async function getCurrentUserRole() {
     const role = await getUserRole(session.user.id);
     const normalizedRole = normalizeRole(role);
 
-   if (!normalizedRole) {
-    console.error('Role could not be resolved');
-    return null;
-}
+    const rawRole = role;
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log('ADMIN ROLE RESOLUTION', {
+            rawRole,
+            normalizedRole,
+            canManageCampaigns: ['super_admin', 'pastor', 'secretary'].includes(normalizedRole)
+        });
+    }
 
-window.__adminUserRole = normalizedRole;
-    console.log("CURRENT USER ROLE RESOLVED:", normalizedRole);
+    if (!normalizedRole) {
+        console.error('Role could not be resolved');
+        return null;
+    }
+
+    window.__adminUserRole = normalizedRole;
+    console.log('CURRENT USER ROLE RESOLVED:', normalizedRole);
 
     return normalizedRole;
 }
