@@ -45,6 +45,10 @@ function getPreferenceValue(preferences: unknown, preferenceKey: string) {
   return typeof value === "boolean" ? value : undefined;
 }
 
+function isValidEmail(value: unknown) {
+  return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 serve(async (req) => {
   const origin = req.headers.get("origin") || "*";
 
@@ -107,29 +111,47 @@ serve(async (req) => {
       return jsonResponse({ error: `Campaign status \"${campaign.status}\" is not eligible for sending.` }, 400, origin);
     }
 
-    const { error: statusUpdateError } = await supabaseAdmin
-      .from("newsletter_campaigns")
-      .update({ status: "sending", updated_at: new Date().toISOString() })
-      .eq("id", campaignId);
+    const testMode = Boolean(payload.test_mode === true || String(payload.test_mode || "").toLowerCase() === "true");
+    const testEmail = String(payload.test_email || "").trim();
 
-    if (statusUpdateError) {
-      throw statusUpdateError;
+    if (testMode && !isValidEmail(testEmail)) {
+      return jsonResponse({ error: "A valid test_email is required for test mode." }, 400, origin);
     }
 
-    const { data: subscribers, error: subscriberError } = await supabaseAdmin
-      .from("newsletter_subscribers")
-      .select("id, email, campaign_preferences")
-      .eq("status", "active");
+    const recipients: Array<{ email: string; subscriber_id?: unknown }> = [];
 
-    if (subscriberError) {
-      throw subscriberError;
+    if (testMode) {
+      recipients.push({ email: testEmail });
+    } else {
+      const { data: subscribers, error: subscriberError } = await supabaseAdmin
+        .from("newsletter_subscribers")
+        .select("id, email, campaign_preferences")
+        .eq("status", "active");
+
+      if (subscriberError) {
+        throw subscriberError;
+      }
+
+      const preferenceKey = getPreferenceKey(String(campaign.campaign_type || "Announcement"));
+      const eligibleSubscribers = (subscribers || []).filter((subscriber: Record<string, unknown>) => {
+        const preferenceValue = getPreferenceValue(subscriber.campaign_preferences, preferenceKey);
+        return preferenceValue === undefined ? true : preferenceValue;
+      });
+
+      recipients.push(...eligibleSubscribers.map((subscriber: Record<string, unknown>) => ({
+        email: String(subscriber.email || "").trim(),
+        subscriber_id: subscriber.id
+      })));
+
+      const { error: statusUpdateError } = await supabaseAdmin
+        .from("newsletter_campaigns")
+        .update({ status: "sending", updated_at: new Date().toISOString() })
+        .eq("id", campaignId);
+
+      if (statusUpdateError) {
+        throw statusUpdateError;
+      }
     }
-
-    const preferenceKey = getPreferenceKey(String(campaign.campaign_type || "Announcement"));
-    const eligibleSubscribers = (subscribers || []).filter((subscriber: Record<string, unknown>) => {
-      const preferenceValue = getPreferenceValue(subscriber.campaign_preferences, preferenceKey);
-      return preferenceValue === undefined ? true : preferenceValue;
-    });
 
     const results: Array<Record<string, unknown>> = [];
     let hadFailure = false;
@@ -175,8 +197,10 @@ serve(async (req) => {
           })
         });
 
+        const responseBody = await resendResponse.json().catch(() => null);
+
         if (!resendResponse.ok) {
-          const resendBody = await resendResponse.text();
+          const resendBody = responseBody?.message || JSON.stringify(responseBody) || await resendResponse.text();
           throw new Error(`Resend error ${resendResponse.status}: ${resendBody}`);
         }
 
@@ -185,7 +209,7 @@ serve(async (req) => {
           .update({ status: "sent", error_message: null, updated_at: new Date().toISOString() })
           .eq("id", logRow.id);
 
-        results.push({ email, status: "sent" });
+        results.push({ email, status: "sent", id: responseBody?.id || null });
       } catch (error) {
         hadFailure = true;
         const message = error instanceof Error ? error.message : String(error);
@@ -197,18 +221,20 @@ serve(async (req) => {
       }
     }
 
-    const finalStatus = hadFailure ? "failed" : "sent";
-    const { error: finalStatusError } = await supabaseAdmin
-      .from("newsletter_campaigns")
-      .update({
-        status: finalStatus,
-        updated_at: new Date().toISOString(),
-        sent_at: finalStatus === "sent" ? new Date().toISOString() : null
-      })
-      .eq("id", campaignId);
+    if (!testMode) {
+      const finalStatus = hadFailure ? "failed" : "sent";
+      const { error: finalStatusError } = await supabaseAdmin
+        .from("newsletter_campaigns")
+        .update({
+          status: finalStatus,
+          updated_at: new Date().toISOString(),
+          sent_at: finalStatus === "sent" ? new Date().toISOString() : null
+        })
+        .eq("id", campaignId);
 
-    if (finalStatusError) {
-      throw finalStatusError;
+      if (finalStatusError) {
+        throw finalStatusError;
+      }
     }
 
     return jsonResponse(
@@ -216,7 +242,7 @@ serve(async (req) => {
         success: !hadFailure,
         message: `Newsletter processing completed for campaign ${campaignId}.`,
         campaign_id: campaignId,
-        recipient_count: eligibleSubscribers.length,
+        recipient_count: recipients.length,
         sent_count: results.filter((result) => result.status === "sent").length,
         failed_count: results.filter((result) => result.status === "failed").length,
         results

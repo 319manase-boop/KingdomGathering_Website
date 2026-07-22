@@ -2,6 +2,7 @@
     const TABLE_NAME = 'newsletter_campaigns';
     const CAMPAIGN_TYPES = ['Blog', 'Event', 'Announcement'];
     const allowedRoles = ['super_admin', 'pastor', 'secretary'];
+    let cachedCampaigns = [];
 
     function getSupabaseClient() {
         return window.supabaseClient || null;
@@ -87,6 +88,103 @@
         return allowedRoles.includes(String(role).toLowerCase());
     }
 
+    function validateEmailAddress(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+    }
+
+    function setTestEmailStatus(type, message) {
+        const statusEl = document.getElementById('testEmailStatus');
+        if (!statusEl) return;
+        statusEl.className = `newsletter-message ${type === 'success' ? 'is-success' : type === 'error' ? 'is-error' : ''}`;
+        statusEl.textContent = message || '';
+    }
+
+    function showTestEmailModal(open = true) {
+        const overlay = document.getElementById('testEmailModalOverlay');
+        if (!overlay) return;
+        overlay.classList.toggle('d-none', !open);
+    }
+
+    function populateTestEmailCampaignSelect() {
+        const select = document.getElementById('testEmailCampaignSelect');
+        if (!select) return;
+        const campaigns = cachedCampaigns || [];
+        select.innerHTML = campaigns.map((campaign) => `
+            <option value="${campaign.id}">${escapeHtml(campaign.subject || campaign.title || 'Untitled')} (${escapeHtml(campaign.status || 'draft')})</option>
+        `).join('');
+    }
+
+    function openTestEmailModal() {
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to send test emails.');
+            return;
+        }
+        populateTestEmailCampaignSelect();
+        document.getElementById('testEmailAddress').value = '';
+        setTestEmailStatus('', '');
+        showTestEmailModal(true);
+    }
+
+    function closeTestEmailModal() {
+        setTestEmailStatus('', '');
+        showTestEmailModal(false);
+    }
+
+    async function sendTestEmail() {
+        const button = document.getElementById('sendTestEmailConfirmBtn');
+        const emailInput = document.getElementById('testEmailAddress');
+        const campaignSelect = document.getElementById('testEmailCampaignSelect');
+
+        if (!button || !emailInput || !campaignSelect) return;
+
+        const testEmail = String(emailInput.value || '').trim();
+        const campaignId = String(campaignSelect.value || '').trim();
+
+        if (!validateEmailAddress(testEmail)) {
+            setTestEmailStatus('error', 'Please enter a valid email address.');
+            return;
+        }
+
+        if (!campaignId) {
+            setTestEmailStatus('error', 'Please select a campaign to test.');
+            return;
+        }
+
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Sending...';
+        setTestEmailStatus('', 'Sending test email…');
+
+        try {
+            const url = `${window.location.origin.replace(/\/+$/, '')}/functions/v1/send-newsletter`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    campaign_id: campaignId,
+                    test_mode: true,
+                    test_email: testEmail
+                })
+            });
+
+            const responseBody = await response.json();
+            if (!response.ok) {
+                throw new Error(responseBody?.error || 'Unable to send test email.');
+            }
+
+            const emailId = responseBody?.email_id || responseBody?.results?.[0]?.id || null;
+            setTestEmailStatus('success', emailId ? `Test email sent successfully. Resend email ID: ${emailId}` : 'Test email sent successfully.');
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            setTestEmailStatus('error', message || 'Failed to send test email.');
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+    }
+
     function getCampaignPayload(status) {
         return {
             title: document.getElementById('campaignTitle').value.trim(),
@@ -117,7 +215,8 @@
 
             if (error) throw error;
 
-            renderCampaigns(data || []);
+            cachedCampaigns = data || [];
+            renderCampaigns(cachedCampaigns);
         } catch (error) {
             console.error('[newsletter-campaigns] load failed:', error);
             showAlert('danger', 'Unable to load campaigns right now.');
@@ -375,6 +474,11 @@
             }
             showAlert('info', 'Send Now is prepared for future email-service integration. No emails are sent yet.');
         });
+
+        document.getElementById('sendTestEmailBtn')?.addEventListener('click', openTestEmailModal);
+        document.getElementById('closeTestEmailModal')?.addEventListener('click', closeTestEmailModal);
+        document.getElementById('cancelTestEmailBtn')?.addEventListener('click', closeTestEmailModal);
+        document.getElementById('sendTestEmailConfirmBtn')?.addEventListener('click', sendTestEmail);
 
         document.getElementById('previewCampaignBtn')?.addEventListener('click', previewCampaign);
         document.getElementById('runAutomationBtn')?.addEventListener('click', runAutomationWorkflow);

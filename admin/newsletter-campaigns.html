@@ -113,6 +113,7 @@
                                     <button type="button" id="saveDraftBtn" class="btn btn-outline-light">Save Draft</button>
                                     <button type="button" id="scheduleCampaignBtn" class="btn btn-gold">Schedule</button>
                                     <button type="button" id="sendNowBtn" class="btn btn-outline-gold">Send Now</button>
+                                    <button type="button" id="sendTestEmailBtn" class="btn btn-outline-light">Send Test Email</button>
                                     <button type="button" id="runAutomationBtn" class="btn btn-outline-light">Auto-Generate</button>
                                 </div>
                             </form>
@@ -166,6 +167,31 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <div id="testEmailModalOverlay" class="modal-overlay d-none">
+        <div class="page-modal">
+            <div class="modal-window modal-dialog-scrollable">
+                <button type="button" class="modal-close" id="closeTestEmailModal">×</button>
+                <div class="modal-body p-4">
+                    <h2 class="modal-title">Send Test Email</h2>
+                    <p class="modal-description">Send a single test copy of a campaign email without affecting your live recipients.</p>
+                    <div class="mb-3">
+                        <label class="form-label" for="testEmailAddress">Recipient email</label>
+                        <input id="testEmailAddress" type="email" class="form-control" placeholder="recipient@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="testEmailCampaignSelect">Select campaign</label>
+                        <select id="testEmailCampaignSelect" class="form-select"></select>
+                    </div>
+                    <div id="testEmailStatus" class="newsletter-message"></div>
+                </div>
+                <div class="modal-footer d-flex gap-2 p-4">
+                    <button type="button" class="btn btn-outline-light" id="cancelTestEmailBtn">Cancel</button>
+                    <button type="button" class="btn btn-gold" id="sendTestEmailConfirmBtn">Send Test Email</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
