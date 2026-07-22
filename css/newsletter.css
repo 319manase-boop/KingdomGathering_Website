@@ -10,6 +10,7 @@
     background: linear-gradient(135deg, #ffffff 0%, #fdf8eb 55%, #f5ebd2 100%);
     box-shadow: 0 20px 60px rgba(18, 24, 40, 0.16);
     padding: 2rem;
+    color: #111111;
 }
 
 .newsletter-card::before {
@@ -28,17 +29,24 @@
     align-items: center;
 }
 
+.newsletter-copy .section-eyebrow {
+    color: #8f7a24;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
 .newsletter-copy h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.7rem, 2.2vw, 2.35rem);
+    font-size: clamp(1.9rem, 2.4vw, 2.75rem);
     margin-bottom: 0.8rem;
-    color: #172033;
+    color: #111111;
+    line-height: 1.05;
 }
 
 .newsletter-copy p {
-    color: #5b6473;
+    color: #4d5565;
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.75;
     margin-bottom: 0;
 }
 
