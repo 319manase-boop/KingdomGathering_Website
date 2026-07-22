@@ -9,11 +9,13 @@ const totalCounseling = document.getElementById('totalCounseling');
 const totalGiving = document.getElementById('totalGiving');
 const totalBlogs = document.getElementById('totalBlogs');
 const totalEvents = document.getElementById('totalEvents');
+const totalCampaigns = document.getElementById('totalCampaigns');
 const dashboardError = document.getElementById('dashboardError');
 const recentActivityList = document.getElementById('recentActivityList');
 const recentPrayerList = document.getElementById('recentPrayerList');
 const recentContactList = document.getElementById('recentContactList');
 const recentCounselingList = document.getElementById('recentCounselingList');
+const recentCampaignList = document.getElementById('recentCampaignList');
 
 async function protectDashboard() {
     return await checkPagePermission('dashboard');
@@ -41,10 +43,11 @@ async function loadStatistics() {
         countTable('counseling_requests'),
         countTable('giving_records'),
         countTable('blogs'),
-        countTable('events')
+        countTable('events'),
+        countTable('newsletter_campaigns')
     ]);
 
-    const [prayers, contacts, counseling, giving, blogs, events] = stats;
+    const [prayers, contacts, counseling, giving, blogs, events, campaigns] = stats;
 
     animateCount(totalPrayers, prayers);
     animateCount(totalContacts, contacts);
@@ -52,6 +55,7 @@ async function loadStatistics() {
     animateCount(totalGiving, giving);
     animateCount(totalBlogs, blogs);
     animateCount(totalEvents, events);
+    animateCount(totalCampaigns, campaigns);
 }
 
 function animateCount(element, targetValue) {
@@ -94,10 +98,11 @@ async function countTable(tableName) {
 }
 
 async function loadRecentEntries() {
-    const [prayers, contacts, counseling] = await Promise.all([
+    const [prayers, contacts, counseling, campaigns] = await Promise.all([
         fetchRecent('prayer_requests', 'created_at', 5),
         fetchRecent('contact_messages', 'created_at', 5),
-        fetchRecent('counseling_requests', 'created_at', 5)
+        fetchRecent('counseling_requests', 'created_at', 5),
+        fetchRecent('newsletter_campaigns', 'created_at', 5)
     ]);
 
     recentPrayerList.innerHTML = prayers.length
@@ -127,6 +132,15 @@ async function loadRecentEntries() {
         )).join('')
         : '<li class="list-group-item">No recent counseling requests.</li>';
 
+    recentCampaignList.innerHTML = campaigns.length
+        ? campaigns.map((item) => createListItem(
+            item.title || 'Campaign',
+            item.subject || item.campaign_type || 'No subject',
+            item.status || 'Draft',
+            formatDate(item.created_at)
+        )).join('')
+        : '<li class="list-group-item">No recent newsletter campaigns.</li>';
+
     const recentRequests = [
         ...prayers.slice(0, 2).map((item) => ({
             title: item.name || 'Prayer',
@@ -144,6 +158,12 @@ async function loadRecentEntries() {
             title: item.name || 'Counseling',
             subtitle: item.preferred_contact || 'No contact',
             status: item.status || 'New',
+            date: formatDate(item.created_at)
+        })),
+        ...campaigns.slice(0, 1).map((item) => ({
+            title: item.title || 'Campaign',
+            subtitle: item.subject || item.campaign_type || 'No subject',
+            status: item.status || 'Draft',
             date: formatDate(item.created_at)
         }))
     ];

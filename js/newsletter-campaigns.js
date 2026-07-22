@@ -1,0 +1,430 @@
+(function () {
+    const TABLE_NAME = 'newsletter_campaigns';
+    const CAMPAIGN_TYPES = ['Blog', 'Event', 'Announcement'];
+    const allowedRoles = ['super_admin', 'pastor', 'secretary'];
+
+    function getSupabaseClient() {
+        return window.supabaseClient || null;
+    }
+
+    function getCurrentUserId() {
+        return window.__adminUserId || null;
+    }
+
+    function showAlert(type, message) {
+        const alertEl = document.getElementById('newsletterAlert');
+        if (!alertEl) return;
+        alertEl.className = `alert alert-${type} mt-3`;
+        alertEl.textContent = message;
+        alertEl.classList.remove('d-none');
+    }
+
+    function hideAlert() {
+        const alertEl = document.getElementById('newsletterAlert');
+        if (!alertEl) return;
+        alertEl.className = 'alert alert-info mt-3 d-none';
+        alertEl.textContent = '';
+    }
+
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function formatDate(value) {
+        if (!value) return '—';
+        try {
+            return new Date(value).toLocaleString();
+        } catch (error) {
+            return value;
+        }
+    }
+
+    function getEditorContent() {
+        const editor = document.getElementById('campaignEditor');
+        const hidden = document.getElementById('campaignContent');
+        if (editor) {
+            hidden.value = editor.innerHTML.trim();
+        }
+        return hidden.value;
+    }
+
+    function setEditorContent(value) {
+        const editor = document.getElementById('campaignEditor');
+        const hidden = document.getElementById('campaignContent');
+        if (editor) {
+            editor.innerHTML = value || '';
+        }
+        if (hidden) {
+            hidden.value = value || '';
+        }
+    }
+
+    function setFormMode(isReadOnly) {
+        const form = document.getElementById('campaignForm');
+        const permissionBadge = document.getElementById('campaignPermissionBadge');
+        const controls = form?.querySelectorAll('input, select, button, textarea');
+        if (permissionBadge) {
+            permissionBadge.textContent = isReadOnly ? 'Read Only' : 'Manage';
+            permissionBadge.className = `newsletter-pill ${isReadOnly ? 'bg-secondary' : ''}`;
+        }
+        controls?.forEach((control) => {
+            if (control.id === 'campaignId' || control.id === 'campaignContent') return;
+            if (isReadOnly) {
+                control.disabled = true;
+            } else {
+                control.disabled = false;
+            }
+        });
+    }
+
+    function canManageCampaigns() {
+        const role = window.__adminUserRole || '';
+        return allowedRoles.includes(String(role).toLowerCase());
+    }
+
+    function getCampaignPayload(status) {
+        return {
+            title: document.getElementById('campaignTitle').value.trim(),
+            subject: document.getElementById('campaignSubject').value.trim(),
+            campaign_type: document.getElementById('campaignType').value,
+            content: getEditorContent(),
+            featured_image: document.getElementById('campaignImage').value.trim(),
+            status,
+            scheduled_for: document.getElementById('campaignScheduledFor').value || null,
+            created_by: getCurrentUserId() || null,
+            sent_at: status === 'sent' ? new Date().toISOString() : null
+        };
+    }
+
+    async function loadCampaigns() {
+        const client = getSupabaseClient();
+        if (!client) {
+            showAlert('danger', 'Supabase client is unavailable.');
+            return;
+        }
+
+        hideAlert();
+        try {
+            const { data, error } = await client
+                .from(TABLE_NAME)
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            renderCampaigns(data || []);
+        } catch (error) {
+            console.error('[newsletter-campaigns] load failed:', error);
+            showAlert('danger', 'Unable to load campaigns right now.');
+        }
+    }
+
+    function renderCampaigns(campaigns) {
+        const tableBody = document.getElementById('campaignTableBody');
+        const search = (document.getElementById('campaignSearch').value || '').trim().toLowerCase();
+        const statusFilter = (document.getElementById('campaignStatusFilter').value || 'all').toLowerCase();
+        const typeFilter = (document.getElementById('campaignTypeFilter').value || 'all');
+
+        let items = [...campaigns];
+        if (search) {
+            items = items.filter((campaign) => `${campaign.title} ${campaign.subject} ${campaign.campaign_type}`.toLowerCase().includes(search));
+        }
+        if (statusFilter !== 'all') {
+            items = items.filter((campaign) => String(campaign.status || '').toLowerCase() === statusFilter);
+        }
+        if (typeFilter !== 'all') {
+            items = items.filter((campaign) => String(campaign.campaign_type || '') === typeFilter);
+        }
+
+        if (!tableBody) return;
+        if (!items.length) {
+            tableBody.innerHTML = '<tr><td colspan="8" class="newsletter-empty">No campaigns found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = items.map((campaign) => `
+            <tr>
+                <td>${escapeHtml(campaign.title || 'Untitled')}</td>
+                <td>${escapeHtml(campaign.subject || '—')}</td>
+                <td>${escapeHtml(campaign.campaign_type || '—')}</td>
+                <td><span class="newsletter-badge active">${escapeHtml(campaign.status || 'draft')}</span></td>
+                <td>${escapeHtml(campaign.created_by || '—')}</td>
+                <td>${formatDate(campaign.created_at)}</td>
+                <td>${formatDate(campaign.scheduled_for)}</td>
+                <td>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-sm btn-outline-light" type="button" onclick="window.editCampaign('${campaign.id}')">Edit</button>
+                        <button class="btn btn-sm btn-outline-warning" type="button" onclick="window.duplicateCampaign('${campaign.id}')">Duplicate</button>
+                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="window.deleteCampaign('${campaign.id}')">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function resetForm() {
+        document.getElementById('campaignForm').reset();
+        document.getElementById('campaignId').value = '';
+        setEditorContent('');
+        document.getElementById('campaignType').value = 'Blog';
+    }
+
+    function populateForm(campaign) {
+        document.getElementById('campaignId').value = campaign.id || '';
+        document.getElementById('campaignTitle').value = campaign.title || '';
+        document.getElementById('campaignSubject').value = campaign.subject || '';
+        document.getElementById('campaignType').value = campaign.campaign_type || 'Blog';
+        setEditorContent(campaign.content || '');
+        document.getElementById('campaignImage').value = campaign.featured_image || '';
+        document.getElementById('campaignScheduledFor').value = campaign.scheduled_for ? new Date(campaign.scheduled_for).toISOString().slice(0, 16) : '';
+    }
+
+    async function createCampaign(status = 'draft') {
+        const client = getSupabaseClient();
+        if (!client) {
+            showAlert('danger', 'Supabase client is unavailable.');
+            return;
+        }
+
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to manage campaigns.');
+            return;
+        }
+
+        const payload = getCampaignPayload(status);
+        if (!payload.title || !payload.subject) {
+            showAlert('danger', 'Please add a title and a subject.');
+            return;
+        }
+
+        try {
+            const { error } = await client.from(TABLE_NAME).insert(payload);
+            if (error) throw error;
+            showAlert('success', status === 'scheduled' ? 'Campaign scheduled successfully.' : 'Campaign saved as draft.');
+            resetForm();
+            await loadCampaigns();
+        } catch (error) {
+            console.error('[newsletter-campaigns] create failed:', error);
+            showAlert('danger', 'Unable to create campaign right now.');
+        }
+    }
+
+    async function updateCampaign(id, status = 'draft') {
+        const client = getSupabaseClient();
+        if (!client) {
+            showAlert('danger', 'Supabase client is unavailable.');
+            return;
+        }
+
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to edit campaigns.');
+            return;
+        }
+
+        const payload = getCampaignPayload(status);
+        try {
+            const { error } = await client.from(TABLE_NAME).update(payload).eq('id', id);
+            if (error) throw error;
+            showAlert('success', status === 'scheduled' ? 'Campaign updated and scheduled.' : 'Campaign updated.');
+            await loadCampaigns();
+        } catch (error) {
+            console.error('[newsletter-campaigns] update failed:', error);
+            showAlert('danger', 'Unable to update campaign.');
+        }
+    }
+
+    async function deleteCampaign(id) {
+        if (!id || !window.confirm('Delete this campaign?')) return;
+        const client = getSupabaseClient();
+        if (!client) {
+            showAlert('danger', 'Supabase client is unavailable.');
+            return;
+        }
+
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to delete campaigns.');
+            return;
+        }
+
+        try {
+            const { error } = await client.from(TABLE_NAME).delete().eq('id', id);
+            if (error) throw error;
+            showAlert('success', 'Campaign deleted successfully.');
+            await loadCampaigns();
+        } catch (error) {
+            console.error('[newsletter-campaigns] delete failed:', error);
+            showAlert('danger', 'Unable to delete campaign.');
+        }
+    }
+
+    function previewCampaign() {
+        const preview = document.getElementById('campaignPreview');
+        if (!preview) return;
+        const title = document.getElementById('campaignTitle').value.trim() || 'Untitled Campaign';
+        const subject = document.getElementById('campaignSubject').value.trim() || 'Subject';
+        const content = getEditorContent() || '<p>Your campaign content will appear here.</p>';
+        preview.innerHTML = `
+            <div class="newsletter-card p-3">
+                <h4>${escapeHtml(title)}</h4>
+                <p class="text-muted mb-2"><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+                <div>${content}</div>
+            </div>
+        `;
+    }
+
+    async function duplicateCampaign(id) {
+        const client = getSupabaseClient();
+        if (!client) {
+            showAlert('danger', 'Supabase client is unavailable.');
+            return;
+        }
+
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to duplicate campaigns.');
+            return;
+        }
+
+        try {
+            const { data, error } = await client.from(TABLE_NAME).select('*').eq('id', id).single();
+            if (error) throw error;
+            const { error: insertError } = await client.from(TABLE_NAME).insert({
+                ...data,
+                id: undefined,
+                title: `${data.title || 'Copy'} (Copy)`,
+                status: 'draft',
+                sent_at: null,
+                scheduled_for: null,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            });
+            if (insertError) throw insertError;
+            showAlert('success', 'Campaign duplicated successfully.');
+            await loadCampaigns();
+        } catch (error) {
+            console.error('[newsletter-campaigns] duplicate failed:', error);
+            showAlert('danger', 'Unable to duplicate campaign.');
+        }
+    }
+
+    async function refreshAutomationStats() {
+        if (!window.newsletterAutomation?.getCampaignQueueStats) return;
+        try {
+            const stats = await window.newsletterAutomation.getCampaignQueueStats();
+            document.getElementById('automationReadyCount').textContent = `Ready to Send: ${stats.ready || 0}`;
+            document.getElementById('automationScheduledCount').textContent = `Scheduled: ${stats.scheduled || 0}`;
+            document.getElementById('automationSentCount').textContent = `Sent: ${stats.sent || 0}`;
+            document.getElementById('automationFailedCount').textContent = `Failed: ${stats.failed || 0}`;
+            document.getElementById('automationSubscribersCount').textContent = `Total Subscribers: ${stats.totalSubscribers || 0}`;
+        } catch (error) {
+            console.error('[newsletter-campaigns] automation stats failed:', error);
+        }
+    }
+
+    async function runAutomationWorkflow() {
+        if (!window.newsletterAutomation?.watchPublishedBlogs || !window.newsletterAutomation?.watchUpcomingEvents) {
+            showAlert('danger', 'Automation module is unavailable.');
+            return;
+        }
+
+        try {
+            showAlert('info', 'Generating campaign drafts from published blogs and upcoming events...');
+            const [blogsCampaigns, eventsCampaigns] = await Promise.all([
+                window.newsletterAutomation.watchPublishedBlogs(),
+                window.newsletterAutomation.watchUpcomingEvents()
+            ]);
+            const generatedCount = (blogsCampaigns?.length || 0) + (eventsCampaigns?.length || 0);
+            await loadCampaigns();
+            await refreshAutomationStats();
+            showAlert('success', generatedCount > 0 ? `Automation created ${generatedCount} campaign draft(s).` : 'Automation completed with no new campaigns.');
+        } catch (error) {
+            console.error('[newsletter-campaigns] automation workflow failed:', error);
+            showAlert('danger', 'Unable to generate automation campaigns right now.');
+        }
+    }
+
+    function bindEvents() {
+        document.getElementById('saveDraftBtn')?.addEventListener('click', () => {
+            const id = document.getElementById('campaignId').value;
+            if (id) {
+                updateCampaign(id, 'draft');
+            } else {
+                createCampaign('draft');
+            }
+        });
+
+        document.getElementById('scheduleCampaignBtn')?.addEventListener('click', () => {
+            const id = document.getElementById('campaignId').value;
+            if (id) {
+                updateCampaign(id, 'scheduled');
+            } else {
+                createCampaign('scheduled');
+            }
+        });
+
+        document.getElementById('sendNowBtn')?.addEventListener('click', () => {
+            const id = document.getElementById('campaignId').value;
+            if (id) {
+                updateCampaign(id, 'sent');
+            } else {
+                createCampaign('sent');
+            }
+            showAlert('info', 'Send Now is prepared for future email-service integration. No emails are sent yet.');
+        });
+
+        document.getElementById('previewCampaignBtn')?.addEventListener('click', previewCampaign);
+        document.getElementById('runAutomationBtn')?.addEventListener('click', runAutomationWorkflow);
+
+        document.getElementById('campaignSearch')?.addEventListener('input', () => loadCampaigns());
+        document.getElementById('campaignStatusFilter')?.addEventListener('change', () => loadCampaigns());
+        document.getElementById('campaignTypeFilter')?.addEventListener('change', () => loadCampaigns());
+
+        document.querySelectorAll('[data-editor-command]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const command = button.getAttribute('data-editor-command');
+                document.execCommand(command, false, null);
+                document.getElementById('campaignEditor').focus();
+            });
+        });
+
+        document.getElementById('campaignEditor')?.addEventListener('input', () => {
+            getEditorContent();
+        });
+    }
+
+    async function initialize() {
+        bindEvents();
+        setFormMode(!canManageCampaigns());
+        await loadCampaigns();
+        await refreshAutomationStats();
+    }
+
+    window.loadCampaigns = loadCampaigns;
+    window.createCampaign = createCampaign;
+    window.updateCampaign = updateCampaign;
+    window.deleteCampaign = deleteCampaign;
+    window.previewCampaign = previewCampaign;
+    window.duplicateCampaign = duplicateCampaign;
+    window.editCampaign = function (id) {
+        const client = getSupabaseClient();
+        if (!client) return;
+        client.from(TABLE_NAME).select('*').eq('id', id).single().then(({ data, error }) => {
+            if (error) {
+                showAlert('danger', 'Unable to load campaign for editing.');
+                return;
+            }
+            populateForm(data);
+            previewCampaign();
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
+    }
+})();

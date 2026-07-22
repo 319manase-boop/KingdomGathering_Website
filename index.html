@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/newsletter.css">
     <!-- Favicon -->
     <link rel="icon" href="images/logo.png" type="image/png">
 </head>
@@ -272,6 +273,29 @@
 
 <!-- Featured event cards are now dynamically loaded from Supabase -->
 
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-card">
+            <div class="newsletter-card-content">
+                <div class="newsletter-copy">
+                    <p class="section-eyebrow mb-2">Stay Connected</p>
+                    <h3>Stay Connected</h3>
+                    <p>Subscribe to receive the latest church blogs, upcoming events, announcements, and ministry updates.</p>
+                </div>
+                <div>
+                    <form class="newsletter-form" data-newsletter-form data-newsletter-source="homepage">
+                        <input type="email" class="form-control" placeholder="Enter your email address" required aria-label="Email address">
+                        <button type="submit" class="newsletter-submit">Subscribe</button>
+                        <div class="w-100"></div>
+                        <div class="newsletter-message" data-newsletter-message></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Final CTA -->
 <section class="final-cta-section">
     <div class="container text-center">
@@ -291,6 +315,7 @@
     <script src="/js/settings.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/homeDynamic.js"></script>
+    <script src="/js/newsletter.js"></script>
     <script src="/js/footer-loader.js"></script>
 
 </body>

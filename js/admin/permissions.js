@@ -1,9 +1,9 @@
 // Admin RBAC and shared page protection
 
 const PERMISSION_MATRIX = {
-    super_admin: ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings'],
-    pastor: ['dashboard', 'blogs', 'media'],
-    secretary: ['dashboard', 'prayer', 'contact', 'counseling'],
+    super_admin: ['dashboard', 'prayer', 'contact', 'counseling', 'giving', 'blogs', 'events', 'media', 'users', 'roles', 'settings', 'newsletter'],
+    pastor: ['dashboard', 'blogs', 'media', 'newsletter'],
+    secretary: ['dashboard', 'prayer', 'contact', 'counseling', 'newsletter'],
     media_team: ['dashboard', 'blogs', 'events', 'media'],
     treasurer: ['dashboard', 'giving'],
     member: ['dashboard'],
