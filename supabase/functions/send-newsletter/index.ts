@@ -49,6 +49,63 @@ function isValidEmail(value: unknown) {
   return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
+async function createOrUpdateCampaignLog(supabaseAdmin: any, payload: {
+  campaign_id: string;
+  subscriber_id?: unknown;
+  email: string;
+  status: string;
+  error_message?: string | null;
+}) {
+  const { data: existingLog, error: existingError } = await supabaseAdmin
+    .from("newsletter_campaign_logs")
+    .select("id")
+    .eq("campaign_id", payload.campaign_id)
+    .eq("email", payload.email)
+    .maybeSingle();
+
+  if (existingError) {
+    throw existingError;
+  }
+
+  if (existingLog && existingLog.id) {
+    const { data, error } = await supabaseAdmin
+      .from("newsletter_campaign_logs")
+      .update({
+        subscriber_id: payload.subscriber_id || null,
+        status: payload.status,
+        error_message: payload.error_message || null,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", existingLog.id)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from("newsletter_campaign_logs")
+    .insert({
+      campaign_id: payload.campaign_id,
+      subscriber_id: payload.subscriber_id || null,
+      email: payload.email,
+      status: payload.status,
+      error_message: payload.error_message || null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    })
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
 serve(async (req) => {
   const origin = req.headers.get("origin") || "*";
 
@@ -118,6 +175,14 @@ serve(async (req) => {
       return jsonResponse({ error: "A valid test_email is required for test mode." }, 400, origin);
     }
 
+    console.info("newsletter send request", {
+      campaignId,
+      campaignType: campaign.campaign_type,
+      currentStatus: campaign.status,
+      testMode,
+      timestamp: new Date().toISOString()
+    });
+
     const recipients: Array<{ email: string; subscriber_id?: unknown }> = [];
 
     if (testMode) {
@@ -143,6 +208,26 @@ serve(async (req) => {
         subscriber_id: subscriber.id
       })));
 
+      if (!recipients.length) {
+        console.info("newsletter send aborted: no eligible subscribers found", {
+          campaignId,
+          campaignType: campaign.campaign_type,
+          preferenceKey,
+          activeSubscriberCount: (subscribers || []).length
+        });
+
+        const { error: restoreError } = await supabaseAdmin
+          .from("newsletter_campaigns")
+          .update({ status: "ready", updated_at: new Date().toISOString() })
+          .eq("id", campaignId);
+
+        if (restoreError) {
+          throw restoreError;
+        }
+
+        return jsonResponse({ success: false, message: "No eligible active subscribers were found." }, 400, origin);
+      }
+
       const { error: statusUpdateError } = await supabaseAdmin
         .from("newsletter_campaigns")
         .update({ status: "sending", updated_at: new Date().toISOString() })
@@ -154,31 +239,32 @@ serve(async (req) => {
     }
 
     const results: Array<Record<string, unknown>> = [];
-    let hadFailure = false;
 
-    for (const subscriber of eligibleSubscribers) {
-      const email = String(subscriber.email || "").trim();
+    for (const recipient of recipients) {
+      const email = String(recipient.email || "").trim();
       if (!email) {
         continue;
       }
 
-      const { data: logRow, error: logError } = await supabaseAdmin
-        .from("newsletter_campaign_logs")
-        .insert({
+      let logRow: Record<string, unknown> | null = null;
+      try {
+        logRow = await createOrUpdateCampaignLog(supabaseAdmin, {
           campaign_id: campaignId,
-          subscriber_id: subscriber.id,
+          subscriber_id: recipient.subscriber_id,
           email,
           status: "pending",
-          error_message: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .select()
-        .single();
+          error_message: null
+        });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error("newsletter send log create failed", { campaignId, email, message });
+        results.push({ email, status: "failed", error: message });
+        continue;
+      }
 
-      if (logError || !logRow) {
-        hadFailure = true;
-        results.push({ email, status: "failed", error: String(logError?.message || "Unable to create delivery log.") });
+      if (!logRow || !logRow.id) {
+        const message = "Unable to create delivery log.";
+        results.push({ email, status: "failed", error: message });
         continue;
       }
 
@@ -206,23 +292,27 @@ serve(async (req) => {
 
         await supabaseAdmin
           .from("newsletter_campaign_logs")
-          .update({ status: "sent", error_message: null, updated_at: new Date().toISOString() })
+          .update({ status: "sent", error_message: null, updated_at: new Date().toISOString(), resend_email_id: responseBody?.id || null })
           .eq("id", logRow.id);
 
         results.push({ email, status: "sent", id: responseBody?.id || null });
       } catch (error) {
-        hadFailure = true;
         const message = error instanceof Error ? error.message : String(error);
         await supabaseAdmin
           .from("newsletter_campaign_logs")
           .update({ status: "failed", error_message: message, updated_at: new Date().toISOString() })
           .eq("id", logRow.id);
+        console.error("newsletter send failed for recipient", { campaignId, email, message });
         results.push({ email, status: "failed", error: message });
       }
     }
 
+    const eligibleCount = recipients.length;
+    const successfulSends = results.filter((result) => result.status === "sent").length;
+    const failedSends = results.filter((result) => result.status === "failed").length;
+
     if (!testMode) {
-      const finalStatus = hadFailure ? "failed" : "sent";
+      const finalStatus = successfulSends > 0 ? "sent" : "failed";
       const { error: finalStatusError } = await supabaseAdmin
         .from("newsletter_campaigns")
         .update({
@@ -235,17 +325,22 @@ serve(async (req) => {
       if (finalStatusError) {
         throw finalStatusError;
       }
+
+      console.info("newsletter send completed", {
+        campaignId,
+        eligibleCount,
+        successfulSends,
+        failedSends,
+        finalStatus
+      });
     }
 
     return jsonResponse(
       {
-        success: !hadFailure,
-        message: `Newsletter processing completed for campaign ${campaignId}.`,
-        campaign_id: campaignId,
-        recipient_count: recipients.length,
-        sent_count: results.filter((result) => result.status === "sent").length,
-        failed_count: results.filter((result) => result.status === "failed").length,
-        results
+        success: true,
+        eligible: eligibleCount,
+        sent: successfulSends,
+        failed: failedSends
       },
       200,
       origin

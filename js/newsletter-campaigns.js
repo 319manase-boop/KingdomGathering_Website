@@ -154,6 +154,62 @@
         statusEl.textContent = message || '';
     }
 
+    async function sendCampaignNow() {
+        const campaignId = String(document.getElementById('campaignId').value || '').trim();
+        const button = document.getElementById('sendNowBtn');
+
+        if (!campaignId) {
+            showAlert('danger', 'Please select or load a campaign before sending.');
+            return;
+        }
+
+        if (!canManageCampaigns()) {
+            showAlert('danger', 'You do not have permission to send campaigns.');
+            return;
+        }
+
+        if (!button) {
+            showAlert('danger', 'Send button is unavailable.');
+            return;
+        }
+
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Sending...';
+        showAlert('info', 'Sending campaign now...');
+
+        try {
+            const url = `${window.location.origin.replace(/\/+$/, '')}/functions/v1/send-newsletter`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    campaign_id: campaignId
+                })
+            });
+
+            const responseBody = await response.json();
+            if (!response.ok || responseBody?.success !== true) {
+                throw new Error(responseBody?.message || responseBody?.error || 'Unable to send campaign.');
+            }
+
+            const eligible = Number(responseBody.eligible || 0);
+            const sent = Number(responseBody.sent || 0);
+            const failed = Number(responseBody.failed || 0);
+            showAlert('success', `Send complete. Eligible: ${eligible}, Sent: ${sent}, Failed: ${failed}.`);
+            await loadCampaigns();
+            await refreshAutomationStats();
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            showAlert('danger', message || 'Failed to send campaign.');
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+    }
+
     function showTestEmailModal(open = true) {
         const overlay = document.getElementById('testEmailModalOverlay');
         if (!overlay) return;
@@ -613,15 +669,7 @@
             }
         });
 
-        document.getElementById('sendNowBtn')?.addEventListener('click', () => {
-            const id = document.getElementById('campaignId').value;
-            if (id) {
-                updateCampaign(id, 'sent');
-            } else {
-                createCampaign('sent');
-            }
-            showAlert('info', 'Send Now is prepared for future email-service integration. No emails are sent yet.');
-        });
+        document.getElementById('sendNowBtn')?.addEventListener('click', sendCampaignNow);
 
         document.getElementById('sendTestEmailBtn')?.addEventListener('click', openTestEmailModal);
         document.getElementById('closeTestEmailModal')?.addEventListener('click', closeTestEmailModal);

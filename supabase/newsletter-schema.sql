@@ -35,6 +35,7 @@ create table if not exists public.newsletter_campaign_logs (
   subscriber_id uuid references public.newsletter_subscribers(id) on delete set null,
   email text not null,
   status text not null default 'pending' check (status in ('pending', 'sent', 'failed')),
+  resend_email_id text,
   error_message text,
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
