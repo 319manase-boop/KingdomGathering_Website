@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/styles.css">
     <style>
         .registration-hero {
-            padding: 3rem 0;
+            padding: 3.5rem 0;
         }
         .registration-hero .event-poster {
             width: 100%;
@@ -16,26 +16,34 @@
             object-fit: cover;
             border-radius: 1rem;
             box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+            transition: transform 0.25s ease;
+        }
+        .registration-hero .event-poster:hover {
+            transform: translateY(-3px);
         }
         .registration-card {
-            background: rgba(255,255,255,0.96);
+            background: #ffffff;
             border: 1px solid rgba(0,0,0,0.08);
             border-radius: 1rem;
             box-shadow: 0 16px 30px rgba(0,0,0,0.08);
+            color: #111;
         }
-        .registration-status {
-            font-weight: 600;
-            margin-bottom: 1rem;
+        .registration-card h2,
+        .registration-card h1,
+        .registration-card .text-muted {
+            color: #2e2e2e;
         }
         .registration-alert {
             min-height: 3rem;
         }
         .share-buttons button {
             min-width: 140px;
+            white-space: nowrap;
         }
         .form-label strong {
             display: inline-block;
             margin-bottom: 0.35rem;
+            color: #111;
         }
         .registration-summary dt {
             font-weight: 700;
@@ -61,7 +69,7 @@
             <div class="row g-4">
                 <div class="col-lg-7">
                     <div class="mb-4">
-                        <img id="eventPoster" class="event-poster w-100" src="" alt="Event poster" />
+                        <img id="eventPoster" class="event-poster w-100" src="/images/people.jpg" alt="Event poster" onerror="this.onerror=null;this.src='/images/people.jpg'" />
                     </div>
                     <div class="mb-4">
                         <h1 id="eventTitle" class="display-6"></h1>
@@ -89,11 +97,11 @@
                     <div id="shareSection" class="card registration-card p-4 mb-4 d-none">
                         <h2 class="h5 mb-3">Share registration</h2>
                         <div class="d-flex flex-wrap gap-2 share-buttons">
-                            <button id="copyLinkBtn" type="button" class="btn btn-outline-dark">Copy Link</button>
-                            <button id="whatsappShareBtn" type="button" class="btn btn-outline-success">WhatsApp</button>
-                            <button id="facebookShareBtn" type="button" class="btn btn-outline-primary">Facebook</button>
-                            <button id="emailShareBtn" type="button" class="btn btn-outline-secondary">Email</button>
-                            <button id="nativeShareBtn" type="button" class="btn btn-outline-dark d-none">Share</button>
+                            <button id="copyLinkBtn" type="button" class="btn btn-gold">Copy Link</button>
+                            <button id="whatsappShareBtn" type="button" class="btn btn-outline-gold">WhatsApp</button>
+                            <button id="facebookShareBtn" type="button" class="btn btn-outline-gold">Facebook</button>
+                            <button id="emailShareBtn" type="button" class="btn btn-outline-gold">Email</button>
+                            <button id="nativeShareBtn" type="button" class="btn btn-outline-gold d-none">Share</button>
                         </div>
                     </div>
                 </div>

@@ -62,6 +62,25 @@
         return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     }
 
+    function formatTimeRange(startValue, endValue) {
+        if (!startValue) return 'TBA';
+        const start = formatTime(startValue);
+        if (!endValue) return start;
+        const end = formatTime(endValue);
+        return `${start} - ${end}`;
+    }
+
+    function getPosterUrl(path) {
+        if (!path) {
+            return '/images/people.jpg';
+        }
+        const trimmed = String(path).trim();
+        if (trimmed === '') {
+            return '/images/people.jpg';
+        }
+        return trimmed;
+    }
+
     function setLoading(loading) {
         if (loading) {
             loader.classList.remove('d-none');
@@ -181,12 +200,16 @@
 
     function displayEventDetails(event) {
         currentEvent = event;
-        eventPoster.src = event.poster_path || '/images/default-event.jpg';
-        eventPoster.alt = event.title || 'Event poster';
+        eventPoster.onerror = () => {
+            eventPoster.onerror = null;
+            eventPoster.src = '/images/default-event.jpg';
+        };
+        eventPoster.src = getPosterUrl(event.poster_path);
+        eventPoster.alt = event.title ? `${event.title} poster` : 'Event poster';
         eventTitle.textContent = event.title || 'Event registration';
-        eventShortDescription.textContent = event.short_description || event.description || '';
+        eventShortDescription.textContent = event.short_description || event.description || 'Find registration details below.';
         eventDate.textContent = formatDate(event.start_at);
-        eventTime.textContent = formatTime(event.start_at) + (event.end_at ? ` - ${formatTime(event.end_at)}` : '');
+        eventTime.textContent = formatTimeRange(event.start_at, event.end_at);
         eventLocation.textContent = event.location || 'Location details will be shared soon.';
         eventDeadline.textContent = event.registration_deadline ? formatDate(event.registration_deadline) : 'No deadline set';
         eventCapacity.textContent = event.capacity != null ? `${event.capacity} total capacity` : 'Unlimited capacity';
@@ -420,4 +443,4 @@
     }
 
     document.addEventListener('DOMContentLoaded', initializePage);
-})();
+})();              
