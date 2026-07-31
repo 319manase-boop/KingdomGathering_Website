@@ -137,4 +137,16 @@
     window.kgcLocalDateTimeToISO = localDateTimeToISO;
     window.kgcSplitDateTimeLocal = splitDateTimeLocal;
     window.kgcAreEventInstantsEqual = areInstantsEqual;
+    window.kgcDateUtils = {
+        formatEventDate,
+        formatEventDateShort,
+        formatEventMonthYear,
+        formatEventTime,
+        formatEventDateTime,
+        formatEventTimeRange,
+        formatForDateTimeLocal,
+        localDateTimeToISO,
+        splitDateTimeLocal,
+        areInstantsEqual
+    };
 })();

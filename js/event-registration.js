@@ -51,11 +51,36 @@
     let registrationOpen = false;
 
     function formatDate(value) {
-        return window.kgcFormatEventDate(value);
+        if (typeof window.kgcFormatEventDate === 'function') {
+            return window.kgcFormatEventDate(value);
+        }
+        return String(value || 'TBA');
     }
 
     function formatTimeRange(startValue, endValue) {
-        return window.kgcFormatEventTimeRange(startValue, endValue);
+        if (typeof window.kgcFormatEventTimeRange === 'function') {
+            return window.kgcFormatEventTimeRange(startValue, endValue);
+        }
+        if (!startValue) {
+            return 'TBA';
+        }
+        const startDate = new Date(startValue);
+        if (Number.isNaN(startDate.getTime())) {
+            return 'TBA';
+        }
+        const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+        const formatter = new Intl.DateTimeFormat('en-BW', { timeZone: 'Africa/Gaborone', ...options });
+        const startTime = formatter.format(startDate);
+
+        if (!endValue) {
+            return startTime;
+        }
+        const endDate = new Date(endValue);
+        if (Number.isNaN(endDate.getTime()) || startDate.getTime() === endDate.getTime()) {
+            return startTime;
+        }
+        const endTime = formatter.format(endDate);
+        return `${startTime} – ${endTime}`;
     }
 
     function getPosterUrl(path) {
@@ -395,14 +420,21 @@
                 return;
             }
 
-            displayEventDetails(data);
+            try {
+                displayEventDetails(data);
+            } catch (displayError) {
+                console.error('Failed to render event details', displayError);
+                showClosed('Unable to display event details at this time. Please try again later.');
+                return;
+            }
+
             console.log({
                 storedStart: data.start_at,
                 storedEnd: data.end_at,
                 parsedStart: new Date(data.start_at),
                 parsedEnd: data.end_at ? new Date(data.end_at) : null,
-                displayedStart: window.kgcFormatEventTime(data.start_at),
-                displayedEnd: data.end_at ? window.kgcFormatEventTime(data.end_at) : null
+                displayedStart: typeof window.kgcFormatEventTime === 'function' ? window.kgcFormatEventTime(data.start_at) : data.start_at,
+                displayedEnd: data.end_at && typeof window.kgcFormatEventTime === 'function' ? window.kgcFormatEventTime(data.end_at) : data.end_at
             });
             const confirmedTotal = await getConfirmedAttendeeCount(data.id);
             if (confirmedTotal == null) {
@@ -425,7 +457,7 @@
     function initializePage() {
         if (!window.supabaseClient) {
             console.error('Supabase client is unavailable.');
-            showAlert('Unable to connect to the registration system.', 'danger');
+            showClosed('Unable to connect to the registration system. Please try again later.');
             return;
         }
 
@@ -438,5 +470,9 @@
         loadEvent();
     }
 
-    document.addEventListener('DOMContentLoaded', initializePage);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializePage);
+    } else {
+        initializePage();
+    }
 })();              
