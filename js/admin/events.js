@@ -62,7 +62,7 @@ async function protectPage() {
 }
 
 function formatDate(value) {
-    try { return new Date(value).toLocaleString(); } catch (e) { return ''; }
+    return window.kgcFormatEventDate(value) || '';
 }
 
 function showAlert(type, message, timeout = 4000) {
@@ -196,6 +196,18 @@ function getEventPayload() {
         return null;
     }
 
+    const endAt = eventEndAtInput?.value;
+    const startAtISO = window.kgcLocalDateTimeToISO(startAt);
+    const endAtISO = endAt ? window.kgcLocalDateTimeToISO(endAt) : null;
+    if (endAt && (!endAtISO || !startAtISO)) {
+        showAlert('warning', 'Please enter valid start and end times.');
+        return null;
+    }
+    if (endAtISO && startAtISO && new Date(endAtISO) <= new Date(startAtISO)) {
+        showAlert('warning', 'End time must be later than the start time.');
+        return null;
+    }
+
     const capacity = Number(eventCapacityInput?.value);
     const fee = Number(eventRegistrationFeeInput?.value);
     const tags = (eventTagsInput?.value || '')
@@ -211,12 +223,12 @@ function getEventPayload() {
         short_description: eventShortDescInput?.value.trim() || null,
         description: eventDescInput?.value.trim() || null,
         location: eventLocationInput?.value.trim() || null,
-        start_at: startAt,
-        end_at: eventEndAtInput?.value || null,
+        start_at: startAtISO,
+        end_at: endAtISO,
         capacity: Number.isNaN(capacity) ? null : capacity,
         registration_required: eventRegistrationSelect?.value === 'true',
         registration_status: eventRegistrationStatusSelect?.value || 'open',
-        registration_deadline: eventRegistrationDeadlineInput?.value || null,
+        registration_deadline: eventRegistrationDeadlineInput?.value ? window.kgcLocalDateTimeToISO(eventRegistrationDeadlineInput.value) : null,
         registration_fee: Number.isNaN(fee) ? null : fee,
         poster_path: eventPosterInput?.value.trim() || null,
         tags,
@@ -261,8 +273,8 @@ function renderTable(list) {
                 <td>${escapeHtml(item.title)}</td>
                 <td>${escapeHtml(branchName)}</td>
                 <td class="truncate-2">${escapeHtml(desc)}</td>
-                <td>${escapeHtml(formatDate(item.start_at))}</td>
-                <td>${escapeHtml(formatDate(item.end_at))}</td>
+                <td>${escapeHtml(window.kgcFormatEventDateTime(item.start_at))}</td>
+                <td>${escapeHtml(item.end_at ? window.kgcFormatEventDateTime(item.end_at) : '')}</td>
                 <td><span class="badge ${badgeClass(item.status)}">${escapeHtml(capitalizeStatus(item.status))}</span></td>
                 <td>${escapeHtml(capacityValue)}</td>
                 <td>
@@ -357,7 +369,7 @@ function updateRegistrationSummary(eventItem, registrations) {
     registrationsConfirmedAttendees.textContent = confirmedAttendees;
     registrationsRemainingSpaces.textContent = eventItem.capacity != null ? remaining : '—';
     registrationsCapacity.textContent = eventItem.capacity != null ? eventItem.capacity : 'Unlimited';
-    registrationsDeadline.textContent = eventItem.registration_deadline ? new Date(eventItem.registration_deadline).toLocaleString() : 'None';
+    registrationsDeadline.textContent = eventItem.registration_deadline ? window.kgcFormatEventDateTime(eventItem.registration_deadline) : 'None';
     registrationsState.textContent = eventItem.registration_status ? eventItem.registration_status : 'open';
 }
 
@@ -516,7 +528,7 @@ function openRegistrationsModal(eventItem) {
     if (!eventItem) return;
     currentRegistrationEvent = eventItem;
     registrationsEventTitle.textContent = eventItem.title || 'Event';
-    registrationsEventMeta.textContent = `Starts ${formatDate(eventItem.start_at)} · ${eventItem.location || 'Location TBD'}`;
+    registrationsEventMeta.textContent = `Starts ${window.kgcFormatEventTimeRange(eventItem.start_at, eventItem.end_at)} · ${eventItem.location || 'Location TBD'}`;
     currentRegistrations = [];
     renderRegistrationsTable([]);
     updateRegistrationSummary(eventItem, []);
@@ -538,12 +550,12 @@ function openEventModal(event = null) {
         document.getElementById('eventShortDesc').value = event.short_description || '';
         document.getElementById('eventDesc').value = event.description || '';
         document.getElementById('eventLocation').value = event.location || '';
-        document.getElementById('eventStartAt').value = event.start_at ? event.start_at.replace('Z', '') : '';
-        document.getElementById('eventEndAt').value = event.end_at ? event.end_at.replace('Z', '') : '';
+        document.getElementById('eventStartAt').value = event.start_at ? window.kgcFormatForDateTimeLocal(event.start_at) : '';
+        document.getElementById('eventEndAt').value = event.end_at ? window.kgcFormatForDateTimeLocal(event.end_at) : '';
         document.getElementById('eventCapacity').value = event.capacity || '';
         document.getElementById('eventRegistration').value = event.registration_required ? 'true' : 'false';
         document.getElementById('eventRegistrationStatus').value = event.registration_status || 'open';
-        document.getElementById('eventRegistrationDeadline').value = event.registration_deadline ? event.registration_deadline.replace('Z', '') : '';
+        document.getElementById('eventRegistrationDeadline').value = event.registration_deadline ? window.kgcFormatForDateTimeLocal(event.registration_deadline) : '';
         document.getElementById('eventRegistrationFee').value = event.registration_fee != null ? event.registration_fee : '';
         document.getElementById('eventPoster').value = event.poster_path || '';
         document.getElementById('eventTags').value = (Array.isArray(event.tags) ? event.tags.join(', ') : event.tags) || '';

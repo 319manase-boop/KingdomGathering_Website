@@ -8,54 +8,24 @@
 
     // Utility: Format date ranges
     function formatDateRange(startAt, endAt) {
-    if (!startAt) return "Date TBC";
-
-    const start = new Date(startAt);
-    const end = endAt ? new Date(endAt) : null;
-
-    if (!end || start.toDateString() === end.toDateString()) {
-        return start.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
+        if (!startAt) return "Date TBC";
+        return window.kgcFormatEventTimeRange(startAt, endAt);
     }
-
-    // Same month
-    if (
-        start.getMonth() === end.getMonth() &&
-        start.getFullYear() === end.getFullYear()
-    ) {
-        return `${start.getDate()}–${end.getDate()} ${start.toLocaleDateString("en-GB", {
-            month: "long",
-            year: "numeric"
-        })}`;
-    }
-
-    // Different months
-    return `${start.getDate()} ${start.toLocaleDateString("en-GB", {
-        month: "long"
-    })} – ${end.getDate()} ${end.toLocaleDateString("en-GB", {
-        month: "long",
-        year: "numeric"
-    })}`;
-}
 
     function formatDateForTimeline(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short"
-        });
+        const formatted = window.kgcFormatEventDateShort(dateString);
+        return formatted === 'TBA' ? 'TBC' : formatted;
     }
 
     function getMonthYear(dateString) {
-        const date = new Date(dateString);
-        return {
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            monthName: date.toLocaleString("en-GB", { month: "long" })
-        };
+        const monthYear = window.kgcFormatEventMonthYear(dateString);
+        if (monthYear === 'TBA') {
+            return { month: 0, year: 0, monthName: 'Unknown' };
+        }
+        const [monthName, yearString] = monthYear.split(' ');
+        const year = Number(yearString) || 0;
+        const month = new Date(window.kgcLocalDateTimeToISO(`${yearString}-01-01T00:00`)).getMonth();
+        return { month, year, monthName };
     }
 
     function eventRequiresRegistration(event) {
@@ -198,7 +168,7 @@
             const event = events[0];
             const branchName = await getBranchName(event.branch_id);
             const dateRange = formatDateRange(event.start_at, event.end_at);
-            const startMonth = new Date(event.start_at).toLocaleString("en-US", { month: "long", year: "numeric" });
+            const startMonth = window.kgcFormatEventMonthYear(event.start_at);
 
             featuredEventContainer.innerHTML = `
                 <span class="badge-date">${startMonth}</span>

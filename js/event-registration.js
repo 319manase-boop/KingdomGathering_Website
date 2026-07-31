@@ -51,23 +51,11 @@
     let registrationOpen = false;
 
     function formatDate(value) {
-        if (!value) return 'TBA';
-        const date = new Date(value);
-        return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
-
-    function formatTime(value) {
-        if (!value) return 'TBA';
-        const date = new Date(value);
-        return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        return window.kgcFormatEventDate(value);
     }
 
     function formatTimeRange(startValue, endValue) {
-        if (!startValue) return 'TBA';
-        const start = formatTime(startValue);
-        if (!endValue) return start;
-        const end = formatTime(endValue);
-        return `${start} - ${end}`;
+        return window.kgcFormatEventTimeRange(startValue, endValue);
     }
 
     function getPosterUrl(path) {
@@ -408,6 +396,14 @@
             }
 
             displayEventDetails(data);
+            console.log({
+                storedStart: data.start_at,
+                storedEnd: data.end_at,
+                parsedStart: new Date(data.start_at),
+                parsedEnd: data.end_at ? new Date(data.end_at) : null,
+                displayedStart: window.kgcFormatEventTime(data.start_at),
+                displayedEnd: data.end_at ? window.kgcFormatEventTime(data.end_at) : null
+            });
             const confirmedTotal = await getConfirmedAttendeeCount(data.id);
             if (confirmedTotal == null) {
                 showAlert('Unable to load availability. Please refresh the page.', 'warning');
