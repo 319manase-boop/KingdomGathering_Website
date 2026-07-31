@@ -75,12 +75,13 @@
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Status</th>
-                                    <th>Capacity</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                                <th>Capacity</th>
+                                <th>Registrations</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                             <tbody id="eventsTableBody">
-                                <tr><td colspan="8" class="text-center py-5">Loading...</td></tr>
+                                <tr><td colspan="9" class="text-center py-5">Loading...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -130,16 +131,33 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label">Capacity</label>
                                             <input type="number" class="form-control bg-dark text-light" id="eventCapacity" min="0">
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label">Registration Required</label>
                                             <select class="form-select bg-dark text-light" id="eventRegistration">
                                                 <option value="false">No</option>
                                                 <option value="true">Yes</option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label">Registration Status</label>
+                                            <select class="form-select bg-dark text-light" id="eventRegistrationStatus">
+                                                <option value="open">Open</option>
+                                                <option value="closed">Closed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Registration Deadline</label>
+                                            <input type="datetime-local" class="form-control bg-dark text-light" id="eventRegistrationDeadline">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Registration Fee</label>
+                                            <input type="number" step="0.01" class="form-control bg-dark text-light" id="eventRegistrationFee">
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -164,6 +182,133 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button id="eventDelete" type="button" class="btn btn-danger d-none">Delete</button>
                                 <button id="eventSave" type="button" class="btn btn-warning text-dark">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="registrationsModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content bg-dark text-light">
+                            <div class="modal-header border-0">
+                                <div>
+                                    <h5 class="modal-title">Registrations for <span id="registrationsEventTitle"></span></h5>
+                                    <p class="mb-0 text-muted small" id="registrationsEventMeta"></p>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="registrationsAlertContainer"></div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-4">
+                                        <div class="card bg-black border-secondary p-3 h-100">
+                                            <div class="text-muted small">Total registrations</div>
+                                            <div id="registrationsTotalCount" class="h3 mb-0">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card bg-black border-secondary p-3 h-100">
+                                            <div class="text-muted small">Confirmed attendees</div>
+                                            <div id="registrationsConfirmedAttendees" class="h3 mb-0">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card bg-black border-secondary p-3 h-100">
+                                            <div class="text-muted small">Remaining spaces</div>
+                                            <div id="registrationsRemainingSpaces" class="h3 mb-0">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-4">
+                                        <div class="bg-black border-secondary p-3 rounded-3">
+                                            <div class="text-muted small">Capacity</div>
+                                            <div id="registrationsCapacity">—</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="bg-black border-secondary p-3 rounded-3">
+                                            <div class="text-muted small">Registration deadline</div>
+                                            <div id="registrationsDeadline">—</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="bg-black border-secondary p-3 rounded-3">
+                                            <div class="text-muted small">State</div>
+                                            <div id="registrationsState">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 align-items-end mb-3">
+                                    <div class="col-md-5">
+                                        <label class="form-label small text-muted">Search registrations</label>
+                                        <input id="registrationsSearch" type="search" class="form-control bg-dark text-light" placeholder="Search name, email, phone, source">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label small text-muted">Filter by status</label>
+                                        <select id="registrationsStatusFilter" class="form-select bg-dark text-light">
+                                            <option value="">All statuses</option>
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 d-flex gap-2 justify-content-end">
+                                        <button id="registrationsExportBtn" type="button" class="btn btn-outline-light">Export CSV</button>
+                                        <button id="copyRegistrationLinkBtn" type="button" class="btn btn-outline-info">Copy Link</button>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-4 share-buttons d-flex flex-wrap align-items-center">
+                                    <div class="col-auto">
+                                        <button id="whatsappShareRegistrationBtn" type="button" class="btn btn-outline-success">WhatsApp</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button id="facebookShareRegistrationBtn" type="button" class="btn btn-outline-primary">Facebook</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button id="emailShareRegistrationBtn" type="button" class="btn btn-outline-secondary">Email</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button id="nativeShareRegistrationBtn" type="button" class="btn btn-outline-light d-none">Share</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-dark table-striped table-hover align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Attendees</th>
+                                                <th>Church / Ministry</th>
+                                                <th>Source</th>
+                                                <th>Status</th>
+                                                <th>Registration Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="registrationsTableBody">
+                                            <tr><td colspan="9" class="text-center py-4">Loading registrations...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="viewRegistrationModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content bg-dark text-light">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title">Registration details</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="viewRegistrationBody"></div>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

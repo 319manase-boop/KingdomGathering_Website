@@ -58,8 +58,17 @@
         };
     }
 
+    function eventRequiresRegistration(event) {
+        return event.registration_required === true || String(event.registration_required).toLowerCase() === 'true';
+    }
+
     function getEventCTALabel(event) {
-        return event.registration_required ? "Reserve" : "Learn More";
+        return eventRequiresRegistration(event) ? "Reserve" : "Learn More";
+    }
+
+    function getEventCTAUrl(event, source = 'website') {
+        if (!eventRequiresRegistration(event)) return null;
+        return `${window.location.origin}/event-register.html?event=${encodeURIComponent(event.id)}&source=${encodeURIComponent(source)}`;
     }
 
     function showEventDetailsModal(event, branchName) {
@@ -75,13 +84,30 @@
         if (locationEl) locationEl.textContent = event.location ? `Location: ${event.location}` : "Location information will be shared soon.";
         if (descriptionEl) descriptionEl.textContent = event.description || event.short_description || "Join us for this special gathering.";
         if (registrationEl) {
-            registrationEl.textContent = event.registration_required
-                ? "Registration is required for this event. Contact us to reserve your seat."
+            registrationEl.textContent = eventRequiresRegistration(event)
+                ? "Registration is required for this event. Click below to secure your place."
                 : "No registration is required. Visit our contact page if you have any questions.";
         }
 
         const modalEl = document.getElementById("eventDetailModal");
         if (modalEl) {
+            const modalFooter = modalEl.querySelector('.modal-footer');
+            if (modalFooter) {
+                const registrationUrl = getEventCTAUrl(event);
+                modalFooter.innerHTML = `
+                    <button type="button" class="btn btn-outline-gold" data-bs-dismiss="modal">Close</button>
+                    ${registrationUrl ? `<button type="button" class="btn btn-gold ms-2 event-modal-action">Register Now</button>` : ''}
+                `;
+                if (registrationUrl) {
+                    const actionButton = modalFooter.querySelector('.event-modal-action');
+                    if (actionButton) {
+                        actionButton.addEventListener('click', () => {
+                            window.location.href = registrationUrl;
+                        });
+                    }
+                }
+            }
+
             const modal = new bootstrap.Modal(modalEl, { keyboard: true });
             modal.show();
         }
@@ -190,7 +216,14 @@
 
             const featuredButton = featuredEventContainer.querySelector('.event-detail-trigger');
             if (featuredButton) {
-                featuredButton.addEventListener('click', () => showEventDetailsModal(event, branchName));
+                const registrationUrl = getEventCTAUrl(event);
+                featuredButton.addEventListener('click', () => {
+                    if (registrationUrl) {
+                        window.location.href = registrationUrl;
+                    } else {
+                        showEventDetailsModal(event, branchName);
+                    }
+                });
             }
         } catch (err) {
             console.error("[publicEvents] Featured event error:", err);
@@ -241,7 +274,14 @@
 
                 const triggerButton = eventRow.querySelector('.event-detail-trigger');
                 if (triggerButton) {
-                    triggerButton.addEventListener('click', () => showEventDetailsModal(event, branchName));
+                    const registrationUrl = getEventCTAUrl(event);
+                    triggerButton.addEventListener('click', () => {
+                        if (registrationUrl) {
+                            window.location.href = registrationUrl;
+                        } else {
+                            showEventDetailsModal(event, branchName);
+                        }
+                    });
                 }
             }
         } catch (err) {
@@ -324,7 +364,14 @@
                     timelineContainer.appendChild(timelineItem);
                     const detailButton = timelineItem.querySelector('.event-detail-trigger');
                     if (detailButton) {
-                        detailButton.addEventListener('click', () => showEventDetailsModal(event, branchName));
+                        const registrationUrl = getEventCTAUrl(event);
+                        detailButton.addEventListener('click', () => {
+                            if (registrationUrl) {
+                                window.location.href = registrationUrl;
+                            } else {
+                                showEventDetailsModal(event, branchName);
+                            }
+                        });
                     }
                 }
             }

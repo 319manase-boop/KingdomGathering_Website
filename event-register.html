@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration | Kingdom Gathering Church</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .registration-hero {
+            padding: 3rem 0;
+        }
+        .registration-hero .event-poster {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+        .registration-card {
+            background: rgba(255,255,255,0.96);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 1rem;
+            box-shadow: 0 16px 30px rgba(0,0,0,0.08);
+        }
+        .registration-status {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .registration-alert {
+            min-height: 3rem;
+        }
+        .share-buttons button {
+            min-width: 140px;
+        }
+        .form-label strong {
+            display: inline-block;
+            margin-bottom: 0.35rem;
+        }
+        .registration-summary dt {
+            font-weight: 700;
+        }
+        .registration-summary dd {
+            margin: 0 0 0.75rem 0;
+        }
+    </style>
+</head>
+<body>
+    <main class="container registration-hero">
+        <div id="registrationLoader" class="text-center py-5">
+            <div class="spinner-border text-gold" role="status"><span class="visually-hidden">Loading...</span></div>
+            <p class="mt-3">Loading event details…</p>
+        </div>
+
+        <div id="registrationNotFound" class="d-none text-center py-5">
+            <h1 class="mb-3">Event not found.</h1>
+            <p class="text-muted">Please check your registration link and try again.</p>
+        </div>
+
+        <div id="registrationContent" class="d-none">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="mb-4">
+                        <img id="eventPoster" class="event-poster w-100" src="" alt="Event poster" />
+                    </div>
+                    <div class="mb-4">
+                        <h1 id="eventTitle" class="display-6"></h1>
+                        <p id="eventShortDescription" class="lead text-muted"></p>
+                    </div>
+
+                    <div class="card registration-card p-4 mb-4">
+                        <h2 class="h5 mb-3">Event details</h2>
+                        <dl class="registration-summary">
+                            <dt>Date</dt>
+                            <dd id="eventDate"></dd>
+                            <dt>Time</dt>
+                            <dd id="eventTime"></dd>
+                            <dt>Location</dt>
+                            <dd id="eventLocation"></dd>
+                            <dt>Registration deadline</dt>
+                            <dd id="eventDeadline"></dd>
+                            <dt>Capacity</dt>
+                            <dd id="eventCapacity"></dd>
+                            <dt>Registration fee</dt>
+                            <dd id="eventFee"></dd>
+                        </dl>
+                    </div>
+
+                    <div id="shareSection" class="card registration-card p-4 mb-4 d-none">
+                        <h2 class="h5 mb-3">Share registration</h2>
+                        <div class="d-flex flex-wrap gap-2 share-buttons">
+                            <button id="copyLinkBtn" type="button" class="btn btn-outline-dark">Copy Link</button>
+                            <button id="whatsappShareBtn" type="button" class="btn btn-outline-success">WhatsApp</button>
+                            <button id="facebookShareBtn" type="button" class="btn btn-outline-primary">Facebook</button>
+                            <button id="emailShareBtn" type="button" class="btn btn-outline-secondary">Email</button>
+                            <button id="nativeShareBtn" type="button" class="btn btn-outline-dark d-none">Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card registration-card p-4">
+                        <div class="mb-3">
+                            <h2 class="h4">Register for this event</h2>
+                            <p class="text-muted">Fill out the form and submit your registration.</p>
+                        </div>
+
+                        <div id="registrationAlert" class="alert alert-warning registration-alert d-none" role="alert"></div>
+
+                        <form id="registrationForm" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="fullName"><strong>Full Name</strong></label>
+                                <input id="fullName" type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="email"><strong>Email</strong></label>
+                                <input id="email" type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="phone"><strong>Phone</strong></label>
+                                <input id="phone" type="tel" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="gender"><strong>Gender</strong></label>
+                                <select id="gender" class="form-select">
+                                    <option value="">Prefer not to say</option>
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                    <option value="non_binary">Non-binary</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="ageGroup"><strong>Age Group</strong></label>
+                                <select id="ageGroup" class="form-select">
+                                    <option value="">Select age group</option>
+                                    <option value="under_18">Under 18</option>
+                                    <option value="18_25">18-25</option>
+                                    <option value="26_35">26-35</option>
+                                    <option value="36_50">36-50</option>
+                                    <option value="51_plus">51+</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="attendeeCount"><strong>Number of Attendees</strong></label>
+                                <input id="attendeeCount" type="number" class="form-control" min="1" value="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="churchOrMinistry"><strong>Church / Ministry</strong></label>
+                                <input id="churchOrMinistry" type="text" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="notes"><strong>Notes</strong></label>
+                                <textarea id="notes" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button id="registerButton" type="submit" class="btn btn-gold w-100">Submit registration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="registrationClosed" class="d-none text-center py-5">
+            <div class="alert alert-secondary" role="alert"></div>
+        </div>
+
+        <div id="registrationSuccess" class="d-none text-center py-5">
+            <div class="card registration-card p-4">
+                <h1 class="h2 mb-3">Registration Successful</h1>
+                <p class="mb-3">Your registration has been received successfully.</p>
+                <div class="text-start">
+                    <p><strong>Registrant name:</strong> <span id="successName"></span></p>
+                    <p><strong>Event title:</strong> <span id="successEvent"></span></p>
+                    <p><strong>Event date:</strong> <span id="successDate"></span></p>
+                    <p><strong>Number of attendees:</strong> <span id="successAttendees"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabaseClient.js"></script>
+    <script src="/js/event-registration.js"></script>
+</body>
+</html>
