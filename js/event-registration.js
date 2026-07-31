@@ -1,9 +1,5 @@
 (function () {
     const VALID_SOURCES = new Set(['website', 'whatsapp', 'facebook', 'email', 'copied_link', 'other']);
-    const queryParams = new URLSearchParams(window.location.search);
-    const eventId = String(queryParams.get('event') || '').trim();
-    const sourceParam = String(queryParams.get('source') || 'website').trim().toLowerCase();
-    const registrationSource = VALID_SOURCES.has(sourceParam) ? sourceParam : 'website';
 
     const loader = document.getElementById('registrationLoader');
     const content = document.getElementById('registrationContent');
@@ -50,6 +46,110 @@
     let registrationEnabled = false;
     let registrationOpen = false;
 
+    function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return String(params.get(name) || '').trim();
+    }
+
+    function safeSetText(element, value) {
+        if (!element) return;
+        element.textContent = String(value ?? '');
+    }
+
+    function safeSetSrc(element, value) {
+        if (!element) return;
+        element.src = value;
+    }
+
+    function safeToggle(element, show) {
+        if (!element) return;
+        element.hidden = !show;
+        element.classList.toggle('d-none', !show);
+    }
+
+    function safeListen(element, event, handler) {
+        if (!element || typeof element.addEventListener !== 'function') return;
+        element.addEventListener(event, handler);
+    }
+
+    function logStage(stage, payload) {
+        console.log(`[event-register] ${stage}`, payload ?? '');
+    }
+
+    function showLoadingState() {
+        if (loader) {
+            loader.hidden = false;
+            loader.classList.remove('d-none');
+        }
+        safeToggle(content, false);
+        safeToggle(notFound, false);
+        safeToggle(closed, false);
+        safeToggle(success, false);
+    }
+
+    function hideLoadingState() {
+        if (loader) {
+            loader.hidden = true;
+            loader.classList.add('d-none');
+        }
+    }
+
+    function showAlert(message, type = 'warning') {
+        if (!alertBox) return;
+        alertBox.textContent = message;
+        alertBox.className = `alert alert-${type} registration-alert`;
+        alertBox.classList.remove('d-none');
+        alertBox.hidden = false;
+    }
+
+    function hideAlert() {
+        if (!alertBox) return;
+        alertBox.classList.add('d-none');
+        alertBox.hidden = true;
+        alertBox.textContent = '';
+    }
+
+    function showNotFoundState(title, message) {
+        hideLoadingState();
+        if (notFound) {
+            const heading = notFound.querySelector('h1');
+            const paragraph = notFound.querySelector('p');
+            safeSetText(heading, title);
+            safeSetText(paragraph, message);
+            safeToggle(notFound, true);
+        }
+        safeToggle(content, false);
+        safeToggle(closed, false);
+        safeToggle(success, false);
+    }
+
+    function showClosedState(message) {
+        hideLoadingState();
+        const alertElement = closed?.querySelector('.alert');
+        safeSetText(alertElement, message);
+        safeToggle(closed, true);
+        safeToggle(content, false);
+        safeToggle(notFound, false);
+        safeToggle(success, false);
+    }
+
+    function showContentState() {
+        hideLoadingState();
+        safeToggle(content, true);
+        safeToggle(notFound, false);
+        safeToggle(closed, false);
+        safeToggle(success, false);
+    }
+
+    function showFatalError(message) {
+        console.error('[event-register] fatal error:', message);
+        showClosedState(message);
+    }
+
+    function showAvailabilityWarning(message) {
+        showAlert(message, 'warning');
+    }
+
     function formatDate(value) {
         if (typeof window.kgcFormatEventDate === 'function') {
             return window.kgcFormatEventDate(value);
@@ -68,10 +168,8 @@
         if (Number.isNaN(startDate.getTime())) {
             return 'TBA';
         }
-        const options = { hour: 'numeric', minute: '2-digit', hour12: true };
-        const formatter = new Intl.DateTimeFormat('en-BW', { timeZone: 'Africa/Gaborone', ...options });
+        const formatter = new Intl.DateTimeFormat('en-BW', { timeZone: 'Africa/Gaborone', hour: 'numeric', minute: '2-digit', hour12: true });
         const startTime = formatter.format(startDate);
-
         if (!endValue) {
             return startTime;
         }
@@ -79,8 +177,7 @@
         if (Number.isNaN(endDate.getTime()) || startDate.getTime() === endDate.getTime()) {
             return startTime;
         }
-        const endTime = formatter.format(endDate);
-        return `${startTime} – ${endTime}`;
+        return `${startTime} – ${formatter.format(endDate)}`;
     }
 
     function getPosterUrl(path) {
@@ -88,75 +185,11 @@
             return '/images/people.jpg';
         }
         const trimmed = String(path).trim();
-        if (trimmed === '') {
-            return '/images/people.jpg';
-        }
-        return trimmed;
-    }
-
-    function setLoading(loading) {
-        if (loading) {
-            loader.classList.remove('d-none');
-            content.classList.add('d-none');
-            notFound.classList.add('d-none');
-            closed.classList.add('d-none');
-            success.classList.add('d-none');
-        } else {
-            loader.classList.add('d-none');
-        }
-    }
-
-    function showAlert(message, type = 'warning') {
-        if (!alertBox) return;
-        alertBox.textContent = message;
-        alertBox.className = `alert alert-${type} registration-alert`;
-        alertBox.classList.remove('d-none');
-    }
-
-    function hideAlert() {
-        if (!alertBox) return;
-        alertBox.classList.add('d-none');
-        alertBox.textContent = '';
-    }
-
-    function showNotFound() {
-        setLoading(false);
-        notFound.classList.remove('d-none');
-        content.classList.add('d-none');
-        closed.classList.add('d-none');
-        success.classList.add('d-none');
-    }
-
-    function showClosed(message) {
-        setLoading(false);
-        closed.querySelector('.alert').textContent = message;
-        closed.classList.remove('d-none');
-        content.classList.add('d-none');
-        notFound.classList.add('d-none');
-        success.classList.add('d-none');
-    }
-
-    function showContent() {
-        setLoading(false);
-        content.classList.remove('d-none');
-        notFound.classList.add('d-none');
-        closed.classList.add('d-none');
-        success.classList.add('d-none');
-    }
-
-    function showSuccess(registration) {
-        setLoading(false);
-        success.classList.remove('d-none');
-        content.classList.add('d-none');
-        notFound.classList.add('d-none');
-        closed.classList.add('d-none');
-        successName.textContent = registration.full_name;
-        successEvent.textContent = currentEvent.title || 'Event';
-        successDate.textContent = formatDate(currentEvent.start_at);
-        successAttendees.textContent = registration.attendee_count;
+        return trimmed === '' ? '/images/people.jpg' : trimmed;
     }
 
     function buildRegistrationUrl(src) {
+        if (!currentEvent) return window.location.origin + '/event-register.html';
         const params = new URLSearchParams({ event: currentEvent.id });
         if (src) params.set('source', src);
         return `${window.location.origin}/event-register.html?${params.toString()}`;
@@ -164,40 +197,39 @@
 
     function setupShareButtons() {
         if (!shareSection || !currentEvent) return;
-        shareSection.classList.remove('d-none');
+        safeToggle(shareSection, true);
         const plainTitle = currentEvent.title || 'Event registration';
         const plainDate = formatDate(currentEvent.start_at);
         const registrationUrl = buildRegistrationUrl('website');
         const message = `Register for ${plainTitle} at Kingdom Gathering Church.%0A${plainDate}%0A%0ARegister here:%0A${registrationUrl}`;
 
-        copyLinkBtn.addEventListener('click', async () => {
+        safeListen(copyLinkBtn, 'click', async () => {
             try {
                 await navigator.clipboard.writeText(registrationUrl);
                 showAlert('Registration link copied to clipboard.', 'success');
             } catch (error) {
-                console.error('Copy failed', error);
+                console.error('[event-register] copy failed', error);
                 showAlert('Unable to copy the link. Please copy it manually.', 'danger');
             }
         });
 
-        whatsappShareBtn.addEventListener('click', () => {
+        safeListen(whatsappShareBtn, 'click', () => {
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
         });
 
-        facebookShareBtn.addEventListener('click', () => {
+        safeListen(facebookShareBtn, 'click', () => {
             const url = `${window.location.origin}/event-register.html?event=${currentEvent.id}&source=facebook`;
-            const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-            window.open(fbUrl, '_blank');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
         });
 
-        emailShareBtn.addEventListener('click', () => {
+        safeListen(emailShareBtn, 'click', () => {
             const url = `${window.location.origin}/event-register.html?event=${currentEvent.id}&source=email`;
             window.location.href = `mailto:?subject=${encodeURIComponent(`Register for ${plainTitle}`)}&body=${encodeURIComponent(`Register for ${plainTitle} at Kingdom Gathering Church.\n${plainDate}\n\nRegister here: ${url}`)}`;
         });
 
-        if (navigator.share) {
-            nativeShareBtn.classList.remove('d-none');
-            nativeShareBtn.addEventListener('click', async () => {
+        if (navigator.share && nativeShareBtn) {
+            safeToggle(nativeShareBtn, true);
+            safeListen(nativeShareBtn, 'click', async () => {
                 try {
                     await navigator.share({
                         title: `Register for ${plainTitle}`,
@@ -205,78 +237,54 @@
                         url: buildRegistrationUrl('website')
                     });
                 } catch (error) {
-                    console.error('Native share failed', error);
+                    console.error('[event-register] native share failed', error);
                 }
             });
         }
     }
 
-    function displayEventDetails(event) {
+    function renderEvent(event) {
+        logStage('3 rendering event');
         currentEvent = event;
-        eventPoster.onerror = () => {
-            eventPoster.onerror = null;
-            eventPoster.src = '/images/default-event.jpg';
-        };
-        eventPoster.src = getPosterUrl(event.poster_path);
-        eventPoster.alt = event.title ? `${event.title} poster` : 'Event poster';
-        eventTitle.textContent = event.title || 'Event registration';
-        eventShortDescription.textContent = event.short_description || event.description || 'Find registration details below.';
-        eventDate.textContent = formatDate(event.start_at);
-        eventTime.textContent = formatTimeRange(event.start_at, event.end_at);
-        eventLocation.textContent = event.location || 'Location details will be shared soon.';
-        eventDeadline.textContent = event.registration_deadline ? formatDate(event.registration_deadline) : 'No deadline set';
-        eventCapacity.textContent = event.capacity != null ? `${event.capacity} total capacity` : 'Unlimited capacity';
-        eventFee.textContent = event.registration_fee != null && event.registration_fee !== '' ? `BWP ${Number(event.registration_fee).toFixed(2)}` : 'Free';
+
+        if (eventPoster) {
+            eventPoster.onerror = () => {
+                eventPoster.onerror = null;
+                safeSetSrc(eventPoster, '/images/default-event.jpg');
+            };
+            safeSetSrc(eventPoster, getPosterUrl(event.poster_path));
+            eventPoster.alt = event.title ? `${event.title} poster` : 'Event poster';
+        }
+
+        safeSetText(eventTitle, event.title || 'Event registration');
+        safeSetText(eventShortDescription, event.short_description || event.description || 'Find registration details below.');
+        safeSetText(eventDate, formatDate(event.start_at));
+        safeSetText(eventTime, formatTimeRange(event.start_at, event.end_at));
+        safeSetText(eventLocation, event.location || 'Location details will be shared soon.');
+        safeSetText(eventDeadline, event.registration_deadline ? formatDate(event.registration_deadline) : 'No deadline set');
+        safeSetText(eventCapacity, event.capacity != null ? `${event.capacity} total capacity` : 'Unlimited capacity');
+        safeSetText(eventFee, event.registration_fee != null && event.registration_fee !== '' ? `BWP ${Number(event.registration_fee).toFixed(2)}` : 'Free');
+
         setupShareButtons();
+        logStage('4 event rendered');
     }
 
-    async function getConfirmedAttendeeCount(eventId) {
-        try {
-            const { data, error } = await window.supabaseClient
-                .rpc('event_confirmed_registration_counts', { event_uuid: eventId });
+    async function loadAvailability(event) {
+        logStage('5 loading availability');
+        const confirmedTotal = await getConfirmedAttendeeCount(event.id);
+        logStage('6 availability loaded', { confirmedTotal });
 
-            if (error) {
-                console.error('Failed to fetch confirmed registration counts', error);
-                return null;
-            }
-
-            return data?.confirmed_attendee_count ?? 0;
-        } catch (err) {
-            console.error('Confirmed count lookup error', err);
-            return null;
-        }
-    }
-
-    function evaluateAvailability(event, confirmedTotal) {
-        const requiresRegistration = event.registration_required === true || String(event.registration_required).toLowerCase() === 'true';
-        if (!requiresRegistration) {
-            showClosed('This event does not accept public registrations.');
+        if (confirmedTotal == null) {
             return false;
         }
 
-        if (event.registration_status != null && String(event.registration_status).toLowerCase() !== 'open') {
-            showClosed('Registration for this event is closed.');
-            return false;
-        }
-
-        const now = new Date();
-        if (event.registration_deadline && new Date(event.registration_deadline) < now) {
-            showClosed('The registration deadline has passed.');
-            return false;
-        }
-
-        if (event.end_at && new Date(event.end_at) < now) {
-            showClosed('Registration for this event is closed.');
-            return false;
-        }
-
-        if (event.capacity != null && confirmedTotal != null) {
+        if (event.capacity != null) {
             remainingSpaces = event.capacity - confirmedTotal;
             if (remainingSpaces <= 0) {
-                showClosed('Registration is full for this event.');
+                showClosedState('Registration is full for this event.');
                 return false;
             }
-            eventCapacity.textContent = `${event.capacity} total capacity · ${remainingSpaces} spaces remaining`;
+            safeSetText(eventCapacity, `${event.capacity} total capacity · ${remainingSpaces} spaces remaining`);
         }
 
         registrationEnabled = true;
@@ -284,169 +292,39 @@
         return true;
     }
 
-    function trimValue(value) {
-        return String(value || '').trim();
-    }
-
-    function parseOptional(value) {
-        const trimmed = trimValue(value);
-        return trimmed === '' ? null : trimmed;
-    }
-
-    function buildRegistrationPayload() {
-        const fullName = trimValue(fullNameInput.value);
-        const email = trimValue(emailInput.value).toLowerCase();
-        const phone = trimValue(phoneInput.value);
-        const gender = parseOptional(genderInput.value);
-        const ageGroup = parseOptional(ageGroupInput.value);
-        const churchOrMinistry = parseOptional(churchInput.value);
-        const notes = parseOptional(notesInput.value);
-        const attendeeCount = Number(attendeeCountInput.value || 1);
-
-        if (!fullName || !email || !phone || attendeeCount < 1) {
-            showAlert('Please fill in all required fields and ensure attendee count is at least 1.', 'danger');
-            return null;
-        }
-
-        if (currentEvent.capacity != null && remainingSpaces != null && attendeeCount > remainingSpaces) {
-            showAlert(`Only ${remainingSpaces} spaces are still available.`, 'danger');
-            return null;
-        }
-
-        return {
-            event_id: currentEvent.id,
-            full_name: fullName,
-            email,
-            phone,
-            gender,
-            age_group: ageGroup,
-            attendee_count: attendeeCount,
-            church_or_ministry: churchOrMinistry,
-            notes,
-            source: registrationSource,
-            status: 'confirmed'
-        };
-    }
-
-    async function validateCapacityBeforeSubmit() {
-        if (!currentEvent || currentEvent.capacity == null) {
-            return true;
-        }
-        const confirmedTotal = await getConfirmedAttendeeCount(currentEvent.id);
-        if (confirmedTotal == null) {
-            return false;
-        }
-        remainingSpaces = currentEvent.capacity - confirmedTotal;
-        if (remainingSpaces <= 0) {
-            showAlert('Registration is full for this event.', 'danger');
-            return false;
-        }
-        if (Number(attendeeCountInput.value || 1) > remainingSpaces) {
-            showAlert(`Only ${remainingSpaces} spaces are still available.`, 'danger');
-            return false;
-        }
-        return true;
-    }
-
-    async function submitRegistration(event) {
-        event.preventDefault();
-        hideAlert();
-        registerButton.disabled = true;
-        registerButton.textContent = 'Submitting…';
-
-        if (!registrationEnabled || !registrationOpen) {
-            showAlert('Registration is currently unavailable.', 'danger');
-            registerButton.disabled = false;
-            registerButton.textContent = 'Submit registration';
-            return;
-        }
-
-        if (!(await validateCapacityBeforeSubmit())) {
-            registerButton.disabled = false;
-            registerButton.textContent = 'Submit registration';
-            return;
-        }
-
-        const payload = buildRegistrationPayload();
-        if (!payload) {
-            registerButton.disabled = false;
-            registerButton.textContent = 'Submit registration';
-            return;
-        }
-
+    async function getConfirmedAttendeeCount(eventId) {
         try {
-            const { data, error } = await window.supabaseClient
-                .from('event_registrations')
-                .insert([payload])
-                .select()
-                .single();
-
+            const { data, error } = await window.supabaseClient.rpc('event_confirmed_registration_counts', { event_uuid: eventId });
             if (error) {
-                if (error?.details?.includes('event_registrations_event_id_email_key') || error?.code === '23505') {
-                    showAlert('This email is already registered for this event.', 'danger');
-                } else {
-                    console.error('Registration insert failed', error);
-                    showAlert('Unable to complete registration. Please try again later.', 'danger');
-                }
-                return;
+                console.error('[event-register] confirmed count error', error);
+                return null;
             }
-
-            showSuccess(data);
+            return data?.confirmed_attendee_count ?? 0;
         } catch (err) {
-            console.error('Registration submission error', err);
-            showAlert('Unable to complete registration. Please try again later.', 'danger');
-        } finally {
-            registerButton.disabled = false;
-            registerButton.textContent = 'Submit registration';
+            console.error('[event-register] confirmed count lookup error', err);
+            return null;
         }
     }
 
-    async function loadEvent() {
-        if (!eventId) {
-            showNotFound();
-            return;
+    async function loadEvent(eventId) {
+        logStage('2 event loaded', { eventId });
+        if (!window.supabaseClient) {
+            throw new Error('Supabase client is unavailable.');
         }
 
-        try {
-            const { data, error } = await window.supabaseClient
-                .from('events')
-                .select('*')
-                .eq('id', eventId)
-                .maybeSingle();
+        const { data, error } = await window.supabaseClient
+            .from('events')
+            .select('*')
+            .eq('id', eventId)
+            .maybeSingle();
 
-            if (error || !data) {
-                if (error) console.error('Failed to load event', error);
-                showNotFound();
-                return;
-            }
+        console.log('[event-register] event lookup:', { eventId, data, error });
 
-            try {
-                displayEventDetails(data);
-            } catch (displayError) {
-                console.error('Failed to render event details', displayError);
-                showClosed('Unable to display event details at this time. Please try again later.');
-                return;
-            }
-
-            console.log({
-                storedStart: data.start_at,
-                storedEnd: data.end_at,
-                parsedStart: new Date(data.start_at),
-                parsedEnd: data.end_at ? new Date(data.end_at) : null,
-                displayedStart: typeof window.kgcFormatEventTime === 'function' ? window.kgcFormatEventTime(data.start_at) : data.start_at,
-                displayedEnd: data.end_at && typeof window.kgcFormatEventTime === 'function' ? window.kgcFormatEventTime(data.end_at) : data.end_at
-            });
-            const confirmedTotal = await getConfirmedAttendeeCount(data.id);
-            if (confirmedTotal == null) {
-                showAlert('Unable to load availability. Please refresh the page.', 'warning');
-            }
-            if (evaluateAvailability(data, confirmedTotal)) {
-                showContent();
-            }
-        } catch (err) {
-            console.error('Event load error', err);
-            showNotFound();
+        if (error) {
+            throw error;
         }
+
+        return data || null;
     }
 
     function wireForm() {
@@ -454,24 +332,55 @@
         form.addEventListener('submit', submitRegistration);
     }
 
-    function initializePage() {
-        if (!window.supabaseClient) {
-            console.error('Supabase client is unavailable.');
-            showClosed('Unable to connect to the registration system. Please try again later.');
-            return;
-        }
+    async function initializePage() {
+        logStage('1 init started');
+        showLoadingState();
 
-        if (!eventId) {
-            showNotFound();
-            return;
-        }
+        try {
+            const sourceParam = String(getQueryParam('source') || 'website').trim().toLowerCase();
+            const eventId = getQueryParam('event');
+            const registrationSource = VALID_SOURCES.has(sourceParam) ? sourceParam : 'website';
 
-        wireForm();
-        loadEvent();
+            if (!eventId) {
+                showNotFoundState('No event selected.', 'Please open this page using a valid registration link.');
+                return;
+            }
+
+            if (!window.supabaseClient) {
+                throw new Error('Supabase client is unavailable.');
+            }
+
+            wireForm();
+            const event = await loadEvent(eventId);
+            if (!event) {
+                showNotFoundState('Event not found.', 'Please check your registration link and try again.');
+                return;
+            }
+
+            renderEvent(event);
+
+            try {
+                const availabilityOk = await loadAvailability(event);
+                if (!availabilityOk) {
+                    showAvailabilityWarning('Availability could not be confirmed. Please try again.');
+                }
+            } catch (availabilityError) {
+                console.error('[event-register] availability failed:', availabilityError);
+                showAvailabilityWarning('Availability could not be confirmed. Please try again.');
+            }
+
+            showContentState();
+            logStage('7 showing content');
+        } catch (error) {
+            console.error('[event-register] initialization failed:', error);
+            showFatalError('We couldn\'t load this event. Please refresh and try again.');
+        } finally {
+            hideLoadingState();
+        }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializePage);
+        document.addEventListener('DOMContentLoaded', initializePage, { once: true });
     } else {
         initializePage();
     }
